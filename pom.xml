@@ -7,12 +7,22 @@
     <artifactId>Harvey-Base</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Harvey-Base</name>
-    <description>Harvey-Base</description>
-
+    <description>Harvey企业级项目</description>
+    <packaging>pom</packaging>
     <modules>
         <module>harvey-core</module>
         <module>harvey-web</module>
     </modules>
 
+    <!-- 版本声明 -->
+    <properties>
 
+    </properties>
+
+    <!-- 依赖声明 -->
+    <dependencyManagement>
+        <dependencies>
+
+        </dependencies>
+    </dependencyManagement>
 </project>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.harvey.web.mapper.SysUserMapper">
+    <resultMap id="SysUserResult" type="com.harvey.web.entity.SysUser">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="nickname" column="nickname"/>
+        <result property="enabled" column="enabled"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="deleted" column="deleted"/>
+    </resultMap>
+
+    <select id="selectUserByUsername" parameterType="String" resultMap="SysUserResult">
+        SELECT * FROM sys_user WHERE username = #{username}
+    </select>
+
+    <select id="selectUserList" parameterType="SysUser" resultMap="SysUserResult">
+        SELECT * FROM sys_user u WHERE deleted = 1
+        <if test="username != null and username != ''">AND username = #{username}</if>
+    </select>
+</mapper>
