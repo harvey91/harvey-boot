@@ -11,7 +11,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>harvey-core</module>
-        <module>harvey-web</module>
+        <module>harvey-system</module>
+        <module>harvey-generator</module>
     </modules>
 
     <!-- 版本声明 -->
