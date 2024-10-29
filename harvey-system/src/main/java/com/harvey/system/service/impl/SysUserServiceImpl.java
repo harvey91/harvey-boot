@@ -6,12 +6,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.system.entity.SysUser;
 import com.harvey.system.mapper.SysUserMapper;
-import com.harvey.system.respository.SysUserRepository;
 import com.harvey.system.service.SysUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author Harvey
@@ -33,12 +30,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public Page<SysUser> selectUserList(SysUser user) {
+    public Page<SysUser> selectUserList(Page<SysUser> page) {
         QueryWrapper<SysUser> query = Wrappers.query();
         query.orderByDesc("create_time");
-        Page<SysUser> page = new Page<>(1, 3);
-        Page<SysUser> sysUserPage = sysUserMapper.selectPage(page, query);
-        return sysUserPage;
+        return sysUserMapper.selectPage(page, query);
     }
 
     @Override

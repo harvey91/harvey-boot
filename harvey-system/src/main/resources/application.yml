@@ -1,14 +1,14 @@
+server:
+  servlet:
+    context-path: /admin
 spring:
   application:
-    name: harvey-cloud-web
-  jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: GMT+8
+    name: harvey-admin
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
-      url: jdbc:mysql://127.0.0.1:3306/harvey
+      url: jdbc:mysql://127.0.0.1:3306/harvey?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
       username: root
       password: 123456
 

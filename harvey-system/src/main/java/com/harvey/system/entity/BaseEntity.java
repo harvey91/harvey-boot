@@ -4,9 +4,11 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -16,15 +18,18 @@ import java.util.Date;
 @Data
 public class BaseEntity implements Serializable {
 
+    @ApiModelProperty("创建时间")
     @TableField(fill = FieldFill.INSERT)
-    public Date createTime;
+    public LocalDateTime createTime;
 
+    @ApiModelProperty("修改时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    public Date updateTime;
+    public LocalDateTime updateTime;
 
-    // 逻辑删除
+    @ApiModelProperty("逻辑删除")
     @JsonIgnore
     @TableLogic
     @TableField(fill = FieldFill.INSERT)
     public Integer deleted;
+
 }

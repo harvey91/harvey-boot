@@ -1,6 +1,8 @@
 package com.harvey.system.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.harvey.system.base.PageResult;
+import com.harvey.system.base.RespResult;
 import com.harvey.system.entity.SysUser;
 import com.harvey.system.service.SysUserService;
 import lombok.RequiredArgsConstructor;
@@ -29,10 +31,12 @@ public class SysUserController {
         return user;
     }
 
-    @GetMapping("/list")
-    public Page<SysUser> list(SysUser sysUser) {
-        Page<SysUser> userList = sysUserService.selectUserList(sysUser);
-        return userList;
+    @GetMapping("/page")
+    public RespResult<PageResult<SysUser>> page(@RequestParam("pageIndex") int current,
+                                                @RequestParam("pageSize") int size) {
+        Page<SysUser> page = new Page<>(current, size);
+        Page<SysUser> userPage = sysUserService.selectUserList(page);
+        return RespResult.success(PageResult.of(userPage));
     }
 
     @PostMapping("/add")
