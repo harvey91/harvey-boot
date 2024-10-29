@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+/LOG_PATH_IS_UNDEFINED/debug.log
+/LOG_PATH_IS_UNDEFINED/error.log
+/LOG_PATH_IS_UNDEFINED/info.log
+/LOG_PATH_IS_UNDEFINED/warn.log
