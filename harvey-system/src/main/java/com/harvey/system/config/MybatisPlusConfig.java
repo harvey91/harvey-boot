@@ -32,6 +32,8 @@ public class MybatisPlusConfig {
         return interceptor;
     }
 
-
-
+    @Bean
+    public CustomIdentifierGenerator customIdentifierGenerator() {
+        return new CustomIdentifierGenerator();
+    }
 }

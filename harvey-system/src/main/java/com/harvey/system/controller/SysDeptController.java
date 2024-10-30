@@ -1,9 +1,8 @@
 package com.harvey.system.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.harvey.system.base.PageResult;
 import com.harvey.system.base.RespResult;
 import com.harvey.system.domain.DeptVO;
+import com.harvey.system.domain.OptionVO;
 import com.harvey.system.entity.SysDept;
 import com.harvey.system.service.ISysDeptService;
 import lombok.RequiredArgsConstructor;
@@ -31,29 +30,61 @@ import java.util.stream.Collectors;
 public class SysDeptController {
     private final ISysDeptService sysDeptService;
 
+    @GetMapping("/form/{id}")
+    public RespResult<SysDept> formById(@PathVariable(value = "id") Long id) {
+        SysDept sysDept = sysDeptService.getById(id);
+        return RespResult.success(sysDept);
+    }
+
     /**
-     * 查询部门列表-所有
+     * 查询所有部门树列表
      * @return
      */
     @GetMapping("/list")
     public RespResult<List<DeptVO>> list() {
         List<SysDept> list = sysDeptService.list();
-        return RespResult.success(convert(list));
+        List<DeptVO> deptVOList = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(list)) {
+            Map<Long, List<SysDept>> collect = list.stream().collect(Collectors.groupingBy(SysDept::getParentId));
+            if (collect.containsKey(0L)) {
+                // 获取所有最顶级部门列表
+                List<SysDept> parantDeptList = collect.get(0L);
+                for (SysDept dept : parantDeptList) {
+                    DeptVO deptVO = new DeptVO();
+                    BeanUtils.copyProperties(dept, deptVO);
+                    deptVOList.add(deptVO);
+                    // 递归封装所有部门
+                    recursion(deptVO, collect);
+                }
+            }
+        }
+        return RespResult.success(deptVOList);
     }
 
     /**
-     * 查询部门列表-分页
-     * @param current
-     * @param size
+     * 查询所有部门下拉树列表
      * @return
      */
-    @GetMapping("/page")
-    public RespResult<PageResult<DeptVO>> page(@RequestParam("pageIndex") int current,
-                                                @RequestParam("pageSize") int size) {
-        Page<SysDept> page = new Page<>(current, size);
-        Page<SysDept> deptPage = sysDeptService.page(page);
-        List<DeptVO> deptVOList = convert(deptPage.getRecords());
-        return RespResult.success(PageResult.of(deptVOList, deptPage.getCurrent(), deptPage.getSize(), deptPage.getTotal()));
+    @GetMapping("/option")
+    public RespResult<List<OptionVO>> option() {
+        List<SysDept> list = sysDeptService.list();
+        List<OptionVO> optionVOList = new ArrayList<>();
+        if (CollectionUtils.isEmpty(list)) {
+            return RespResult.success();
+        }
+
+        Map<Long, List<SysDept>> collect = list.stream().collect(Collectors.groupingBy(SysDept::getParentId));
+        if (collect.containsKey(0L)) {
+            List<SysDept> deptList = collect.get(0L);
+            for (SysDept dept : deptList) {
+                OptionVO optionVO = new OptionVO();
+                optionVO.setValue(dept.getId());
+                optionVO.setLabel(dept.getDeptName());
+                optionVOList.add(optionVO);
+                recursionOption(optionVO, collect);
+            }
+        }
+        return RespResult.success(optionVOList);
     }
 
     /**
@@ -66,7 +97,7 @@ public class SysDeptController {
         if (sysDept.getParentId() == null) {
             sysDept.setParentId(0L);
         }
-        sysDeptService.save(sysDept);
+        sysDeptService.saveOrUpdate(sysDept);
         return RespResult.success();
     }
 
@@ -84,38 +115,44 @@ public class SysDeptController {
         return RespResult.success();
     }
 
-
-    public List<DeptVO> convert(List<SysDept> deptList) {
-        List<DeptVO> deptVOList = new ArrayList<>();
-        if (!CollectionUtils.isEmpty(deptList)) {
-            Map<Long, List<SysDept>> collect = deptList.stream().collect(Collectors.groupingBy(SysDept::getParentId));
-            if (collect.containsKey(0L)) {
-                // 获取所有最顶级部门列表
-                List<SysDept> parantDeptList = collect.get(0L);
-                for (SysDept dept : parantDeptList) {
-                    DeptVO deptVO = new DeptVO();
-                    BeanUtils.copyProperties(dept, deptVO);
-                    deptVOList.add(deptVO);
-                    // 递归封装所有部门
-                    recursion(deptVO, collect);
-                }
-            }
-        }
-        return deptVOList;
-    }
-
-    public void recursion(DeptVO darentDeptVO, Map<Long, List<SysDept>> collect) {
-        if (!collect.containsKey(darentDeptVO.getId())) {
+    /**
+     * 递归所有下级部门
+     * @param parentDeptVO
+     * @param collect
+     */
+    public void recursion(DeptVO parentDeptVO, Map<Long, List<SysDept>> collect) {
+        if (!collect.containsKey(parentDeptVO.getId())) {
             return;
         }
         List<DeptVO> deptVOList = new ArrayList<>();
-        List<SysDept> childDeptList = collect.get(darentDeptVO.getId());
+        List<SysDept> childDeptList = collect.get(parentDeptVO.getId());
         for (SysDept dept : childDeptList) {
             DeptVO deptVO = new DeptVO();
             BeanUtils.copyProperties(dept, deptVO);
             deptVOList.add(deptVO);
             recursion(deptVO, collect);
         }
-        darentDeptVO.setChildren(deptVOList);
+        parentDeptVO.setChildren(deptVOList);
+    }
+
+    /**
+     * 递归所有下级部门-下拉列表
+     * @param parentOptionVO
+     * @param collect
+     */
+    public void recursionOption(OptionVO parentOptionVO, Map<Long, List<SysDept>> collect) {
+        if (!collect.containsKey(parentOptionVO.getValue())) {
+            return;
+        }
+        List<OptionVO> optionVOList = new ArrayList<>();
+        List<SysDept> childDeptList = collect.get(parentOptionVO.getValue());
+        for (SysDept dept : childDeptList) {
+            OptionVO optionVO = new OptionVO();
+            optionVO.setValue(dept.getId());
+            optionVO.setLabel(dept.getDeptName());
+            optionVOList.add(optionVO);
+            recursionOption(optionVO, collect);
+        }
+        parentOptionVO.setChildren(optionVOList);
     }
 }

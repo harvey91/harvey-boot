@@ -3,11 +3,11 @@ package com.harvey.system.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -20,7 +20,7 @@ import lombok.Data;
 @Data
 @TableName("sys_role")
 @ApiModel(value = "SysRole对象", description = "系统角色表")
-public class SysRole implements Serializable {
+public class SysRole extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -38,14 +38,6 @@ public class SysRole implements Serializable {
     private String roleRemark;
 
     @ApiModelProperty("是否启用：0禁用，1启用")
-    private Boolean enabled;
+    private Integer enabled;
 
-    @ApiModelProperty("创建时间")
-    private LocalDateTime createTime;
-
-    @ApiModelProperty("修改时间")
-    private LocalDateTime updateTime;
-
-    @ApiModelProperty("逻辑删除")
-    private Boolean deleted;
 }
