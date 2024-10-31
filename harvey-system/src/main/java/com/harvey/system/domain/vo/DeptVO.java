@@ -1,4 +1,4 @@
-package com.harvey.system.domain;
+package com.harvey.system.domain.vo;
 
 import com.harvey.system.entity.SysDept;
 import lombok.Data;

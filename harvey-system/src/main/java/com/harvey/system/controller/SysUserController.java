@@ -3,6 +3,7 @@ package com.harvey.system.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.harvey.system.base.PageResult;
 import com.harvey.system.base.RespResult;
+import com.harvey.system.domain.vo.LoginUserVO;
 import com.harvey.system.entity.SysUser;
 import com.harvey.system.service.SysUserService;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +11,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author Harvey
@@ -34,9 +34,15 @@ public class SysUserController {
     }
 
     @GetMapping("/me")
-    public RespResult<SysUser> me() {
+    public RespResult<LoginUserVO> me() {
         SysUser user = sysUserService.findByUsername("admin");
-        return RespResult.success(user);
+        LoginUserVO loginUserVO = new LoginUserVO();
+        loginUserVO.setUserId(user.getId());
+        loginUserVO.setUsername(user.getUsername());
+        loginUserVO.setNickname(user.getNickname());
+        loginUserVO.setAvatar(user.getAvatar());
+        loginUserVO.setRoles(Arrays.asList("ROOT"));
+        return RespResult.success(loginUserVO);
     }
 
     @GetMapping("/page")

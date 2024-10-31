@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: harvey-admin
+  jackson:
+    default-property-inclusion: non_null
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource

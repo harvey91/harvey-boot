@@ -1,4 +1,4 @@
-package com.harvey.system.domain;
+package com.harvey.system.domain.vo;
 
 import lombok.Data;
 

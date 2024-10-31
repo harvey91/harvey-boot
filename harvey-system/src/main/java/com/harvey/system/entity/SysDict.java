@@ -11,16 +11,16 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 系统角色表
+ * 系统字典表
  * </p>
  *
  * @author harvey
- * @since 2024-10-28
+ * @since 2024-10-31
  */
 @Data
-@TableName("sys_role")
-@ApiModel(value = "SysRole对象", description = "系统角色表")
-public class SysRole extends BaseEntity implements Serializable {
+@TableName("sys_dict")
+@ApiModel(value = "SysDict对象", description = "系统字典表")
+public class SysDict extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,11 +28,11 @@ public class SysRole extends BaseEntity implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @ApiModelProperty("角色编码")
-    private String roleCode;
+    @ApiModelProperty("字典编码")
+    private String dictCode;
 
-    @ApiModelProperty("角色名称")
-    private String roleName;
+    @ApiModelProperty("字典名称")
+    private String dictName;
 
     @ApiModelProperty("角色描述")
     private String remark;
@@ -42,5 +42,4 @@ public class SysRole extends BaseEntity implements Serializable {
 
     @ApiModelProperty("是否启用：0禁用，1启用")
     private Integer enabled;
-
 }

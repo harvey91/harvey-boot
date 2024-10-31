@@ -1,8 +1,8 @@
 package com.harvey.system.controller;
 
 import com.harvey.system.base.RespResult;
-import com.harvey.system.domain.DeptVO;
-import com.harvey.system.domain.OptionVO;
+import com.harvey.system.domain.vo.DeptVO;
+import com.harvey.system.domain.vo.OptionVO;
 import com.harvey.system.entity.SysDept;
 import com.harvey.system.service.ISysDeptService;
 import lombok.RequiredArgsConstructor;

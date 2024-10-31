@@ -58,8 +58,14 @@ public class SysMenu extends BaseEntity implements Serializable {
     @ApiModelProperty("重定向地址")
     private String redirect;
 
+    @ApiModelProperty("始终显示")
+    private Integer alwaysShow;
+
+    @ApiModelProperty("缓存页面")
+    private Integer keepAlive;
+
     @ApiModelProperty("排序")
-    private Integer sortNum;
+    private Integer sort;
 
     @ApiModelProperty("是否启用：0禁用，1启用")
     private Integer enabled;
