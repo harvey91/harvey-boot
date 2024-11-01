@@ -1,8 +1,9 @@
-package com.harvey.system.controller;
+package com.harvey.system.controller.system;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.harvey.system.base.PageResult;
 import com.harvey.system.base.RespResult;
+import com.harvey.system.domain.query.UserQueryParam;
 import com.harvey.system.domain.vo.LoginUserVO;
 import com.harvey.system.entity.SysUser;
 import com.harvey.system.service.SysUserService;
@@ -46,10 +47,8 @@ public class SysUserController {
     }
 
     @GetMapping("/page")
-    public RespResult<PageResult<SysUser>> page(@RequestParam("pageNum") int pageNum,
-                                                @RequestParam("pageSize") int pageSize) {
-        Page<SysUser> page = new Page<>(pageNum, pageSize);
-        Page<SysUser> userPage = sysUserService.selectUserList(page);
+    public RespResult<PageResult<SysUser>> page(UserQueryParam queryParam) {
+        Page<SysUser> userPage = sysUserService.selectUserPage(queryParam);
         return RespResult.success(PageResult.of(userPage));
     }
 
@@ -70,9 +69,9 @@ public class SysUserController {
         return RespResult.success();
     }
 
-    @PostMapping("/reset/password")
+    @PostMapping("/password/reset")
     public RespResult<String> resetPassword(@RequestBody SysUser user) {
-        // 只修改密码字段
+        // TODO 只修改密码字段
         sysUserService.updateById(user);
         return RespResult.success();
     }

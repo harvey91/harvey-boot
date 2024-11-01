@@ -2,6 +2,7 @@ package com.harvey.system.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.harvey.system.domain.query.UserQueryParam;
 import com.harvey.system.entity.SysUser;
 
 /**
@@ -14,7 +15,7 @@ public interface SysUserService extends IService<SysUser> {
 
     SysUser findByUsername(String username);
 
-    Page<SysUser> selectUserList(Page<SysUser> page);
+    Page<SysUser> selectUserPage(UserQueryParam queryParam);
 
     int saveUser(SysUser user);
 

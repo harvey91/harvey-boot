@@ -1,4 +1,4 @@
-package com.harvey.system.domain;
+package com.harvey.system.domain.param;
 
 import lombok.Data;
 
@@ -12,4 +12,8 @@ public class LoginParam {
     private String username;
 
     private String password;
+
+    private String captchaKey;
+
+    private String captchaCode;
 }

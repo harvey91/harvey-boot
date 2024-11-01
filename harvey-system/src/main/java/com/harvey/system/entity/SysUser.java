@@ -34,6 +34,9 @@ public class SysUser extends BaseEntity {
     @ApiModelProperty("头像")
     public String avatar;
 
+    @ApiModelProperty("性别")
+    public Integer gender;
+
     @ApiModelProperty("手机号")
     public String phone;
 

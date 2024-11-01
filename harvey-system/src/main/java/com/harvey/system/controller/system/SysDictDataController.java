@@ -1,10 +1,10 @@
-package com.harvey.system.controller;
+package com.harvey.system.controller.system;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.harvey.system.base.PageResult;
 import com.harvey.system.base.RespResult;
-import com.harvey.system.domain.query.DictQuery;
+import com.harvey.system.domain.query.DictQueryParam;
 import com.harvey.system.entity.SysDictData;
 import com.harvey.system.service.ISysDictDataService;
 import lombok.RequiredArgsConstructor;
@@ -34,9 +34,9 @@ public class SysDictDataController {
     }
 
     @GetMapping("/page")
-    public RespResult<PageResult<SysDictData>> page(DictQuery query) {
-        String dictCode = query.getDictCode();
-        Page<SysDictData> page = new Page<>(query.getPageNum(), query.getPageSize());
+    public RespResult<PageResult<SysDictData>> page(DictQueryParam queryParam) {
+        String dictCode = queryParam.getDictCode();
+        Page<SysDictData> page = new Page<>(queryParam.getPageNum(), queryParam.getPageSize());
         LambdaQueryWrapper<SysDictData> queryWrapper = new LambdaQueryWrapper<SysDictData>()
                 .eq(StringUtils.hasLength(dictCode), SysDictData::getDictCode, dictCode);
         Page<SysDictData> dictDataPage = sysDictDataService.page(page, queryWrapper);

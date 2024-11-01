@@ -1,4 +1,4 @@
-package com.harvey.system.controller;
+package com.harvey.system.controller.system;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

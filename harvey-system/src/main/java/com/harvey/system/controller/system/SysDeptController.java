@@ -1,4 +1,4 @@
-package com.harvey.system.controller;
+package com.harvey.system.controller.system;
 
 import com.harvey.system.base.RespResult;
 import com.harvey.system.domain.vo.DeptVO;
