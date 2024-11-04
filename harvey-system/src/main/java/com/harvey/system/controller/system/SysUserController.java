@@ -3,12 +3,15 @@ package com.harvey.system.controller.system;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.harvey.system.base.PageResult;
 import com.harvey.system.base.RespResult;
+import com.harvey.system.domain.param.ResetPasswordParam;
 import com.harvey.system.domain.query.UserQueryParam;
 import com.harvey.system.domain.vo.LoginUserVO;
 import com.harvey.system.entity.SysUser;
 import com.harvey.system.service.SysUserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -22,6 +25,7 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class SysUserController {
     private final SysUserService sysUserService;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/form/{id}")
     public RespResult<SysUser> formById(@PathVariable(value = "id") Long id) {
@@ -56,7 +60,7 @@ public class SysUserController {
     public RespResult<String> add(@RequestBody SysUser user) {
         if (!StringUtils.hasLength(user.getPassword())) {
             // 前端没设置密码时给默认密码
-            user.setPassword("123456");
+            user.setPassword(passwordEncoder.encode("123456"));
         }
         sysUserService.save(user);
         return RespResult.success();
@@ -64,14 +68,17 @@ public class SysUserController {
 
     @PutMapping("/modify")
     public RespResult<String> modify(@RequestBody SysUser user) {
+        user.setPassword(null);
         // 只修改指定字段
         sysUserService.updateById(user);
         return RespResult.success();
     }
 
-    @PostMapping("/password/reset")
-    public RespResult<String> resetPassword(@RequestBody SysUser user) {
-        // TODO 只修改密码字段
+    @PutMapping("/password/reset")
+    public RespResult<String> resetPassword(@RequestBody @Validated ResetPasswordParam param) {
+        SysUser user = new SysUser();
+        user.setId(param.getId());
+        user.setPassword(passwordEncoder.encode(param.getPassword()));
         sysUserService.updateById(user);
         return RespResult.success();
     }
