@@ -18,6 +18,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
@@ -38,6 +39,8 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class WebSecurityConfig {
     private final ApplicationContext applicationContext;
+    private final JwtProperties jwtProperties;
+    private final JwtTokenProvider jwtTokenProvider;
 
     /**
      * 原先的方法authorizeRequests变为authorizeHttpRequests、方法antMatchers变为requestMatchers
@@ -50,8 +53,6 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                // 前置过滤器
-//                .addFilterBefore()
                 // 所有请求都需要认证
                 .authorizeHttpRequests(request -> request.anyRequest().authenticated())
                 // 防止iframe 造成跨域
@@ -61,8 +62,10 @@ public class WebSecurityConfig {
                 // 异常授权
 //                .exceptionHandling(configurer -> configurer.authenticationEntryPoint())
                 // 禁用CSRF，防跨站请求伪造
-                .csrf(AbstractHttpConfigurer::disable);
-//                .apply()
+                .csrf(AbstractHttpConfigurer::disable)
+                // 前置过滤器
+                .addFilterBefore(new JwtTokenFilter(jwtProperties, jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+                ;
         return httpSecurity.build();
     }
 
@@ -95,8 +98,8 @@ public class WebSecurityConfig {
                 // 阿里巴巴 druid
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/druid/**"))
                 // 允许所有OPTIONS请求
-//                .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.OPTIONS, "/**"))
-                .requestMatchers(AntPathRequestMatcher.antMatcher("/**"));
+                .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.OPTIONS, "/**"))
+                .requestMatchers(AntPathRequestMatcher.antMatcher("/authorize/**"));
                 // 自定义匿名访问所有url放行：允许匿名和带Token访问，细腻化到每个 Request 类型
                 // GET
 //                .requestMatchers(HttpMethod.GET, anonymousUrls.get(RequestMethodEnum.GET.getType()).toArray(new String[0]))

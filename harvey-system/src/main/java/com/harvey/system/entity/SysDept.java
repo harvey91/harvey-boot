@@ -33,8 +33,14 @@ public class SysDept extends BaseEntity implements Serializable {
     @ApiModelProperty("部门名称")
     private String deptName;
 
+    @ApiModelProperty("部门编号")
+    private String deptCode;
+
     @ApiModelProperty("部门描述")
     private String remark;
+
+    @ApiModelProperty("排序")
+    private Integer sort;
 
     @ApiModelProperty("是否启用：0禁用，1启用")
     private Integer enabled;

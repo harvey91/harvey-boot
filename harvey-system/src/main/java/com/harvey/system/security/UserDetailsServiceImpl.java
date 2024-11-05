@@ -27,7 +27,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("");
         } else if (user.getEnabled() == 0) {
             // 账号被禁用
+
         }
+
+
         return User.builder().username(username).password(user.getPassword()).build();
     }
 }

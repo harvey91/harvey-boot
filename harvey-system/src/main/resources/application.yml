@@ -28,11 +28,11 @@ mybatis-plus:
       logic-delete-value: 0 # 逻辑已删除值
       logic-not-delete-value: 1 # 逻辑未删除值
 
-# PageHelper????
-pagehelper:
-  helperDialect: mysql
-  supportMethodsArguments: true
-  params: count=countSql
+#jwt
+jwt:
+  # 令牌前缀
+  token-start-with: Bearer
+  base64-secret: ZWQ0ZGI5NjQ0MGR3NDBjYjgyMzFjZjdmYjcyN2E3ZmYyM2E4Yjk4NWRhNDUwYzBjODQwNzYxMjdjOWMwYWRmZTBlZjlhNGY3ZTg4Y2U3YTE1cjg1ZGQ1OWNmNzhmMGVhNTc1Mzk1ZDZiMWNkNzQ0Y2VlNjJkNzI2NTcyZjUxNDMydw==
 
 log:
   path: /opt/springboot/web
