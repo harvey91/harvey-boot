@@ -22,7 +22,7 @@ import java.io.IOException;
  **/
 @Slf4j
 @RequiredArgsConstructor
-public class JwtTokenFilter extends GenericFilterBean {
+public class JwtAuthTokenFilter extends GenericFilterBean {
     private final JwtProperties jwtProperties;
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -41,7 +41,7 @@ public class JwtTokenFilter extends GenericFilterBean {
 
         // TODO token是否过期
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
-        // 把token认证设置到spring上下文
+        // 把token认证设置到security上下文
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         filterChain.doFilter(servletRequest, servletResponse);

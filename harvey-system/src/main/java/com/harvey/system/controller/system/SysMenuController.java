@@ -1,11 +1,14 @@
 package com.harvey.system.controller.system;
 
 import com.harvey.system.base.RespResult;
+import com.harvey.system.domain.vo.MenuVO;
 import com.harvey.system.domain.vo.OptionVO;
 import com.harvey.system.domain.vo.RouteVO;
 import com.harvey.system.entity.SysMenu;
+import com.harvey.system.enums.MenuTypeEnum;
 import com.harvey.system.service.ISysMenuService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -37,16 +40,31 @@ public class SysMenuController {
     }
 
     @GetMapping("/list")
-    public RespResult<List<SysMenu>> list() {
-        List<SysMenu> menuList = sysMenuService.list();
-        // TODO 树形结构
-
-        return RespResult.success(menuList);
+    public RespResult<List<MenuVO>> list() {
+        List<SysMenu> list = sysMenuService.list();
+        List<MenuVO> menuVOList = new ArrayList<>();
+        Map<Long, List<SysMenu>> collect = list.stream().collect(Collectors.groupingBy(SysMenu::getParentId));
+        if (collect.containsKey(0L)) {
+            List<SysMenu> parentMenuList = collect.get(0L);
+            for (SysMenu sysMenu : parentMenuList) {
+                MenuVO menuVO = new MenuVO();
+                BeanUtils.copyProperties(sysMenu, menuVO);
+                menuVO.setChildren(recursionMenu(menuVO, collect));
+                menuVOList.add(menuVO);
+            }
+        }
+        return RespResult.success(menuVOList);
     }
 
 
     @PostMapping("/add")
     public RespResult<String> add(@RequestBody SysMenu sysMenu) {
+        if (MenuTypeEnum.DIRECTORY.toString().equals(sysMenu.getType())) {
+            sysMenu.setComponent("Layout");
+            if (!sysMenu.getRoutePath().startsWith("/")) {
+                sysMenu.setRoutePath("/" + sysMenu.getRoutePath());
+            }
+        }
         sysMenuService.save(sysMenu);
         return RespResult.success();
     }
@@ -100,7 +118,6 @@ public class SysMenuController {
      */
     @GetMapping("/option")
     public RespResult<Object> option() {
-        // TODO 只查询目录和菜单，不查询按钮
         List<SysMenu> list = sysMenuService.list();
         List<OptionVO> optionVOList = new ArrayList<>();
         if (CollectionUtils.isEmpty(list)) {
@@ -167,6 +184,25 @@ public class SysMenuController {
             recursionOption(optionVO, collect);
         }
         parentOptionVO.setChildren(optionVOList);
+    }
+
+    /**
+     * 递归所有下级菜单-列表
+     * @param parentMenuVO
+     * @param collect
+     */
+    public List<MenuVO> recursionMenu(MenuVO parentMenuVO, Map<Long, List<SysMenu>> collect) {
+        List<MenuVO> menuVOList = new ArrayList<>();
+        if (collect.containsKey(parentMenuVO.getId())) {
+            List<SysMenu> childMenuList = collect.get(parentMenuVO.getId());
+            for (SysMenu menu : childMenuList) {
+                MenuVO menuVO = new MenuVO();
+                BeanUtils.copyProperties(menu, menuVO);
+                menuVOList.add(menuVO);
+                menuVO.setChildren(recursionMenu(menuVO, collect));
+            }
+        }
+        return menuVOList;
     }
 
 }

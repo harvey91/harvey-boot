@@ -14,7 +14,7 @@ import java.io.IOException;
  * @date 2024-11-05 22:13
  **/
 @Component
-public class JwtAccessDeniedHandler implements AccessDeniedHandler {
+public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         //当用户在没有授权的情况下访问受保护的REST资源时，将调用此方法发送403 Forbidden响应

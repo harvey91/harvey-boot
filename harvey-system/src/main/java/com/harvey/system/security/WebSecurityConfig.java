@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
@@ -41,6 +42,9 @@ public class WebSecurityConfig {
     private final ApplicationContext applicationContext;
     private final JwtProperties jwtProperties;
     private final JwtTokenProvider jwtTokenProvider;
+    private final CustomAccessDeniedHandler accessDeniedHandler;
+    private final CustomAuthenticationEntryPoint authenticationEntryPoint;
+    private final CorsFilter corsFilter;
 
     /**
      * 原先的方法authorizeRequests变为authorizeHttpRequests、方法antMatchers变为requestMatchers
@@ -60,11 +64,14 @@ public class WebSecurityConfig {
                 // 前后端分离，不需要创建session
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 // 异常授权
-//                .exceptionHandling(configurer -> configurer.authenticationEntryPoint())
+                .exceptionHandling(configurer -> configurer.authenticationEntryPoint(authenticationEntryPoint)
+                        .accessDeniedHandler(accessDeniedHandler))
                 // 禁用CSRF，防跨站请求伪造
                 .csrf(AbstractHttpConfigurer::disable)
-                // 前置过滤器
-                .addFilterBefore(new JwtTokenFilter(jwtProperties, jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+                // JWT Token验证过滤器
+                .addFilterBefore(new JwtAuthTokenFilter(jwtProperties, jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+                //
+                .addFilterBefore(corsFilter, JwtAuthTokenFilter.class)
                 ;
         return httpSecurity.build();
     }
@@ -160,6 +167,12 @@ public class WebSecurityConfig {
         return anonymousUrls;
     }*/
 
+    /**
+     * 注入认证管理配置
+     * @param configuration
+     * @return
+     * @throws Exception
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();

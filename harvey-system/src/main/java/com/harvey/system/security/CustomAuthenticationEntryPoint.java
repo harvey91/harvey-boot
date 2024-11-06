@@ -14,7 +14,7 @@ import java.io.IOException;
  * @date 2024-11-05 22:14
  **/
 @Component
-public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
+public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         // 当用户尝试访问安全的REST资源而不提供任何凭据时，将调用此方法发送401 响应

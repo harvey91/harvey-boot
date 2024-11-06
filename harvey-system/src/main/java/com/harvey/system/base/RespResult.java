@@ -1,5 +1,6 @@
 package com.harvey.system.base;
 
+import com.harvey.system.enums.ErrorCodeEnum;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -48,5 +49,17 @@ public class RespResult<T> implements Serializable {
 
     public static <T> RespResult<T> fail(String msg) {
         return of(null, FAIL, msg);
+    }
+
+    public static <T> RespResult<T> fail(int code, String msg) {
+        return of(null, code, msg);
+    }
+
+    public static <T> RespResult<T> error() {
+        return of(null, ErrorCodeEnum.ERROR.getCode(), ErrorCodeEnum.ERROR.getMsg());
+    }
+
+    public static <T> RespResult<T> error(String msg) {
+        return of(null, ErrorCodeEnum.ERROR.getCode(), msg);
     }
 }

@@ -3,13 +3,17 @@ package com.harvey.system.controller.system;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.harvey.system.base.PageResult;
 import com.harvey.system.base.RespResult;
+import com.harvey.system.domain.vo.OptionVO;
 import com.harvey.system.entity.SysRole;
 import com.harvey.system.service.ISysRoleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * <p>
@@ -40,9 +44,18 @@ public class SysRoleController {
     }
 
     @GetMapping("/option")
-    public RespResult<Object> option() {
-
-        return RespResult.success();
+    public RespResult<List<OptionVO>> option() {
+        List<SysRole> list = sysRoleService.list();
+        List<OptionVO> optionVOList = new ArrayList<>();
+        if (!ObjectUtils.isEmpty(list)) {
+            for (SysRole sysRole : list) {
+                OptionVO optionVO = new OptionVO();
+                optionVO.setValue(sysRole.getId());
+                optionVO.setLabel(sysRole.getRoleName());
+                optionVOList.add(optionVO);
+            }
+        }
+        return RespResult.success(optionVOList);
     }
 
     @PostMapping("/add")
