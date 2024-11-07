@@ -75,6 +75,16 @@ CREATE TABLE `sys_menu`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT ='系统菜单表';
 
+CREATE TABLE `sys_user_role`
+(
+    `id`          bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键',
+    `user_id`     bigint(20)  NOT NULL COMMENT '用户id',
+    `role_id`     bigint(20)  NOT NULL COMMENT '角色id',
+    `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+    `update_time` datetime(0) NOT NULL COMMENT '修改时间',
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT ='系统用户角色关联表';
+
 CREATE TABLE `sys_dept_role`
 (
     `id`          bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键',
@@ -101,7 +111,7 @@ CREATE TABLE `sys_dict`
     `dict_code`   varchar(32) NOT NULL COMMENT '字典编码',
     `dict_name`   varchar(32) NOT NULL COMMENT '字典名称',
     `remark`      varchar(16) DEFAULT '' COMMENT '角色描述',
-    `sort`        int(11)      DEFAULT '99' COMMENT '排序',
+    `sort`        int(11)     DEFAULT '99' COMMENT '排序',
     `enabled`     int(1)      DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
     `create_time` datetime(0) NOT NULL COMMENT '创建时间',
     `update_time` datetime(0) NOT NULL COMMENT '修改时间',

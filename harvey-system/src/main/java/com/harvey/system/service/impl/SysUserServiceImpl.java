@@ -1,18 +1,28 @@
 package com.harvey.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.harvey.system.domain.dto.PasswordDto;
+import com.harvey.system.domain.dto.UserDto;
 import com.harvey.system.domain.query.UserQueryParam;
 import com.harvey.system.entity.SysUser;
+import com.harvey.system.entity.SysUserRole;
+import com.harvey.system.exception.BusinessException;
 import com.harvey.system.mapper.SysUserMapper;
+import com.harvey.system.mapstruct.UserConverter;
+import com.harvey.system.service.ISysUserRoleService;
 import com.harvey.system.service.SysUserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Harvey
@@ -22,6 +32,9 @@ import org.springframework.util.StringUtils;
 @RequiredArgsConstructor
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
     private final SysUserMapper sysUserMapper;
+    private final UserConverter userConverter;
+    private final ISysUserRoleService sysUserRoleService;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public SysUser findById(Long id) {
@@ -35,6 +48,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public Page<SysUser> selectUserPage(UserQueryParam queryParam) {
+        // TODO 根据数据权限查询相应的数据
+
         Page<SysUser> page = new Page<>(queryParam.getPageNum(), queryParam.getPageSize());
         LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<SysUser>()
                 // 部门id
@@ -50,15 +65,72 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         return sysUserMapper.selectPage(page, queryWrapper);
     }
 
+    /**
+     * 新增用户
+     * @param userDto
+     * @return
+     */
     @Override
-    public int saveUser(SysUser user) {
-        if (user == null) {
-            throw  new RuntimeException("用户数据为空");
+    @Transactional(rollbackFor = Exception.class)
+    public void createUser(UserDto userDto) {
+        long count = sysUserMapper.countByUsername(userDto.getUsername());
+        if (count > 0) {
+            throw new BusinessException("用户名已存在");
         }
-        if (user.getId() == null) {
-            return sysUserMapper.insert(user);
+
+        SysUser entity = userConverter.toEntity(userDto);
+        // 前端没设置密码时给默认密码
+        entity.setPassword(passwordEncoder.encode("123456"));
+        sysUserMapper.insert(entity);
+
+        // 保存用户角色
+        Set<Long> roleIds = userDto.getRoleIds();
+        if (!ObjectUtils.isEmpty(roleIds)) {
+            sysUserRoleService.create(entity.getId(), roleIds);
         }
-        return sysUserMapper.updateById(user);
     }
 
+    @Override
+    @Transactional
+    public void modifyUser(UserDto userDto) {
+        SysUser sysUser = sysUserMapper.selectById(userDto.getId());
+        if (ObjectUtils.isEmpty(sysUser) || ObjectUtils.isEmpty(sysUser.getId())) {
+            throw new BusinessException("找不到用户");
+        }
+        if (!userDto.getUsername().equals(sysUser.getUsername())) {
+            // 用户名有变化，需要检测新用户名是否存在
+            LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<SysUser>()
+                    .eq(SysUser::getUsername, userDto.getUsername())
+                    .ne(SysUser::getId, userDto.getId());
+            long count = sysUserMapper.selectCount(queryWrapper);
+            if (count > 0) {
+                throw new BusinessException("用户名已存在");
+            }
+        }
+        // 修改用户
+        SysUser entity = userConverter.toEntity(userDto);
+        sysUserMapper.updateById(entity);
+
+        Set<Long> roleIds = userDto.getRoleIds();
+        LambdaQueryWrapper<SysUserRole> queryWrapper = new LambdaQueryWrapper<SysUserRole>()
+                .eq(SysUserRole::getUserId, sysUser.getId());
+        // 先删除原先的用户角色
+        sysUserRoleService.remove(queryWrapper);
+        if (!ObjectUtils.isEmpty(roleIds)) {
+            // 保存新的用户角色
+            sysUserRoleService.create(sysUser.getId(), roleIds);
+        }
+    }
+
+    /**
+     * 重置密码
+     * @param passwordDto
+     */
+    @Override
+    public void resetPassword(PasswordDto passwordDto) {
+        SysUser user = new SysUser();
+        user.setId(passwordDto.getId());
+        user.setPassword(passwordEncoder.encode(passwordDto.getPassword()));
+        sysUserMapper.updateById(user);
+    }
 }

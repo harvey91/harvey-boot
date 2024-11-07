@@ -3,18 +3,19 @@ package com.harvey.system.controller.system;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.harvey.system.base.PageResult;
 import com.harvey.system.base.RespResult;
-import com.harvey.system.domain.param.ResetPasswordParam;
+import com.harvey.system.domain.dto.PasswordDto;
+import com.harvey.system.domain.dto.UserDto;
 import com.harvey.system.domain.query.UserQueryParam;
 import com.harvey.system.domain.vo.LoginUserVO;
 import com.harvey.system.entity.SysUser;
 import com.harvey.system.service.SysUserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Harvey
@@ -25,17 +26,11 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class SysUserController {
     private final SysUserService sysUserService;
-    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/form/{id}")
     public RespResult<SysUser> formById(@PathVariable(value = "id") Long id) {
         SysUser sysUser = sysUserService.getById(id);
         return RespResult.success(sysUser);
-    }
-    @GetMapping("/find")
-    public SysUser find(String username) {
-        SysUser user = sysUserService.findByUsername(username);
-        return user;
     }
 
     @GetMapping("/me")
@@ -46,49 +41,70 @@ public class SysUserController {
         loginUserVO.setUsername(user.getUsername());
         loginUserVO.setNickname(user.getNickname());
         loginUserVO.setAvatar(user.getAvatar());
-        loginUserVO.setRoles(Arrays.asList("ROOT"));
+        // TODO
+        loginUserVO.setRoles(List.of("ROOT"));
         return RespResult.success(loginUserVO);
     }
 
+    /**
+     * 用户分页列表
+     * @param queryParam
+     * @return
+     */
     @GetMapping("/page")
     public RespResult<PageResult<SysUser>> page(UserQueryParam queryParam) {
         Page<SysUser> userPage = sysUserService.selectUserPage(queryParam);
         return RespResult.success(PageResult.of(userPage));
     }
 
-    @PostMapping("/add")
-    public RespResult<String> add(@RequestBody SysUser user) {
-        if (!StringUtils.hasLength(user.getPassword())) {
-            // 前端没设置密码时给默认密码
-            user.setPassword(passwordEncoder.encode("123456"));
+    /**
+     * 新增用户信息
+     * @param userDto
+     * @return
+     */
+    @PostMapping("/create")
+    public RespResult<String> create(@RequestBody @Validated UserDto userDto) {
+        if (ObjectUtils.isEmpty(userDto.getId())) {
+            sysUserService.createUser(userDto);
+        } else {
+            sysUserService.modifyUser(userDto);
         }
-        sysUserService.save(user);
         return RespResult.success();
     }
 
+    /**
+     * 修改用户信息
+     * @param userDto
+     * @return
+     */
     @PutMapping("/modify")
-    public RespResult<String> modify(@RequestBody SysUser user) {
-        user.setPassword(null);
-        // 只修改指定字段
-        sysUserService.updateById(user);
+    public RespResult<String> modify(@RequestBody @Validated UserDto userDto) {
+        sysUserService.modifyUser(userDto);
         return RespResult.success();
     }
 
+    /**
+     * 重置密码
+     * @param passwordDto
+     * @return
+     */
     @PutMapping("/password/reset")
-    public RespResult<String> resetPassword(@RequestBody @Validated ResetPasswordParam param) {
-        SysUser user = new SysUser();
-        user.setId(param.getId());
-        user.setPassword(passwordEncoder.encode(param.getPassword()));
-        sysUserService.updateById(user);
+    public RespResult<String> resetPassword(@RequestBody @Validated PasswordDto passwordDto) {
+        sysUserService.resetPassword(passwordDto);
         return RespResult.success();
     }
 
+    /**
+     * 删除用户
+     * @param ids
+     * @return
+     */
     @DeleteMapping("/delete")
-    public RespResult<String> delete(@RequestBody Long[] ids) {
-        if (ids == null) {
-            return RespResult.fail("id不能为空");
+    public RespResult<String> delete(@RequestBody List<Long> ids) {
+        if (ObjectUtils.isEmpty(ids)) {
+            return RespResult.fail("用户id不能为空");
         }
-        sysUserService.removeByIds(Arrays.asList(ids));
+        sysUserService.removeByIds(ids);
         return RespResult.success();
     }
 }

@@ -2,6 +2,8 @@ package com.harvey.system.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.harvey.system.domain.dto.PasswordDto;
+import com.harvey.system.domain.dto.UserDto;
 import com.harvey.system.domain.query.UserQueryParam;
 import com.harvey.system.entity.SysUser;
 
@@ -17,6 +19,9 @@ public interface SysUserService extends IService<SysUser> {
 
     Page<SysUser> selectUserPage(UserQueryParam queryParam);
 
-    int saveUser(SysUser user);
+    void createUser(UserDto userDto);
 
+    void modifyUser(UserDto userDto);
+
+    void resetPassword(PasswordDto passwordDto);
 }

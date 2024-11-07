@@ -1,37 +1,31 @@
-package com.harvey.system.entity;
+package com.harvey.system.domain.dto;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.io.Serial;
+import java.io.Serializable;
+import java.util.Set;
 
 /**
  * @author Harvey
- * @date 2024-10-24 21:20
+ * @date 2024-11-07 10:34
  **/
 @Data
-@TableName(value = "sys_user")
-@ApiModel(value = "SysUser对象", description = "系统用户表")
-public class SysUser extends BaseEntity {
+public class UserDto implements Serializable {
+
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("主键，用户id")
-    @TableId(value = "id", type = IdType.AUTO)
+    @ApiModelProperty("用户id")
     public Long id;
 
+    @NotBlank(message = "用户名不能为空")
     @ApiModelProperty("用户名")
     public String username;
 
-    @JsonIgnore
-    @ApiModelProperty("密码")
-    public String password;
-
+    @NotBlank(message = "昵称不能为空")
     @ApiModelProperty("昵称")
     public String nickname;
 
@@ -52,4 +46,10 @@ public class SysUser extends BaseEntity {
 
     @ApiModelProperty("是否启用：0禁用，1启用")
     public Integer enabled;
+
+    @ApiModelProperty("角色id集合")
+    public Set<Long> roleIds;
+
+    @ApiModelProperty("职位id集合")
+    public Set<Long> postIds;
 }

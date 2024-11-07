@@ -10,6 +10,11 @@ import org.apache.ibatis.annotations.Select;
  * @date 2024-10-24 21:26
  **/
 public interface SysUserMapper extends BaseMapper<SysUser> {
+
+    @Select("SELECT count(`username`) FROM sys_user WHERE `username` = #{username}")
+    long countByUsername(@Param("username") String username);
+
+
     /**
      * 根据用户名查询用户
      * @param username 用户名
