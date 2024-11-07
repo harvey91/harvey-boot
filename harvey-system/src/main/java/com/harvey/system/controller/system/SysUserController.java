@@ -7,6 +7,7 @@ import com.harvey.system.domain.dto.PasswordDto;
 import com.harvey.system.domain.dto.UserDto;
 import com.harvey.system.domain.query.UserQueryParam;
 import com.harvey.system.domain.vo.LoginUserVO;
+import com.harvey.system.domain.vo.UserVO;
 import com.harvey.system.entity.SysUser;
 import com.harvey.system.service.SysUserService;
 import lombok.RequiredArgsConstructor;
@@ -52,8 +53,8 @@ public class SysUserController {
      * @return
      */
     @GetMapping("/page")
-    public RespResult<PageResult<SysUser>> page(UserQueryParam queryParam) {
-        Page<SysUser> userPage = sysUserService.selectUserPage(queryParam);
+    public RespResult<PageResult<UserVO>> page(UserQueryParam queryParam) {
+        Page<UserVO> userPage = sysUserService.selectUserPage(queryParam);
         return RespResult.success(PageResult.of(userPage));
     }
 

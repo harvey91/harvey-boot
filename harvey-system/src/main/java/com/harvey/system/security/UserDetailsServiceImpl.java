@@ -1,6 +1,7 @@
 package com.harvey.system.security;
 
 import com.harvey.system.entity.SysUser;
+import com.harvey.system.exception.BusinessException;
 import com.harvey.system.service.SysUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
@@ -27,10 +28,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("");
         } else if (user.getEnabled() == 0) {
             // 账号被禁用
-
+            throw new BusinessException("账号未激活，请联系管理员!");
         }
 
-
-        return User.builder().username(username).password(user.getPassword()).build();
+        return LoginUser.builder()
+                .userId(user.getId())
+                .username(user.getUsername())
+                .password(user.getPassword())
+                .deptId(user.getDeptId())
+                .enabled(Objects.equals(user.getEnabled(), 1))
+//                .dataScopes()
+//                .permissions()
+//                .authorities()
+                .build();
     }
 }

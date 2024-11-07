@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.harvey.web.mapper.SysUserMapper">
+<mapper namespace="com.harvey.system.mapper.SysUserMapper">
     <resultMap id="SysUserResult" type="com.harvey.system.entity.SysUser">
         <id property="id" column="id"/>
         <result property="username" column="username"/>
@@ -14,4 +14,18 @@
         <result property="deleted" column="deleted"/>
     </resultMap>
 
+    <sql id="base_column_list">
+
+    </sql>
+<!--    <select id="selectAll">-->
+<!--        SELECT su.*, sd.dept_name, GROUP_CONCAT(sr.role_name SEPARATOR ', ') role_names-->
+<!--        FROM sys_user su-->
+<!--                 LEFT JOIN sys_dept sd ON su.dept_id = sd.id-->
+<!--                 LEFT JOIN sys_user_role sur ON su.id = sur.user_id-->
+<!--                 LEFT JOIN sys_role sr ON sr.id = sur.role_id-->
+<!--        <where>-->
+
+<!--        </where>-->
+<!--        group by su.id-->
+<!--    </select>-->
 </mapper>

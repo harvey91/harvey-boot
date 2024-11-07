@@ -6,14 +6,17 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.system.domain.dto.PasswordDto;
 import com.harvey.system.domain.dto.UserDto;
 import com.harvey.system.domain.query.UserQueryParam;
+import com.harvey.system.domain.vo.UserVO;
 import com.harvey.system.entity.SysUser;
 import com.harvey.system.entity.SysUserRole;
 import com.harvey.system.exception.BusinessException;
 import com.harvey.system.mapper.SysUserMapper;
 import com.harvey.system.mapstruct.UserConverter;
+import com.harvey.system.service.ISysRoleService;
 import com.harvey.system.service.ISysUserRoleService;
 import com.harvey.system.service.SysUserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +36,7 @@ import java.util.Set;
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
     private final SysUserMapper sysUserMapper;
     private final UserConverter userConverter;
+    private final ISysRoleService sysRoleService;
     private final ISysUserRoleService sysUserRoleService;
     private final PasswordEncoder passwordEncoder;
 
@@ -47,8 +51,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public Page<SysUser> selectUserPage(UserQueryParam queryParam) {
-        // TODO 根据数据权限查询相应的数据
+    public Page<UserVO> selectUserPage(UserQueryParam queryParam) {
+        // TODO 根据当前用户角色dataScope查询相应的部门ids
 
         Page<SysUser> page = new Page<>(queryParam.getPageNum(), queryParam.getPageSize());
         LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<SysUser>()
@@ -62,7 +66,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 //                .between((queryParam.getCreateTime() != null && queryParam.getCreateTime().size() == 2),
 //                        SysUser::getCreateTime, queryParam.getCreateTime().get(0), queryParam.getCreateTime().get(1))
                 .orderByDesc(SysUser::getCreateTime);
-        return sysUserMapper.selectPage(page, queryWrapper);
+        Page<SysUser> sysUserPage = sysUserMapper.selectPage(page, queryWrapper);
+        Page<UserVO> userVOPage = userConverter.toPage(sysUserPage);
+
+        return userVOPage;
     }
 
     /**
@@ -79,7 +86,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }
 
         SysUser entity = userConverter.toEntity(userDto);
-        // 前端没设置密码时给默认密码
+        // 设置默认密码
         entity.setPassword(passwordEncoder.encode("123456"));
         sysUserMapper.insert(entity);
 
@@ -90,6 +97,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }
     }
 
+    /**
+     * 修改用户信息
+     * @param userDto
+     */
     @Override
     @Transactional
     public void modifyUser(UserDto userDto) {
@@ -98,7 +109,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             throw new BusinessException("找不到用户");
         }
         if (!userDto.getUsername().equals(sysUser.getUsername())) {
-            // 用户名有变化，需要检测新用户名是否存在
+            // 当用户名有变化，需要检测新用户名是否存在
             LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<SysUser>()
                     .eq(SysUser::getUsername, userDto.getUsername())
                     .ne(SysUser::getId, userDto.getId());
@@ -124,7 +135,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     /**
      * 重置密码
-     * @param passwordDto
+     * @param passwordDto 修改密码参数
      */
     @Override
     public void resetPassword(PasswordDto passwordDto) {

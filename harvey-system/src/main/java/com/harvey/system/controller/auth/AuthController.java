@@ -1,12 +1,11 @@
 package com.harvey.system.controller.auth;
 
 import com.harvey.system.base.RespResult;
-import com.harvey.system.domain.param.LoginParam;
+import com.harvey.system.domain.dto.LoginDto;
 import com.harvey.system.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,22 +20,17 @@ import java.util.Map;
 @RequestMapping("/authorize")
 @RequiredArgsConstructor
 public class AuthController {
-//    private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/login")
-    public RespResult<Object> login(LoginParam loginParam) {
+    public RespResult<Object> login(LoginDto loginDto) {
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginParam.getUsername(), loginParam.getPassword());
+                new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
-        Object principal = authentication.getPrincipal();
-
         String token = jwtTokenProvider.buildToken(authentication);
         Map<String, String> data = new HashMap<>();
         data.put("accessToken", "Bearer " + token);
-
-        // TODO 使用认证框架认证用户，生成token，缓存token
         return RespResult.success(data);
     }
 

@@ -8,11 +8,11 @@ import org.mapstruct.MapperConfig;
  * @date 2024-11-07 11:36
  **/
 @MapperConfig
-public interface IConverter<ENTITY, DTO> {
+public interface IConverter<ENTITY, DTO, VO> {
 
     DTO toDto(ENTITY entity);
 
     ENTITY toEntity(DTO dto);
 
-    Page<DTO> toPage(Page<ENTITY> page);
+    Page<VO> toPage(Page<ENTITY> page);
 }

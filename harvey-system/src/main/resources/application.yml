@@ -32,8 +32,8 @@ spring:
 
 # MyBatisPlus??
 mybatis-plus:
-#  type-aliases-package: com.harvey.**.entity
-#  mapper-locations: classpath*:mapper/**/*Mapper.xml
+  type-aliases-package: com.harvey.**.entity
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
 #  config-location: classpath:mybatis/mybatis-config.xml
   global-config:
     db-config:

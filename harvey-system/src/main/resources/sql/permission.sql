@@ -81,19 +81,17 @@ CREATE TABLE `sys_user_role`
     `user_id`     bigint(20)  NOT NULL COMMENT '用户id',
     `role_id`     bigint(20)  NOT NULL COMMENT '角色id',
     `create_time` datetime(0) NOT NULL COMMENT '创建时间',
-    `update_time` datetime(0) NOT NULL COMMENT '修改时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT ='系统用户角色关联表';
 
-CREATE TABLE `sys_dept_role`
+CREATE TABLE `sys_role_dept`
 (
     `id`          bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键',
-    `dept_id`     bigint(20)  NOT NULL COMMENT '部门id',
     `role_id`     bigint(20)  NOT NULL COMMENT '角色id',
+    `dept_id`     bigint(20)  NOT NULL COMMENT '部门id',
     `create_time` datetime(0) NOT NULL COMMENT '创建时间',
-    `update_time` datetime(0) NOT NULL COMMENT '修改时间',
     PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT ='系统部门角色关联表';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT ='系统角色部门关联表';
 
 CREATE TABLE `sys_role_menu`
 (
@@ -101,7 +99,6 @@ CREATE TABLE `sys_role_menu`
     `role_id`     bigint(20)  NOT NULL COMMENT '角色id',
     `menu_id`     bigint(20)  NOT NULL COMMENT '菜单id',
     `create_time` datetime(0) NOT NULL COMMENT '创建时间',
-    `update_time` datetime(0) NOT NULL COMMENT '修改时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT ='系统角色菜单关联表';
 

@@ -45,15 +45,14 @@ INSERT INTO `sys_dept` VALUES (8, 5, '', '研发部', '', 99, 1, '2024-10-30 17:
 -- ----------------------------
 -- Table structure for sys_dept_role
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_dept_role`;
+DROP TABLE IF EXISTS `sys_role_dept`;
 CREATE TABLE `sys_dept_role`  (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
   `dept_id` bigint NOT NULL COMMENT '部门id',
   `role_id` bigint NOT NULL COMMENT '角色id',
   `create_time` datetime(0) NOT NULL COMMENT '创建时间',
-  `update_time` datetime(0) NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统部门角色关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统角色部门关联表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_dept_role
@@ -182,7 +181,6 @@ CREATE TABLE `sys_role_menu`  (
   `role_id` bigint NOT NULL COMMENT '角色id',
   `menu_id` bigint NOT NULL COMMENT '菜单id',
   `create_time` datetime(0) NOT NULL COMMENT '创建时间',
-  `update_time` datetime(0) NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `un_menu_role`(`role_id`, `menu_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统角色菜单关联表' ROW_FORMAT = Dynamic;
@@ -190,13 +188,13 @@ CREATE TABLE `sys_role_menu`  (
 -- ----------------------------
 -- Records of sys_role_menu
 -- ----------------------------
-INSERT INTO `sys_role_menu` VALUES (14, 1, 1, '2024-11-06 20:25:52', '2024-11-06 20:25:52');
-INSERT INTO `sys_role_menu` VALUES (15, 1, 2, '2024-11-06 20:25:52', '2024-11-06 20:25:52');
-INSERT INTO `sys_role_menu` VALUES (16, 1, 3, '2024-11-06 20:25:52', '2024-11-06 20:25:52');
-INSERT INTO `sys_role_menu` VALUES (17, 1, 4, '2024-11-06 20:25:52', '2024-11-06 20:25:52');
-INSERT INTO `sys_role_menu` VALUES (18, 1, 5, '2024-11-06 20:25:52', '2024-11-06 20:25:52');
-INSERT INTO `sys_role_menu` VALUES (19, 1, 6, '2024-11-06 20:25:52', '2024-11-06 20:25:52');
-INSERT INTO `sys_role_menu` VALUES (20, 1, 7, '2024-11-06 20:25:52', '2024-11-06 20:25:52');
+INSERT INTO `sys_role_menu` VALUES (14, 1, 1, '2024-11-06 20:25:52');
+INSERT INTO `sys_role_menu` VALUES (15, 1, 2, '2024-11-06 20:25:52');
+INSERT INTO `sys_role_menu` VALUES (16, 1, 3, '2024-11-06 20:25:52');
+INSERT INTO `sys_role_menu` VALUES (17, 1, 4, '2024-11-06 20:25:52');
+INSERT INTO `sys_role_menu` VALUES (18, 1, 5, '2024-11-06 20:25:52');
+INSERT INTO `sys_role_menu` VALUES (19, 1, 6, '2024-11-06 20:25:52');
+INSERT INTO `sys_role_menu` VALUES (20, 1, 7, '2024-11-06 20:25:52');
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -236,7 +234,6 @@ CREATE TABLE `sys_user_role`  (
   `user_id` bigint NOT NULL COMMENT '用户id',
   `role_id` bigint NOT NULL COMMENT '角色id',
   `create_time` datetime(0) NOT NULL COMMENT '创建时间',
-  `update_time` datetime(0) NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统用户角色关联表' ROW_FORMAT = Dynamic;
 

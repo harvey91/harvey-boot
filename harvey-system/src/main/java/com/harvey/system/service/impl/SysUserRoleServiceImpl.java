@@ -1,5 +1,6 @@
 package com.harvey.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.system.entity.SysUserRole;
 import com.harvey.system.mapper.SysUserRoleMapper;
@@ -27,5 +28,15 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         List<SysUserRole> userRoleList = roleIds.stream()
                 .map(roleId -> SysUserRole.builder().userId(userId).roleId(roleId).build()).toList();
         saveBatch(userRoleList);
+    }
+
+    @Override
+    public Set<Long> getDeptIds(Long userId) {
+        LambdaQueryWrapper<SysUserRole> wrapper = new LambdaQueryWrapper<SysUserRole>()
+                .eq(SysUserRole::getUserId, userId).select(SysUserRole::getRoleId);
+        List<Long> roleIdList = listObjs(wrapper);
+
+
+        return null;
     }
 }

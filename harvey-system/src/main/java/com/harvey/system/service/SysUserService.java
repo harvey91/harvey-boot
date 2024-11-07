@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.harvey.system.domain.dto.PasswordDto;
 import com.harvey.system.domain.dto.UserDto;
 import com.harvey.system.domain.query.UserQueryParam;
+import com.harvey.system.domain.vo.UserVO;
 import com.harvey.system.entity.SysUser;
 
 /**
@@ -17,7 +18,7 @@ public interface SysUserService extends IService<SysUser> {
 
     SysUser findByUsername(String username);
 
-    Page<SysUser> selectUserPage(UserQueryParam queryParam);
+    Page<UserVO> selectUserPage(UserQueryParam queryParam);
 
     void createUser(UserDto userDto);
 

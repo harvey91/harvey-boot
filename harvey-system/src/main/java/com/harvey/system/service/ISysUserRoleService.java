@@ -16,4 +16,6 @@ import java.util.Set;
 public interface ISysUserRoleService extends IService<SysUserRole> {
 
     void create(Long userId, Set<Long> roleIds);
+
+    Set<Long> getDeptIds(Long userId);
 }
