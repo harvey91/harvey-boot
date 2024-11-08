@@ -2,4 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.harvey.system.mapper.SysMenuMapper">
 
+    <select id="selectMenuByUserId" parameterType="Long" resultType="SysMenu">
+        SELECT m.*
+        FROM sys_menu m
+                 LEFT JOIN sys_role_menu rm ON m.id = rm.menu_id
+                 LEFT JOIN sys_role r ON r.id = rm.role_id
+                 LEFT JOIN sys_user_role ur ON r.id = ur.role_id
+        WHERE m.deleted = 1 AND r.deleted = 1 AND  ur.user_id = #{userId}
+    </select>
 </mapper>

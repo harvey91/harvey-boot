@@ -16,4 +16,6 @@ public class JwtProperties {
     private String tokenStartWith;
 
     private String base64Secret;
+
+    private Integer expireTime;
 }

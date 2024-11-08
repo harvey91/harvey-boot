@@ -2,7 +2,7 @@ package com.harvey.system.controller.auth;
 
 import com.harvey.system.base.RespResult;
 import com.harvey.system.domain.dto.LoginDto;
-import com.harvey.system.security.JwtTokenProvider;
+import com.harvey.system.security.JwtTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,14 +21,14 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthenticationManager authenticationManager;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenService jwtTokenService;
 
     @PostMapping("/login")
     public RespResult<Object> login(LoginDto loginDto) {
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
-        String token = jwtTokenProvider.buildToken(authentication);
+        String token = jwtTokenService.createToken(authentication);
         Map<String, String> data = new HashMap<>();
         data.put("accessToken", "Bearer " + token);
         return RespResult.success(data);

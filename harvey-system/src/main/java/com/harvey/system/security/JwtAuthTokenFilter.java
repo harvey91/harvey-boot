@@ -1,17 +1,20 @@
 package com.harvey.system.security;
 
+import com.alibaba.fastjson2.JSON;
+import com.harvey.system.base.RespResult;
+import com.harvey.system.utils.ServletUtils;
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
@@ -23,24 +26,28 @@ import java.io.IOException;
 @Slf4j
 @RequiredArgsConstructor
 public class JwtAuthTokenFilter extends GenericFilterBean {
-    private final JwtProperties jwtProperties;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenService jwtTokenService;
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        String token = jwtTokenProvider.getToken(request);
-        log.debug("url: {}", request.getRequestURI());
-        log.debug("token: {}", token);
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+        String token = jwtTokenService.getToken(request);
+        log.debug("url: {}, token: {}", request.getRequestURI(), token);
         if (ObjectUtils.isEmpty(token)) {
             log.debug("非法Token：{}", token);
-            // TODO 返回错误码
+            ServletUtils.renderString(response, JSON.toJSONString(RespResult.fail("未登录")));
             return;
         }
 
-        // TODO token是否过期
-        Authentication authentication = jwtTokenProvider.getAuthentication(token);
+        LoginUser loginUser = jwtTokenService.getLoginUser(token);
+        if (ObjectUtils.isEmpty(loginUser)) {
+            ServletUtils.renderString(response, JSON.toJSONString(RespResult.fail("登录过期")));
+            return;
+        }
+        jwtTokenService.verifyToken(loginUser);
+        Authentication authentication = jwtTokenService.getAuthentication(loginUser);
         // 把token认证设置到security上下文
         SecurityContextHolder.getContext().setAuthentication(authentication);
 

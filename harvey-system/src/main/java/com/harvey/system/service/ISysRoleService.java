@@ -1,9 +1,9 @@
 package com.harvey.system.service;
 
-import com.harvey.system.entity.SysRole;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.harvey.system.entity.SysRole;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * <p>
@@ -15,5 +15,5 @@ import java.util.Set;
  */
 public interface ISysRoleService extends IService<SysRole> {
 
-    Set<Long> getDeptIds(Long userId, Long deptId);
+    List<Long> getDeptIds(Long userId, Long deptId);
 }

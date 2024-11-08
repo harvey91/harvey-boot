@@ -13,7 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
-import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,10 +24,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Harvey
@@ -40,8 +36,8 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class WebSecurityConfig {
     private final ApplicationContext applicationContext;
-    private final JwtProperties jwtProperties;
-    private final JwtTokenProvider jwtTokenProvider;
+//    private final JwtProperties jwtProperties;
+    private final JwtTokenService jwtTokenService;
     private final CustomAccessDeniedHandler accessDeniedHandler;
     private final CustomAuthenticationEntryPoint authenticationEntryPoint;
     private final CorsFilter corsFilter;
@@ -69,7 +65,7 @@ public class WebSecurityConfig {
                 // 禁用CSRF，防跨站请求伪造
                 .csrf(AbstractHttpConfigurer::disable)
                 // JWT Token验证过滤器
-                .addFilterBefore(new JwtAuthTokenFilter(jwtProperties, jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthTokenFilter(jwtTokenService), UsernamePasswordAuthenticationFilter.class)
                 //
                 .addFilterBefore(corsFilter, JwtAuthTokenFilter.class)
                 ;
