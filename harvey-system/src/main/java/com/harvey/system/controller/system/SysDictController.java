@@ -7,17 +7,15 @@ import com.harvey.system.base.RespResult;
 import com.harvey.system.domain.vo.DictVO;
 import com.harvey.system.entity.SysDict;
 import com.harvey.system.entity.SysDictData;
-import com.harvey.system.entity.SysRole;
 import com.harvey.system.service.ISysDictDataService;
 import com.harvey.system.service.ISysDictService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -102,8 +100,11 @@ public class SysDictController {
 
     @PreAuthorize("@ex.hasPerm('sys:dept:delete')")
     @DeleteMapping("/delete")
-    public RespResult<String> delete(@RequestBody Long[] ids) {
-        sysDictService.removeByIds(Arrays.asList(ids));
+    public RespResult<String> delete(@RequestBody List<Long> ids) {
+        if (ObjectUtils.isEmpty(ids)) {
+            return RespResult.fail("id不能为空");
+        }
+        sysDictService.removeByIds(ids);
         return RespResult.success();
     }
 }

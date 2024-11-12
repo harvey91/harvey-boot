@@ -9,10 +9,11 @@ import com.harvey.system.entity.SysDictData;
 import com.harvey.system.service.ISysDictDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * <p>
@@ -60,8 +61,11 @@ public class SysDictDataController {
 
     @PreAuthorize("@ex.hasPerm('sys:dict:data:delete')")
     @DeleteMapping("/delete")
-    public RespResult<String> delete(@RequestBody Long[] ids) {
-        sysDictDataService.removeByIds(Arrays.asList(ids));
+    public RespResult<String> delete(@RequestBody List<Long> ids) {
+        if (ObjectUtils.isEmpty(ids)) {
+            return RespResult.fail("id不能为空");
+        }
+        sysDictDataService.removeByIds(ids);
         return RespResult.success();
     }
 }

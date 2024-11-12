@@ -10,10 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -75,8 +73,11 @@ public class SysRoleController {
 
     @PreAuthorize("@ex.hasPerm('sys:role:delete')")
     @DeleteMapping("/delete")
-    public RespResult<String> delete(@RequestBody Long[] ids) {
-        sysRoleService.removeByIds(Arrays.asList(ids));
+    public RespResult<String> delete(@RequestBody List<Long> ids) {
+        if (ObjectUtils.isEmpty(ids)) {
+            return RespResult.fail("id不能为空");
+        }
+            sysRoleService.removeByIds(ids);
         return RespResult.success();
     }
 }
