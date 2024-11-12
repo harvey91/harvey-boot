@@ -48,7 +48,8 @@ jwt:
   # 令牌前缀
   token-start-with: Bearer
   base64-secret: ZWQ0ZGI5NjQ0MGR3NDBjYjgyMzFjZjdmYjcyN2E3ZmYyM2E4Yjk4NWRhNDUwYzBjODQwNzYxMjdjOWMwYWRmZTBlZjlhNGY3ZTg4Y2U3YTE1cjg1ZGQ1OWNmNzhmMGVhNTc1Mzk1ZDZiMWNkNzQ0Y2VlNjJkNzI2NTcyZjUxNDMydw==
-  expire-time: 30
+  # token 过期时间，单位：分钟
+  expire-time: 60
 
 log:
   path: /opt/springboot/web

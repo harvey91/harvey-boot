@@ -7,6 +7,7 @@ import com.harvey.system.entity.SysDept;
 import com.harvey.system.service.ISysDeptService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -88,16 +89,32 @@ public class SysDeptController {
     }
 
     /**
-     * 保存
+     * 新增
      * @param sysDept
      * @return
      */
-    @PostMapping("/save")
-    public RespResult<String> save(@RequestBody SysDept sysDept) {
+    @PreAuthorize("@ex.hasPerm('sys:dept:create')")
+    @PostMapping("/create")
+    public RespResult<String> create(@RequestBody SysDept sysDept) {
         if (sysDept.getParentId() == null) {
             sysDept.setParentId(0L);
         }
-        sysDeptService.saveOrUpdate(sysDept);
+        sysDeptService.save(sysDept);
+        return RespResult.success();
+    }
+
+    /**
+     * 修改
+     * @param sysDept
+     * @return
+     */
+    @PreAuthorize("@ex.hasPerm('sys:dept:modify')")
+    @PostMapping("/modify")
+    public RespResult<String> modify(@RequestBody SysDept sysDept) {
+        if (sysDept.getParentId() == null) {
+            sysDept.setParentId(0L);
+        }
+        sysDeptService.updateById(sysDept);
         return RespResult.success();
     }
 
@@ -106,6 +123,7 @@ public class SysDeptController {
      * @param ids
      * @return
      */
+    @PreAuthorize("@ex.hasPerm('sys:dept:delete')")
     @PostMapping("/delete")
     public RespResult<String> delete(@RequestBody Long[] ids) {
         if (ids == null) {

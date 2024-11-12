@@ -6,6 +6,7 @@ import com.harvey.system.service.ISysMenuService;
 import com.harvey.system.service.ISysRoleService;
 import com.harvey.system.service.SysUserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,6 +20,7 @@ import java.util.Objects;
  * @author Harvey
  * @date 2024-11-04 10:53
  **/
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -39,11 +41,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<Long> deptIds = sysRoleService.getDeptIds(user.getId(), user.getDeptId());
         // 用户菜单权限列表
         List<String> permissions = sysMenuService.getPermissionByUserId(user.getId());
+        log.debug("permissions list: {}", permissions);
         List<SimpleGrantedAuthority> authorities = permissions.stream().map(SimpleGrantedAuthority::new).toList();
         return LoginUser.builder()
                 .userId(user.getId())
                 .username(user.getUsername())
                 .password(user.getPassword())
+                .isAdmin(user.getId() == 1L)
                 .deptId(user.getDeptId())
                 .enabled(Objects.equals(user.getEnabled(), 1))
                 .dataScopes(deptIds)

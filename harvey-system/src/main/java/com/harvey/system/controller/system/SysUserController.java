@@ -11,6 +11,7 @@ import com.harvey.system.domain.vo.UserVO;
 import com.harvey.system.entity.SysUser;
 import com.harvey.system.service.SysUserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -63,6 +64,7 @@ public class SysUserController {
      * @param userDto
      * @return
      */
+    @PreAuthorize("@ex.hasPerm('sys:user:create')")
     @PostMapping("/create")
     public RespResult<String> create(@RequestBody @Validated UserDto userDto) {
         if (ObjectUtils.isEmpty(userDto.getId())) {
@@ -78,6 +80,7 @@ public class SysUserController {
      * @param userDto
      * @return
      */
+    @PreAuthorize("@ex.hasPerm('sys:user:modify')")
     @PutMapping("/modify")
     public RespResult<String> modify(@RequestBody @Validated UserDto userDto) {
         sysUserService.modifyUser(userDto);
@@ -89,6 +92,7 @@ public class SysUserController {
      * @param passwordDto
      * @return
      */
+    @PreAuthorize("@ex.hasPerm('sys:user:password:rest')")
     @PutMapping("/password/reset")
     public RespResult<String> resetPassword(@RequestBody @Validated PasswordDto passwordDto) {
         sysUserService.resetPassword(passwordDto);
@@ -100,6 +104,7 @@ public class SysUserController {
      * @param ids
      * @return
      */
+    @PreAuthorize("ex.hasPerm('sys:user:delete')")
     @DeleteMapping("/delete")
     public RespResult<String> delete(@RequestBody List<Long> ids) {
         if (ObjectUtils.isEmpty(ids)) {

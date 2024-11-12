@@ -11,6 +11,7 @@ import com.harvey.system.entity.SysRole;
 import com.harvey.system.service.ISysDictDataService;
 import com.harvey.system.service.ISysDictService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
@@ -85,18 +86,21 @@ public class SysDictController {
         return RespResult.success(PageResult.of(dictPage));
     }
 
-    @PostMapping("/add")
-    public RespResult<String> add(@RequestBody SysDict sysDict) {
+    @PreAuthorize("@ex.hasPerm('sys:dept:create')")
+    @PostMapping("/create")
+    public RespResult<String> create(@RequestBody SysDict sysDict) {
         sysDictService.save(sysDict);
         return RespResult.success();
     }
 
+    @PreAuthorize("@ex.hasPerm('sys:dept:modify')")
     @PutMapping("/modify")
     public RespResult<String> modify(@RequestBody SysDict sysDict) {
         sysDictService.updateById(sysDict);
         return RespResult.success();
     }
 
+    @PreAuthorize("@ex.hasPerm('sys:dept:delete')")
     @DeleteMapping("/delete")
     public RespResult<String> delete(@RequestBody Long[] ids) {
         sysDictService.removeByIds(Arrays.asList(ids));

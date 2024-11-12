@@ -8,6 +8,7 @@ import com.harvey.system.domain.query.DictQueryParam;
 import com.harvey.system.entity.SysDictData;
 import com.harvey.system.service.ISysDictDataService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,18 +44,21 @@ public class SysDictDataController {
         return RespResult.success(PageResult.of(dictDataPage));
     }
 
-    @PostMapping("/add")
-    public RespResult<String> add(@RequestBody SysDictData sysDictData) {
+    @PreAuthorize("@ex.hasPerm('sys:dict:data:create')")
+    @PostMapping("/create")
+    public RespResult<String> create(@RequestBody SysDictData sysDictData) {
         sysDictDataService.save(sysDictData);
         return RespResult.success();
     }
 
+    @PreAuthorize("@ex.hasPerm('sys:dict:data:modify')")
     @PutMapping("/modify")
     public RespResult<String> modify(@RequestBody SysDictData sysDictData) {
         sysDictDataService.updateById(sysDictData);
         return RespResult.success();
     }
 
+    @PreAuthorize("@ex.hasPerm('sys:dict:data:delete')")
     @DeleteMapping("/delete")
     public RespResult<String> delete(@RequestBody Long[] ids) {
         sysDictDataService.removeByIds(Arrays.asList(ids));

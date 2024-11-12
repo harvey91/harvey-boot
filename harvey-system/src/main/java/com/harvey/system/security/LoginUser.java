@@ -26,6 +26,8 @@ public class LoginUser implements UserDetails {
 
     private Long deptId;
 
+    private Boolean isAdmin;
+
     /** 用户唯一标识 */
     private String uuid;
 
