@@ -35,8 +35,10 @@ public class SysDictDataController {
         return RespResult.success(dictData);
     }
 
+    @PreAuthorize("@ex.hasPerm('sys:dict:data:list')")
     @GetMapping("/page")
     public RespResult<PageResult<SysDictData>> page(DictQueryParam queryParam) {
+        // TODO 查询逻辑搬到service
         String dictCode = queryParam.getDictCode();
         Page<SysDictData> page = new Page<>(queryParam.getPageNum(), queryParam.getPageSize());
         LambdaQueryWrapper<SysDictData> queryWrapper = new LambdaQueryWrapper<SysDictData>()

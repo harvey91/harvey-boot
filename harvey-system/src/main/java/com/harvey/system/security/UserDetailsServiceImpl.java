@@ -42,6 +42,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // 用户菜单权限列表
         List<String> permissions = sysMenuService.getPermissionByUserId(user.getId());
         log.debug("permissions list: {}", permissions);
+        // 用户角色列表 TODO
         List<SimpleGrantedAuthority> authorities = permissions.stream().map(SimpleGrantedAuthority::new).toList();
         return LoginUserVO.builder()
                 .userId(user.getId())

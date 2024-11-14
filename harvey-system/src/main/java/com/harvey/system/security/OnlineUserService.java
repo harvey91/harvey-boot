@@ -24,11 +24,6 @@ public class OnlineUserService {
     private final ISysOnlineUserService sysOnlineUserService;
     private final RedisCache redisCache;
 
-    public List<LoginUserVO> list() {
-//        redisCache.
-        return null;
-    }
-
     public void save(LoginUserVO loginUserVO, Integer expireTime, boolean refresh) {
         loginUserVO.setLoginTime(System.currentTimeMillis());
         loginUserVO.setExpireTime(loginUserVO.getLoginTime() + expireTime * Constant.MILLIS_MINUTE);
@@ -43,6 +38,7 @@ public class OnlineUserService {
             sysOnlineUserService.saveByLoginUser(loginUserVO);
         }
     }
+
 
     public void delete(String uuid) {
         sysOnlineUserService.offline(uuid);

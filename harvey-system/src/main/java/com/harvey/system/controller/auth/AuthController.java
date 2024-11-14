@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 用户授权
  * @author Harvey
  * @date 2024-10-30 10:35
  **/

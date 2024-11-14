@@ -44,6 +44,11 @@ public class JwtTokenService implements InitializingBean {
         jwtBuilder = Jwts.builder().signWith(key);
     }
 
+    /**
+     * 生成token
+     * @param authentication
+     * @return
+     */
     public String createToken(Authentication authentication) {
         LoginUserVO loginUser = (LoginUserVO) authentication.getPrincipal();// 缓存登陆用户信息
         String uuid = IdUtil.fastSimpleUUID();
@@ -56,6 +61,11 @@ public class JwtTokenService implements InitializingBean {
                 .compact();
     }
 
+    /**
+     * token解析Claims
+     * @param token
+     * @return
+     */
     public Claims parserToken(String token) {
         return jwtParser.parseSignedClaims(token).getPayload();
     }
@@ -74,10 +84,20 @@ public class JwtTokenService implements InitializingBean {
         }
     }
 
+    /**
+     * loginUser生成Authentication
+     * @param loginUser
+     * @return
+     */
     public Authentication getAuthentication(LoginUserVO loginUser) {
         return new UsernamePasswordAuthenticationToken(loginUser, "", loginUser.getAuthorities());
     }
 
+    /**
+     * 获取request请求header中的token
+     * @param request
+     * @return
+     */
     public String getToken(HttpServletRequest request) {
         final String requestHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (requestHeader != null && requestHeader.startsWith(jwtProperties.getTokenStartWith())) {
@@ -85,6 +105,12 @@ public class JwtTokenService implements InitializingBean {
         }
         return null;
     }
+
+    /**
+     * 根据token解析后获取缓存用户
+     * @param token
+     * @return
+     */
     public LoginUserVO getLoginUser(String token) {
         Claims claims = parserToken(token);
         String uuid = claims.get("uuid", String.class);

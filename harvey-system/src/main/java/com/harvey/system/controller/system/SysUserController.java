@@ -14,8 +14,6 @@ import com.harvey.system.security.SecurityUtil;
 import com.harvey.system.service.SysUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
+ * 用户表 前端控制器
  * @author Harvey
  * @date 2024-10-24 21:40
  **/
@@ -46,6 +45,7 @@ public class SysUserController {
         userInfoVO.setUsername(loginUserVO.getUsername());
         userInfoVO.setNickname(loginUserVO.getNickname());
         userInfoVO.setAvatar(loginUserVO.getAvatar());
+        // TODO 角色列表
 //        userInfoVO.setRoles(loginUserVO.getAuthorities());
         userInfoVO.setPerms(loginUserVO.getPermissions());
         return RespResult.success(userInfoVO);
@@ -56,6 +56,7 @@ public class SysUserController {
      * @param queryParam
      * @return
      */
+    @PreAuthorize("@ex.hasPerm('sys:user:list')")
     @GetMapping("/page")
     public RespResult<PageResult<UserVO>> page(UserQueryParam queryParam) {
         Page<UserVO> userPage = sysUserService.selectUserPage(queryParam);

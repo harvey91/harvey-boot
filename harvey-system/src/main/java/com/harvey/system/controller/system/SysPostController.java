@@ -31,9 +31,11 @@ public class SysPostController {
         return RespResult.success(sysPostService.getById(id));
     }
 
+    @PreAuthorize("@ex.hasPerm('sys:post:list')")
     @GetMapping("/page")
     public RespResult<PageResult<SysPost>> page(@RequestParam("pageNum") int pageNum,
                                                 @RequestParam("pageSize") int pageSize) {
+        // TODO 查询条件
         Page<SysPost> page = new Page<>(pageNum, pageSize);
         Page<SysPost> dictPage = sysPostService.page(page);
         return RespResult.success(PageResult.of(dictPage));

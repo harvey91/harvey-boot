@@ -76,9 +76,11 @@ public class SysDictController {
         return RespResult.success(dictVOList);
     }
 
+    @PreAuthorize("@ex.hasPerm('sys:dept:list')")
     @GetMapping("/page")
     public RespResult<PageResult<SysDict>> page(@RequestParam("pageNum") int pageNum,
                                                 @RequestParam("pageSize") int pageSize) {
+        // TODO 查询条件
         Page<SysDict> page = new Page<>(pageNum, pageSize);
         Page<SysDict> dictPage = sysDictService.page(page);
         return RespResult.success(PageResult.of(dictPage));

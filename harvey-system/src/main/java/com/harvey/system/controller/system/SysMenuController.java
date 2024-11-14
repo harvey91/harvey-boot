@@ -33,6 +33,7 @@ public class SysMenuController {
         return RespResult.success(sysMenu);
     }
 
+    @PreAuthorize("@ex.hasPerm('sys:menu:list')")
     @GetMapping("/list")
     public RespResult<List<MenuVO>> list() {
         return RespResult.success(sysMenuService.menuList());

@@ -2,6 +2,7 @@ package com.harvey.system.controller.system;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -11,8 +12,8 @@ import org.springframework.stereotype.Controller;
  * @author harvey
  * @since 2024-11-07
  */
-@Controller
-@RequestMapping("/system/sysRoleDept")
+@RestController
+@RequestMapping("/system/roleDept")
 public class SysRoleDeptController {
 
 }

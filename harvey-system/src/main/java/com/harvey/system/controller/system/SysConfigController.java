@@ -34,6 +34,7 @@ public class SysConfigController {
     @GetMapping("/page")
     public RespResult<PageResult<SysConfig>> page(@RequestParam("pageNum") int pageNum,
                                                   @RequestParam("pageSize") int pageSize) {
+        // TODO 查询条件
         Page<SysConfig> page = new Page<>(pageNum, pageSize);
         Page<SysConfig> dictPage = sysConfigService.page(page);
         return RespResult.success(PageResult.of(dictPage));
@@ -63,7 +64,7 @@ public class SysConfigController {
     @PreAuthorize("@ex.hasPerm('sys:config:refresh')")
     @PatchMapping("/refresh")
     public RespResult<String> refresh() {
-
+        // TODO
         return RespResult.success();
     }
 }

@@ -34,9 +34,11 @@ public class SysRoleController {
         return RespResult.success(sysRole);
     }
 
+    @PreAuthorize("@ex.hasPerm('sys:role:list')")
     @GetMapping("/page")
     public RespResult<PageResult<SysRole>> page(@RequestParam("pageNum") int pageNum,
                                                 @RequestParam("pageSize") int pageSize) {
+        // TODO 查询条件
         Page<SysRole> page = new Page<>(pageNum, pageSize);
         Page<SysRole> rolePage = sysRoleService.page(page);
         return RespResult.success(PageResult.of(rolePage));

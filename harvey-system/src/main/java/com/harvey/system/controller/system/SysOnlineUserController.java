@@ -27,6 +27,13 @@ public class SysOnlineUserController {
     private final ISysOnlineUserService sysOnlineUserService;
     private final OnlineUserService onlineUserService;
 
+    /**
+     * 查询在线用户分页列表
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @PreAuthorize("@ex.hasPerm('sys:online:user:list')")
     @GetMapping("/page")
     public RespResult<PageResult<SysOnlineUser>> page(@RequestParam("pageNum") int pageNum,
                                                       @RequestParam("pageSize") int pageSize) {
