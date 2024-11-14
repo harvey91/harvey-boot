@@ -19,14 +19,13 @@ public class AuthorityConfig {
 
     public boolean hasPerm(String permission) {
         // 获取当前登录用户认证信息
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-        if (ObjectUtils.isEmpty(loginUser)) {
+        LoginUserVO loginUserVO = SecurityUtil.getLoginUserVO();
+        if (ObjectUtils.isEmpty(loginUserVO)) {
             return false;
         }
-        List<String> permissions = loginUser.getPermissions();
+        List<String> permissions = loginUserVO.getPermissions();
         // TODO 判断当前用户是否为管理员角色，管理员角色可直接放行
         // 判断登录用户权限列表中是否包含参数permission
-        return loginUser.getIsAdmin() || permissions.contains(permission);
+        return loginUserVO.getIsAdmin() || permissions.contains(permission);
     }
 }

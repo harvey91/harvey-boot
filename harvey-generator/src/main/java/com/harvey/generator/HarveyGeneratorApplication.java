@@ -23,10 +23,11 @@ public class HarveyGeneratorApplication {
 					builder.parent("com.harvey") // 设置父包名
 							.moduleName("system") // 设置父包模块名
 //							.service("")
+							.controller("controller.system")
 							.pathInfo(Collections.singletonMap(OutputFile.xml, OUTPUT_DIR+"resources//mapper")); // 设置mapperXml生成路径
 				})
 				.strategyConfig(builder -> {
-					builder.addInclude("sys_role") // 设置需要生成的表名
+					builder.addInclude("sys_online_user") // 设置需要生成的表名
 							.addTablePrefix("t_", "c_"); // 设置过滤表前缀
 				})
 				.templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板

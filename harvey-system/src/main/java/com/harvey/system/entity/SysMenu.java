@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 
@@ -18,6 +19,7 @@ import java.io.Serializable;
  * @since 2024-10-30
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @TableName("sys_menu")
 @ApiModel(value = "SysMenu对象", description = "系统菜单表")
 public class SysMenu extends BaseEntity implements Serializable {
@@ -66,8 +68,5 @@ public class SysMenu extends BaseEntity implements Serializable {
 
     @ApiModelProperty("排序")
     private Integer sort;
-
-    @ApiModelProperty("是否启用：0禁用，1启用")
-    private Integer enabled;
 
 }

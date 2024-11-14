@@ -2,8 +2,8 @@ package com.harvey.system.security;
 
 import com.alibaba.fastjson2.JSON;
 import com.harvey.system.base.RespResult;
+import com.harvey.system.enums.ErrorCodeEnum;
 import com.harvey.system.utils.ServletUtils;
-import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
@@ -37,13 +37,13 @@ public class JwtAuthTokenFilter extends GenericFilterBean {
         log.debug("url: {}, token: {}", request.getRequestURI(), token);
         if (ObjectUtils.isEmpty(token)) {
             log.debug("非法Token：{}", token);
-            ServletUtils.renderString(response, JSON.toJSONString(RespResult.fail("未登录")));
+            ServletUtils.renderString(response, JSON.toJSONString(RespResult.fail(ErrorCodeEnum.NOT_LOGIN)));
             return;
         }
 
-        LoginUser loginUser = jwtTokenService.getLoginUser(token);
+        LoginUserVO loginUser = jwtTokenService.getLoginUser(token);
         if (ObjectUtils.isEmpty(loginUser)) {
-            ServletUtils.renderString(response, JSON.toJSONString(RespResult.fail("登录过期")));
+            ServletUtils.renderString(response, JSON.toJSONString(RespResult.fail(ErrorCodeEnum.NOT_LOGIN)));
             return;
         }
         jwtTokenService.verifyToken(loginUser);

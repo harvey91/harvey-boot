@@ -43,10 +43,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<String> permissions = sysMenuService.getPermissionByUserId(user.getId());
         log.debug("permissions list: {}", permissions);
         List<SimpleGrantedAuthority> authorities = permissions.stream().map(SimpleGrantedAuthority::new).toList();
-        return LoginUser.builder()
+        return LoginUserVO.builder()
                 .userId(user.getId())
                 .username(user.getUsername())
                 .password(user.getPassword())
+                .nickname(user.getNickname())
+                .avatar(user.getAvatar())
                 .isAdmin(user.getId() == 1L)
                 .deptId(user.getDeptId())
                 .enabled(Objects.equals(user.getEnabled(), 1))

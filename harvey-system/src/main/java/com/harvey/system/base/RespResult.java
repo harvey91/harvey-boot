@@ -47,6 +47,10 @@ public class RespResult<T> implements Serializable {
         return of(data, FAIL, "失败");
     }
 
+    public static <T> RespResult<T> fail(ErrorCodeEnum errorCodeEnum) {
+        return of(null, errorCodeEnum.getCode(), errorCodeEnum.getMsg());
+    }
+
     public static <T> RespResult<T> fail(String msg) {
         return of(null, FAIL, msg);
     }
@@ -62,4 +66,5 @@ public class RespResult<T> implements Serializable {
     public static <T> RespResult<T> error(String msg) {
         return of(null, ErrorCodeEnum.ERROR.getCode(), msg);
     }
+
 }

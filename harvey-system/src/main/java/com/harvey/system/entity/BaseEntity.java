@@ -21,6 +21,9 @@ public class BaseEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty("是否启用：0禁用，1启用")
+    private Integer enabled;
+
     @ApiModelProperty("创建时间")
     @TableField(fill = FieldFill.INSERT)
     public LocalDateTime createTime;

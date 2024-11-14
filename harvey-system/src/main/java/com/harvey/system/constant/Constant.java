@@ -26,5 +26,11 @@ public class Constant {
 
     public static final long MILLIS_MINUTE = 60 * MILLIS_SECOND;
 
-    public static final Long MILLIS_MINUTE_TEN = 20 * 60 * 1000L;
+    public static final long MILLIS_MINUTE_TEN = 20 * 60 * 1000L;
+
+    /** 在线状态 */
+    public static final int ONLINE_STATUS = 1;
+
+    /** 离线状态 */
+    public static final int OFFLINE_STATUS = 0;
 }

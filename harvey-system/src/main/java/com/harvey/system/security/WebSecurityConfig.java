@@ -102,7 +102,8 @@ public class WebSecurityConfig {
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/druid/**"))
                 // 允许所有OPTIONS请求
                 .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.OPTIONS, "/**"))
-                .requestMatchers(AntPathRequestMatcher.antMatcher("/authorize/**"));
+                .requestMatchers(AntPathRequestMatcher.antMatcher("/authorize/login"))
+                .requestMatchers(AntPathRequestMatcher.antMatcher("/authorize/captcha"));
                 // 自定义匿名访问所有url放行：允许匿名和带Token访问，细腻化到每个 Request 类型
                 // GET
 //                .requestMatchers(HttpMethod.GET, anonymousUrls.get(RequestMethodEnum.GET.getType()).toArray(new String[0]))

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serial;
 
@@ -15,6 +16,7 @@ import java.io.Serial;
  * @date 2024-10-24 21:20
  **/
 @Data
+@EqualsAndHashCode(callSuper = true)
 @TableName(value = "sys_user")
 @ApiModel(value = "SysUser对象", description = "系统用户表")
 public class SysUser extends BaseEntity {

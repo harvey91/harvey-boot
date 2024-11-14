@@ -16,13 +16,17 @@ import java.util.Set;
  **/
 @Data
 @Builder
-public class LoginUser implements UserDetails {
+public class LoginUserVO implements UserDetails {
 
     private Long userId;
 
     private String username;
 
     private String password;
+
+    private String nickname;
+
+    private String avatar;
 
     private Long deptId;
 
@@ -38,10 +42,10 @@ public class LoginUser implements UserDetails {
     private Long expireTime;
 
     /** * 登录IP地址 */
-    private String ipAddress;
+    private String ip;
 
     /** * 登录地点 */
-    private String loginLocation;
+    private String location;
 
     /** 浏览器类型 */
     private String browser;

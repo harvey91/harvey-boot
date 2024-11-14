@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * <p>
@@ -18,6 +19,7 @@ import lombok.Data;
  * @since 2024-10-29
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @TableName("sys_dept")
 @ApiModel(value = "SysDept对象", description = "系统部门表")
 public class SysDept extends BaseEntity implements Serializable {
@@ -41,7 +43,4 @@ public class SysDept extends BaseEntity implements Serializable {
 
     @ApiModelProperty("排序")
     private Integer sort;
-
-    @ApiModelProperty("是否启用：0禁用，1启用")
-    private Integer enabled;
 }

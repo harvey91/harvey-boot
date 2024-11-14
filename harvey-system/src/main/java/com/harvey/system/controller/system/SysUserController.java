@@ -6,17 +6,20 @@ import com.harvey.system.base.RespResult;
 import com.harvey.system.domain.dto.PasswordDto;
 import com.harvey.system.domain.dto.UserDto;
 import com.harvey.system.domain.query.UserQueryParam;
-import com.harvey.system.domain.vo.LoginUserVO;
+import com.harvey.system.domain.vo.UserInfoVO;
 import com.harvey.system.domain.vo.UserVO;
 import com.harvey.system.entity.SysUser;
+import com.harvey.system.security.LoginUserVO;
+import com.harvey.system.security.SecurityUtil;
 import com.harvey.system.service.SysUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -36,16 +39,16 @@ public class SysUserController {
     }
 
     @GetMapping("/me")
-    public RespResult<LoginUserVO> me() {
-        SysUser user = sysUserService.findByUsername("admin");
-        LoginUserVO loginUserVO = new LoginUserVO();
-        loginUserVO.setUserId(user.getId());
-        loginUserVO.setUsername(user.getUsername());
-        loginUserVO.setNickname(user.getNickname());
-        loginUserVO.setAvatar(user.getAvatar());
-        // TODO
-        loginUserVO.setRoles(List.of("ROOT"));
-        return RespResult.success(loginUserVO);
+    public RespResult<UserInfoVO> me() {
+        LoginUserVO loginUserVO = SecurityUtil.getLoginUserVO();
+        UserInfoVO userInfoVO = new UserInfoVO();
+        userInfoVO.setUserId(loginUserVO.getUserId());
+        userInfoVO.setUsername(loginUserVO.getUsername());
+        userInfoVO.setNickname(loginUserVO.getNickname());
+        userInfoVO.setAvatar(loginUserVO.getAvatar());
+//        userInfoVO.setRoles(loginUserVO.getAuthorities());
+        userInfoVO.setPerms(loginUserVO.getPermissions());
+        return RespResult.success(userInfoVO);
     }
 
     /**
