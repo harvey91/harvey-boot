@@ -1,6 +1,6 @@
 package com.harvey.system.domain.dto;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -18,38 +18,38 @@ public class UserDto implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("用户id")
+    @Schema(title = "id", description = "用户id")
     public Long id;
 
     @NotBlank(message = "用户名不能为空")
-    @ApiModelProperty("用户名")
+    @Schema(title = "username", description = "用户名")
     public String username;
 
     @NotBlank(message = "昵称不能为空")
-    @ApiModelProperty("昵称")
+    @Schema(title = "nickname", description = "昵称")
     public String nickname;
 
-    @ApiModelProperty("头像")
+    @Schema(title = "avatar", description = "头像")
     public String avatar;
 
-    @ApiModelProperty("性别")
+    @Schema(title = "gender", description = "性别")
     public Integer gender;
 
-    @ApiModelProperty("手机号")
+    @Schema(title = "phone", description = "手机号")
     public String phone;
 
-    @ApiModelProperty("邮箱")
+    @Schema(title = "email", description = "邮箱")
     public String email;
 
-    @ApiModelProperty("部门id")
+    @Schema(title = "deptId", description = "部门id")
     public Long deptId;
 
-    @ApiModelProperty("是否启用：0禁用，1启用")
+    @Schema(title = "enabled", description = "是否启用：0禁用，1启用")
     public Integer enabled;
 
-    @ApiModelProperty("角色id集合")
+    @Schema(title = "roleIds", description = "角色id集合")
     public Set<Long> roleIds;
 
-    @ApiModelProperty("职位id集合")
+    @Schema(title = "postIds", description = "职位id集合")
     public Set<Long> postIds;
 }

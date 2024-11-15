@@ -2,7 +2,7 @@
 
 CREATE TABLE `sys_user`
 (
-    `id`              bigint(20)   NOT NULL AUTO_INCREMENT COMMENT '主键，用户id',
+    `id`              bigint(20)   NOT NULL AUTO_INCREMENT COMMENT '主键id',
     `username`        varchar(16)  NOT NULL COMMENT '用户名',
     `password`        varchar(255) NOT NULL COMMENT '密码',
     `nickname`        varchar(16)  DEFAULT '' COMMENT '昵称',
@@ -13,6 +13,7 @@ CREATE TABLE `sys_user`
     `dept_id`         bigint(20)   DEFAULT '0' COMMENT '所属部门id',
     `last_login_ip`   varchar(255) DEFAULT '' COMMENT '最后登录IP',
     `last_login_time` datetime(0)  DEFAULT NULL COMMENT '最后登录时间',
+    `remark`          varchar(255) DEFAULT '' COMMENT '描述',
     `enabled`         int(1)       DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
     `sort`            int(11)      DEFAULT '0' COMMENT '排序',
     `create_time`     datetime(0)  NOT NULL COMMENT '创建时间',
@@ -26,11 +27,11 @@ CREATE TABLE `sys_user`
 
 CREATE TABLE `sys_dept`
 (
-    `id`          bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键，部门id',
+    `id`          bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键id',
     `parent_id`   bigint(20)  NOT NULL COMMENT '父级id',
     `dept_name`   varchar(64) NOT NULL COMMENT '部门名称',
     `dept_code`   varchar(64)  DEFAULT '' COMMENT '部门编号',
-    `remark`      varchar(255) DEFAULT '' COMMENT '部门描述',
+    `remark`      varchar(255) DEFAULT '' COMMENT '描述',
     `sort`        int(11)      DEFAULT '99' COMMENT '排序',
     `enabled`     int(1)       DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
     `create_time` datetime(0) NOT NULL COMMENT '创建时间',
@@ -43,11 +44,11 @@ CREATE TABLE `sys_dept`
 
 CREATE TABLE `sys_role`
 (
-    `id`          bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键，角色id',
+    `id`          bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键id',
     `role_code`   varchar(32) NOT NULL COMMENT '角色编码',
     `role_name`   varchar(32) NOT NULL COMMENT '角色名称',
     `data_scope`  int(1)      DEFAULT '3' COMMENT '数据权限：0全部数据，1部门及子部门数据，2本部门数据，3本人数据',
-    `remark`      varchar(16) DEFAULT '' COMMENT '角色描述',
+    `remark`      varchar(255) DEFAULT '' COMMENT '描述',
     `sort`        int(11)     DEFAULT '99' COMMENT '排序',
     `enabled`     int(1)      DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
     `create_time` datetime(0) NOT NULL COMMENT '创建时间',
@@ -60,7 +61,7 @@ CREATE TABLE `sys_role`
 
 CREATE TABLE `sys_menu`
 (
-    `id`           bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键，菜单id',
+    `id`           bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键id',
     `parent_id`    bigint(20)  NOT NULL COMMENT '上级id',
     `menu_name`    varchar(64) NOT NULL COMMENT '菜单名称',
     `menu_name_en` varchar(64)  DEFAULT '' COMMENT '菜单英文名称',
@@ -73,6 +74,7 @@ CREATE TABLE `sys_menu`
     `redirect`     varchar(255) DEFAULT '' COMMENT '重定向地址',
     `always_show`  int(1)       DEFAULT '0' COMMENT '始终显示',
     `keep_alive`   int(1)       DEFAULT '1' COMMENT '缓存页面',
+    `remark`       varchar(255) DEFAULT '' COMMENT '描述',
     `sort`         int(11)      DEFAULT '99' COMMENT '排序',
     `enabled`      int(1)       DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
     `create_time`  datetime(0) NOT NULL COMMENT '创建时间',
@@ -85,7 +87,7 @@ CREATE TABLE `sys_menu`
 
 CREATE TABLE `sys_user_role`
 (
-    `id`          bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键',
+    `id`          bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键id',
     `user_id`     bigint(20)  NOT NULL COMMENT '用户id',
     `role_id`     bigint(20)  NOT NULL COMMENT '角色id',
     `create_time` datetime(0) NOT NULL COMMENT '创建时间',
@@ -96,7 +98,7 @@ CREATE TABLE `sys_user_role`
 
 CREATE TABLE `sys_role_dept`
 (
-    `id`          bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键',
+    `id`          bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键id',
     `role_id`     bigint(20)  NOT NULL COMMENT '角色id',
     `dept_id`     bigint(20)  NOT NULL COMMENT '部门id',
     `create_time` datetime(0) NOT NULL COMMENT '创建时间',
@@ -107,7 +109,7 @@ CREATE TABLE `sys_role_dept`
 
 CREATE TABLE `sys_role_menu`
 (
-    `id`          bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键',
+    `id`          bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键id',
     `role_id`     bigint(20)  NOT NULL COMMENT '角色id',
     `menu_id`     bigint(20)  NOT NULL COMMENT '菜单id',
     `create_time` datetime(0) NOT NULL COMMENT '创建时间',
@@ -118,10 +120,10 @@ CREATE TABLE `sys_role_menu`
 
 CREATE TABLE `sys_dict`
 (
-    `id`          bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键，字典id',
+    `id`          bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键id',
     `dict_code`   varchar(32) NOT NULL COMMENT '字典编码',
     `dict_name`   varchar(32) NOT NULL COMMENT '字典名称',
-    `remark`      varchar(16) DEFAULT '' COMMENT '角色描述',
+    `remark`      varchar(255) DEFAULT '' COMMENT '描述',
     `sort`        int(11)     DEFAULT '99' COMMENT '排序',
     `enabled`     int(1)      DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
     `create_time` datetime(0) NOT NULL COMMENT '创建时间',
@@ -134,11 +136,12 @@ CREATE TABLE `sys_dict`
 
 CREATE TABLE `sys_dict_data`
 (
-    `id`          bigint(20)   NOT NULL AUTO_INCREMENT COMMENT '主键，字典数据id',
+    `id`          bigint(20)   NOT NULL AUTO_INCREMENT COMMENT '主键id',
     `dict_code`   varchar(32)  NOT NULL COMMENT '字典编码',
     `label`       varchar(255) NOT NULL COMMENT '字典项',
     `value`       varchar(32)  NOT NULL COMMENT '字典值',
     `tag`         varchar(32) DEFAULT '' COMMENT '前端标签tag值',
+    `remark`      varchar(255) DEFAULT '' COMMENT '备注',
     `sort`        int(11)     DEFAULT '99' COMMENT '排序',
     `enabled`     int(1)      DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
     `create_time` datetime(0)  NOT NULL COMMENT '创建时间',
@@ -151,7 +154,7 @@ CREATE TABLE `sys_dict_data`
 
 CREATE TABLE `sys_post`
 (
-    `id`          bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键，职位id',
+    `id`          bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键id',
     `post_name`   varchar(64) NOT NULL COMMENT '职位名称',
     `post_level`  int(2)      NOT NULL COMMENT '职级',
     `remark`      varchar(255) DEFAULT '' COMMENT '备注',
@@ -167,7 +170,7 @@ CREATE TABLE `sys_post`
 
 CREATE TABLE `sys_config`
 (
-    `id`           bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键，职位id',
+    `id`           bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键id',
     `config_name`  varchar(64) NOT NULL COMMENT '配置名称',
     `config_key`   varchar(64) NOT NULL COMMENT '配置键key',
     `config_value` varchar(64) NOT NULL COMMENT '配置值value',
@@ -176,6 +179,7 @@ CREATE TABLE `sys_config`
     `enabled`      int(1)       DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
     `create_time`  datetime(0) NOT NULL COMMENT '创建时间',
     `update_time`  datetime(0) NOT NULL COMMENT '修改时间',
+    `deleted`      int(1)       DEFAULT '1' COMMENT '逻辑删除',
     PRIMARY KEY (`id`),
     UNIQUE (`config_key`)
 ) ENGINE = InnoDB

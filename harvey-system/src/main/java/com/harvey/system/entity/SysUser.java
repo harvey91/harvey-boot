@@ -1,11 +1,8 @@
 package com.harvey.system.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -18,40 +15,34 @@ import java.io.Serial;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "sys_user")
-@ApiModel(value = "SysUser对象", description = "系统用户表")
+@Schema(title = "SysUser对象", description = "系统用户表")
 public class SysUser extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("主键，用户id")
-    @TableId(value = "id", type = IdType.AUTO)
-    public Long id;
-
-    @ApiModelProperty("用户名")
+    @Schema(title = "username", description = "用户名")
     public String username;
 
     @JsonIgnore
-    @ApiModelProperty("密码")
+    @Schema(title = "password", description = "密码")
     public String password;
 
-    @ApiModelProperty("昵称")
+    @Schema(title = "nickname", description = "昵称")
     public String nickname;
 
-    @ApiModelProperty("头像")
+    @Schema(title = "avatar", description = "头像")
     public String avatar;
 
-    @ApiModelProperty("性别")
+    @Schema(title = "gender", description = "性别")
     public Integer gender;
 
-    @ApiModelProperty("手机号")
+    @Schema(title = "phone", description = "手机号")
     public String phone;
 
-    @ApiModelProperty("邮箱")
+    @Schema(title = "email", description = "邮箱")
     public String email;
 
-    @ApiModelProperty("部门id")
+    @Schema(title = "deptId", description = "部门id")
     public Long deptId;
 
-    @ApiModelProperty("是否启用：0禁用，1启用")
-    public Integer enabled;
 }

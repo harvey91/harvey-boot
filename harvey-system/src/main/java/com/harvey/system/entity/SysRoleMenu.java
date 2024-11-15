@@ -1,8 +1,7 @@
 package com.harvey.system.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -18,22 +17,22 @@ import java.time.LocalDateTime;
  */
 @Data
 @TableName("sys_role_menu")
-@ApiModel(value = "SysRoleMenu对象", description = "系统角色菜单关联表")
+@Schema(title = "SysRoleMenu对象", description = "系统角色菜单关联表")
 public class SysRoleMenu implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("主键")
+    @Schema(title = "id", description = "主键id")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @ApiModelProperty("角色id")
+    @Schema(title = "roleId", description = "角色id")
     private Long roleId;
 
-    @ApiModelProperty("菜单id")
+    @Schema(title = "menuId", description = "菜单id")
     private Long menuId;
 
-    @ApiModelProperty("创建时间")
+    @Schema(title = "createTime", description = "创建时间")
     @TableField(fill = FieldFill.INSERT)
     public LocalDateTime createTime;
 

@@ -2,11 +2,11 @@ package com.harvey.system.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
 
 /**
  * <p>
@@ -18,43 +18,43 @@ import lombok.Data;
  */
 @Data
 @TableName("sys_online_user")
-@ApiModel(value = "SysOnlineUser对象", description = "系统在线用户表")
+@Schema(title = "SysOnlineUser对象",description = "系统在线用户表")
 public class SysOnlineUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("主键id")
+    @Schema(title = "uuid",description = "主键id")
     @TableId("uuid")
     private String uuid;
 
-    @ApiModelProperty("用户id")
+    @Schema(title = "userId",description = "用户id")
     private Long userId;
 
-    @ApiModelProperty("用户名")
+    @Schema(title = "username",description = "用户名")
     private String username;
 
-    @ApiModelProperty("所属部门")
+    @Schema(title = "deptName",description = "所属部门")
     private String deptName;
 
-    @ApiModelProperty("登录IP")
+    @Schema(title = "ip",description = "登录IP")
     private String ip;
 
-    @ApiModelProperty("登录地点")
+    @Schema(title = "location",description = "登录地点")
     private String location;
 
-    @ApiModelProperty("浏览器")
+    @Schema(title = "browser",description = "浏览器")
     private String browser;
 
-    @ApiModelProperty("操作系统")
+    @Schema(title = "os",description = "操作系统")
     private String os;
 
-    @ApiModelProperty("创建时间")
+    @Schema(title = "createTime",description = "创建时间")
     private LocalDateTime createTime;
 
-    @ApiModelProperty("过期时间")
+    @Schema(title = "expireTime",description = "过期时间")
     private LocalDateTime expireTime;
 
-    @ApiModelProperty("过期时间")
+    @Schema(title = "status",description = "在线状态")
     private Integer status;
 
 }

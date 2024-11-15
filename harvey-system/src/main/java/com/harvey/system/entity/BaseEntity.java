@@ -1,16 +1,13 @@
 package com.harvey.system.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * @author Harvey
@@ -21,18 +18,28 @@ public class BaseEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("是否启用：0禁用，1启用")
+    @Schema(title = "id",description = "主键id")
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
+
+    @Schema(title = "remark", description = "描述")
+    private String remark;
+
+    @Schema(title = "sort", description = "排序", defaultValue = "99")
+    private Integer sort;
+
+    @Schema(title = "enabled", description = "是否启用(0禁用，1启用)", defaultValue = "1")
     private Integer enabled;
 
-    @ApiModelProperty("创建时间")
+    @Schema(title = "createTime", description = "创建时间")
     @TableField(fill = FieldFill.INSERT)
     public LocalDateTime createTime;
 
-    @ApiModelProperty("修改时间")
+    @Schema(title = "updateTime", description = "修改时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     public LocalDateTime updateTime;
 
-    @ApiModelProperty("逻辑删除")
+    @Schema(title = "deleted", description = "逻辑删除(1未删除，0已删除)", defaultValue = "1")
     @JsonIgnore
     @TableLogic
     @TableField(fill = FieldFill.INSERT)

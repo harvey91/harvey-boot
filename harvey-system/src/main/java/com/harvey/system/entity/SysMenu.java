@@ -1,10 +1,7 @@
 package com.harvey.system.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -21,52 +18,45 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("sys_menu")
-@ApiModel(value = "SysMenu对象", description = "系统菜单表")
+@Schema(title = "SysMenu对象", description = "系统菜单表")
 public class SysMenu extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("主键，菜单id")
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
-
-    @ApiModelProperty("上级id")
+    @Schema(title = "parentId", description = "上级id")
     private Long parentId;
 
-    @ApiModelProperty("菜单名称")
+    @Schema(title = "menuName", description = "菜单名称")
     private String menuName;
 
-    @ApiModelProperty("菜单英文名称")
+    @Schema(title = "menuNameEn", description = "菜单英文名称")
     private String menuNameEn;
 
-    @ApiModelProperty("菜单类型")
+    @Schema(title = "type", description = "菜单类型")
     private String type;
 
-    @ApiModelProperty("路由名称")
+    @Schema(title = "routeName", description = "路由名称")
     private String routeName;
 
-    @ApiModelProperty("路由路径")
+    @Schema(title = "routePath", description = "路由路径")
     private String routePath;
 
-    @ApiModelProperty("组件路径")
+    @Schema(title = "component", description = "组件路径")
     private String component;
 
-    @ApiModelProperty("权限标识")
+    @Schema(title = "permission", description = "权限标识")
     private String permission;
 
-    @ApiModelProperty("图标")
+    @Schema(title = "icon", description = "图标")
     private String icon;
 
-    @ApiModelProperty("重定向地址")
+    @Schema(title = "redirect", description = "重定向地址")
     private String redirect;
 
-    @ApiModelProperty("始终显示")
+    @Schema(title = "alwaysShow", description = "始终显示")
     private Integer alwaysShow;
 
-    @ApiModelProperty("缓存页面")
+    @Schema(title = "keepAlive", description = "缓存页面")
     private Integer keepAlive;
-
-    @ApiModelProperty("排序")
-    private Integer sort;
 
 }

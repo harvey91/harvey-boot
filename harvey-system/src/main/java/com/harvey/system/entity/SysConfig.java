@@ -1,12 +1,12 @@
 package com.harvey.system.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
 
 /**
  * <p>
@@ -18,39 +18,18 @@ import lombok.Data;
  */
 @Data
 @TableName("sys_config")
-@ApiModel(value = "SysConfig对象", description = "系统配置表")
-public class SysConfig implements Serializable {
+@Schema(title = "SysConfig对象", description = "系统配置表")
+public class SysConfig extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("主键，职位id")
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
-
-    @ApiModelProperty("配置名称")
+    @Schema(title = "configName", description = "配置名称")
     private String configName;
 
-    @ApiModelProperty("配置键key")
+    @Schema(title = "configKey", description = "配置键key")
     private String configKey;
 
-    @ApiModelProperty("配置值value")
+    @Schema(title = "configValue", description = "配置值value")
     private String configValue;
-
-    @ApiModelProperty("备注")
-    private String remark;
-
-    @ApiModelProperty("排序")
-    private Integer sort;
-
-    @ApiModelProperty("是否启用：0禁用，1启用")
-    private Integer enabled;
-
-    @ApiModelProperty("创建时间")
-    @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
-
-    @ApiModelProperty("修改时间")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime updateTime;
 
 }

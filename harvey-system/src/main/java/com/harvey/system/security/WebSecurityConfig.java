@@ -94,7 +94,7 @@ public class WebSecurityConfig {
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-ui.html"))
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-resources/**"))
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/webjars/**"))
-                .requestMatchers(AntPathRequestMatcher.antMatcher("/*/api-docs"))
+                .requestMatchers(AntPathRequestMatcher.antMatcher("/v3/api-docs/**"))
                 // 文件
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/avatar/**"))
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/file/**"))

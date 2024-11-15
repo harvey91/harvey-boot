@@ -1,10 +1,7 @@
 package com.harvey.system.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -21,28 +18,18 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("sys_role")
-@ApiModel(value = "SysRole对象", description = "系统角色表")
+@Schema(title = "SysRole对象", description = "系统角色表")
 public class SysRole extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("主键，角色id")
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
-
-    @ApiModelProperty("角色编码")
+    @Schema(title = "roleCode", description = "角色编码")
     private String roleCode;
 
-    @ApiModelProperty("角色名称")
+    @Schema(title = "roleName", description = "角色名称")
     private String roleName;
 
-    @ApiModelProperty("数据权限：0全部数据，1部门及子部门数据，2本部门数据，3本人数据")
+    @Schema(title = "dataScope", description = "数据权限(0全部数据，1部门及子部门数据，2本部门数据，3本人数据)")
     private Integer dataScope;
-
-    @ApiModelProperty("角色描述")
-    private String remark;
-
-    @ApiModelProperty("排序")
-    private Integer sort;
 
 }
