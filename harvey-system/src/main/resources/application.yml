@@ -9,11 +9,38 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+    #      url: jdbc:mysql://127.0.0.1:3306/harvey?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://127.0.0.1:3306/harvey?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
     druid:
-#      url: jdbc:mysql://127.0.0.1:3306/harvey?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-      url: jdbc:mysql://127.0.0.1:3306/harvey?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-      username: root
-      password: 123456
+      initial-size: 5 #初始创建时建立的连接数
+      min-idle: 5 #最小空闲连接数
+      max-active: 20 #最大的连接池数量
+      max-wait: 60000 #获取连接的最大等待毫秒数
+      time-between-eviction-runs-millis: 60000 #两个连接空闲检查之间的时间间隔
+      min-evictable-idle-time-millis: 30000 #连接在池中最小生存时间后才允许被驱逐
+      validation-query: select 'x' #检查连接是否可用的 SQL 查询
+      test-while-idle: true #申请连接前检测连接是否有效
+      test-on-borrow: false #申请连接时进行连接有效性检验
+      test-on-return: false #归还连接时进行连接有效性检验
+      pool-prepared-statements: false #是否开启 PreparedStatement 的缓存
+#      filters: stat,wall,slf4j #配置扩展插件，常用的有 stat（监控统计）、wall（SQL防火墙）、log4j（日志）等
+      max-pool-prepared-statement-per-connection-size: -1 #每个连接上PSCache最大语句数
+      use-global-data-source-stat: true #是否开启合并Stat
+#      connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000 #连接属性，用于合并 SQL 和设置慢 SQL 的阈值
+      web-stat-filter:
+        enabled: true #是否启用该过滤器
+        url-pattern: /*
+        exclusions: /druid/*,*.js,*.gif,*.jpg,*.png,*.css,*.ico
+      stat-view-servlet:
+        enabled: true #是否启用监控页面
+        url-pattern: /druid/*
+        reset-enable: false #是否允许重置监控数据
+        login-username: druid #登录监控页面所需的用户名
+        login-password: druid #登录监控页面所需的密码
+        allow: 127.0.0.1 #允许访问监控页面的 IP 地址或地址段列表
+        deny: #明确拒绝访问监控页面的 IP 地址或地址段列表。如果留空，则默认拒绝所有未在 allow 中列出的 IP 地址。
 
   data:
     redis:
