@@ -1,5 +1,7 @@
 package com.harvey.system.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.harvey.system.domain.query.DictQueryParam;
 import com.harvey.system.entity.SysDictData;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISysDictDataService extends IService<SysDictData> {
 
+    Page<SysDictData> queryPage(DictQueryParam queryParam);
 }

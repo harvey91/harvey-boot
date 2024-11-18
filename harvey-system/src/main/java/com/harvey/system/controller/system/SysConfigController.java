@@ -25,7 +25,7 @@ import java.util.List;
  * @author harvey
  * @since 2024-11-13
  */
-@Tag(name = "系统配置参数")
+@Tag(name = "系统配置Controller")
 @RestController
 @RequestMapping("/system/config")
 @RequiredArgsConstructor

@@ -5,6 +5,8 @@ import com.harvey.system.domain.vo.DeptVO;
 import com.harvey.system.domain.vo.OptionVO;
 import com.harvey.system.entity.SysDept;
 import com.harvey.system.service.ISysDeptService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,22 +27,21 @@ import java.util.stream.Collectors;
  * @author harvey
  * @since 2024-10-29
  */
+@Tag(name = "部门管理Controller")
 @RestController
 @RequestMapping("/system/dept")
 @RequiredArgsConstructor
 public class SysDeptController {
     private final ISysDeptService sysDeptService;
 
+    @Operation(summary = "id查询表单")
     @GetMapping("/form/{id}")
     public RespResult<SysDept> formById(@PathVariable(value = "id") Long id) {
         SysDept sysDept = sysDeptService.getById(id);
         return RespResult.success(sysDept);
     }
 
-    /**
-     * 查询所有部门树列表
-     * @return
-     */
+    @Operation(summary = "部门列表-tree")
     @GetMapping("/list")
     public RespResult<List<DeptVO>> list() {
         List<SysDept> list = sysDeptService.list();
@@ -62,10 +63,7 @@ public class SysDeptController {
         return RespResult.success(deptVOList);
     }
 
-    /**
-     * 查询所有部门下拉树列表
-     * @return
-     */
+    @Operation(summary = "部门下拉列表-tree")
     @GetMapping("/option")
     public RespResult<List<OptionVO>> option() {
         List<SysDept> list = sysDeptService.list();
@@ -88,11 +86,7 @@ public class SysDeptController {
         return RespResult.success(optionVOList);
     }
 
-    /**
-     * 新增
-     * @param sysDept
-     * @return
-     */
+    @Operation(summary = "新增部门")
     @PreAuthorize("@ex.hasPerm('sys:dept:create')")
     @PostMapping("/create")
     public RespResult<String> create(@RequestBody SysDept sysDept) {
@@ -103,11 +97,7 @@ public class SysDeptController {
         return RespResult.success();
     }
 
-    /**
-     * 修改
-     * @param sysDept
-     * @return
-     */
+    @Operation(summary = "编辑部门")
     @PreAuthorize("@ex.hasPerm('sys:dept:modify')")
     @PostMapping("/modify")
     public RespResult<String> modify(@RequestBody SysDept sysDept) {
@@ -118,11 +108,7 @@ public class SysDeptController {
         return RespResult.success();
     }
 
-    /**
-     * 删除
-     * @param ids
-     * @return
-     */
+    @Operation(summary = "删除部门")
     @PreAuthorize("@ex.hasPerm('sys:dept:delete')")
     @PostMapping("/delete")
     public RespResult<String> delete(@RequestBody List<Long> ids) {

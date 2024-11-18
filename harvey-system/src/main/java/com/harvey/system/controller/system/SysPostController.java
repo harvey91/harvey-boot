@@ -5,6 +5,8 @@ import com.harvey.system.base.PageResult;
 import com.harvey.system.base.RespResult;
 import com.harvey.system.entity.SysPost;
 import com.harvey.system.service.ISysPostService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.ObjectUtils;
@@ -20,17 +22,20 @@ import java.util.List;
  * @author harvey
  * @since 2024-11-13
  */
+@Tag(name = "职位管理Controller")
 @RestController
 @RequestMapping("/system/post")
 @RequiredArgsConstructor
 public class SysPostController {
     private final ISysPostService sysPostService;
 
+    @Operation(summary = "id查询表单")
     @GetMapping("/form/{id}")
     public RespResult<SysPost> formById(@PathVariable(value = "id") Long id) {
         return RespResult.success(sysPostService.getById(id));
     }
 
+    @Operation(summary = "职位分页列表")
     @PreAuthorize("@ex.hasPerm('sys:post:list')")
     @GetMapping("/page")
     public RespResult<PageResult<SysPost>> page(@RequestParam("pageNum") int pageNum,
@@ -41,6 +46,7 @@ public class SysPostController {
         return RespResult.success(PageResult.of(dictPage));
     }
 
+    @Operation(summary = "新增职位")
     @PreAuthorize("@ex.hasPerm('sys:post:create')")
     @PostMapping("/create")
     public RespResult<String> create(@RequestBody SysPost sysPost) {
@@ -48,6 +54,7 @@ public class SysPostController {
         return RespResult.success();
     }
 
+    @Operation(summary = "编辑职位")
     @PreAuthorize("@ex.hasPerm('sys:post:modify')")
     @PutMapping("/modify")
     public RespResult<String> modify(@RequestBody SysPost sysPost) {
@@ -55,6 +62,7 @@ public class SysPostController {
         return RespResult.success();
     }
 
+    @Operation(summary = "删除职位")
     @PreAuthorize("@ex.hasPerm('sys:post:delete')")
     @DeleteMapping("/delete")
     public RespResult<String> delete(@RequestBody List<Long> ids) {

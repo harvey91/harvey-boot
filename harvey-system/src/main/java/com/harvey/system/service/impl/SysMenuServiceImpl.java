@@ -2,6 +2,7 @@ package com.harvey.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.harvey.system.domain.query.MenuQueryParam;
 import com.harvey.system.domain.vo.MenuVO;
 import com.harvey.system.domain.vo.OptionVO;
 import com.harvey.system.domain.vo.RouteVO;
@@ -38,8 +39,10 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
      * @return
      */
     @Override
-    public List<MenuVO> menuList() {
-        LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<SysMenu>().orderByAsc(SysMenu::getSort);
+    public List<MenuVO> queryList(MenuQueryParam queryParam) {
+        LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<SysMenu>()
+                .like(StringUtils.isNotBlank(queryParam.getKeywords()), SysMenu::getMenuName, queryParam.getKeywords())
+                .orderByAsc(SysMenu::getSort);
         List<SysMenu> list = mapper.selectList(queryWrapper);
         List<MenuVO> menuVOList = new ArrayList<>();
         Map<Long, List<SysMenu>> collect = list.stream().collect(Collectors.groupingBy(SysMenu::getParentId));

@@ -3,14 +3,14 @@ package com.harvey.system.controller.system;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.harvey.system.base.PageResult;
 import com.harvey.system.base.RespResult;
-import com.harvey.system.entity.SysDict;
 import com.harvey.system.entity.SysOnlineUser;
 import com.harvey.system.security.OnlineUserService;
 import com.harvey.system.service.ISysOnlineUserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.Controller;
 
 /**
  * <p>
@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
  * @author harvey
  * @since 2024-11-14
  */
+@Tag(name = "在线用户Controller")
 @RestController
 @RequestMapping("/system/onlineUser")
 @RequiredArgsConstructor
@@ -27,12 +28,7 @@ public class SysOnlineUserController {
     private final ISysOnlineUserService sysOnlineUserService;
     private final OnlineUserService onlineUserService;
 
-    /**
-     * 查询在线用户分页列表
-     * @param pageNum
-     * @param pageSize
-     * @return
-     */
+    @Operation(summary = "在线用户列表")
     @PreAuthorize("@ex.hasPerm('sys:online:user:list')")
     @GetMapping("/page")
     public RespResult<PageResult<SysOnlineUser>> page(@RequestParam("pageNum") int pageNum,
@@ -41,11 +37,7 @@ public class SysOnlineUserController {
         return RespResult.success(PageResult.of(onlineUserPage));
     }
 
-    /**
-     * 踢用户下线
-     * @param uuid
-     * @return
-     */
+    @Operation(summary = "强制用户下线")
     @PreAuthorize("@ex.hasPerm('sys:online:user:offline')")
     @DeleteMapping("/offline/{uuid}")
     public RespResult<String> offline(@PathVariable(value = "uuid") String uuid) {

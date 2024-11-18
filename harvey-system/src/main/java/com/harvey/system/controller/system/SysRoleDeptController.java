@@ -1,5 +1,6 @@
 package com.harvey.system.controller.system;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author harvey
  * @since 2024-11-07
  */
+@Tag(name = "角色部门关联Controller")
 @RestController
 @RequestMapping("/system/roleDept")
 public class SysRoleDeptController {

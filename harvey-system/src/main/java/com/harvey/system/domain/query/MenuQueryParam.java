@@ -9,7 +9,6 @@ import lombok.EqualsAndHashCode;
  **/
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class DictQueryParam extends BaseQueryParam {
+public class MenuQueryParam extends BaseQueryParam {
 
-    private String dictCode;
 }

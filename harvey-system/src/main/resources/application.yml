@@ -28,7 +28,7 @@ spring:
 #      filters: stat,wall,slf4j #配置扩展插件，常用的有 stat（监控统计）、wall（SQL防火墙）、log4j（日志）等
       max-pool-prepared-statement-per-connection-size: -1 #每个连接上PSCache最大语句数
       use-global-data-source-stat: true #是否开启合并Stat
-#      connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000 #连接属性，用于合并 SQL 和设置慢 SQL 的阈值
+#      connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=1000 #连接属性，用于合并 SQL 和设置慢 SQL 的阈值
       web-stat-filter:
         enabled: true #是否启用该过滤器
         url-pattern: /*

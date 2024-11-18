@@ -6,6 +6,7 @@ import com.harvey.system.security.JwtTokenService;
 import com.harvey.system.security.OnlineUserService;
 import com.harvey.system.security.SecurityUtil;
 import com.harvey.system.service.ISysOnlineUserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,6 +22,7 @@ import java.util.Map;
  * @author Harvey
  * @date 2024-10-30 10:35
  **/
+@Tag(name = "用户认证Controller")
 @RestController
 @RequestMapping("/authorize")
 @RequiredArgsConstructor

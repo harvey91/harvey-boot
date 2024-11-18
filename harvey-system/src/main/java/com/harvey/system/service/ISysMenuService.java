@@ -1,5 +1,6 @@
 package com.harvey.system.service;
 
+import com.harvey.system.domain.query.MenuQueryParam;
 import com.harvey.system.domain.vo.MenuVO;
 import com.harvey.system.domain.vo.OptionVO;
 import com.harvey.system.domain.vo.RouteVO;
@@ -18,7 +19,7 @@ import java.util.List;
  */
 public interface ISysMenuService extends IService<SysMenu> {
 
-    List<MenuVO> menuList();
+    List<MenuVO> queryList(MenuQueryParam queryParam);
 
     List<RouteVO> routes();
 
