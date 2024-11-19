@@ -15,4 +15,6 @@ public interface IConverter<ENTITY, DTO, VO> {
     ENTITY toEntity(DTO dto);
 
     Page<VO> toPage(Page<ENTITY> page);
+
+    VO toVO(ENTITY entity);
 }

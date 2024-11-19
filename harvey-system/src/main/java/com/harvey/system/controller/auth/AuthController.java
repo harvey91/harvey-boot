@@ -1,17 +1,15 @@
 package com.harvey.system.controller.auth;
 
 import com.harvey.system.base.RespResult;
-import com.harvey.system.domain.dto.LoginDto;
+import com.harvey.system.model.dto.LoginDto;
 import com.harvey.system.security.JwtTokenService;
-import com.harvey.system.security.OnlineUserService;
+import com.harvey.system.security.OnlineUserCacheService;
 import com.harvey.system.security.SecurityUtil;
-import com.harvey.system.service.ISysOnlineUserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -29,7 +27,7 @@ import java.util.Map;
 public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenService jwtTokenService;
-    private final OnlineUserService onlineUserService;
+    private final OnlineUserCacheService onlineUserCacheService;
 
     @PostMapping("/login")
     public RespResult<Object> login(LoginDto loginDto) {
@@ -44,7 +42,7 @@ public class AuthController {
 
     @DeleteMapping("/logout")
     public RespResult<Object> logout() {
-        onlineUserService.delete(SecurityUtil.getUuid());
+        onlineUserCacheService.delete(SecurityUtil.getUuid());
         return RespResult.success();
     }
 

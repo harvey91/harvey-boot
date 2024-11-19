@@ -27,7 +27,7 @@ import javax.crypto.SecretKey;
 @RequiredArgsConstructor
 public class JwtTokenService implements InitializingBean {
     private final JwtProperties jwtProperties;
-    private final OnlineUserService onlineUserService;
+    private final OnlineUserCacheService onlineUserCacheService;
     private JwtParser jwtParser;
     private JwtBuilder jwtBuilder;
 
@@ -53,7 +53,7 @@ public class JwtTokenService implements InitializingBean {
         LoginUserVO loginUser = (LoginUserVO) authentication.getPrincipal();// 缓存登陆用户信息
         String uuid = IdUtil.fastSimpleUUID();
         loginUser.setUuid(uuid);
-        onlineUserService.save(loginUser, jwtProperties.getExpireTime(), false);
+        onlineUserCacheService.save(loginUser, jwtProperties.getExpireTime(), false);
         return jwtBuilder
                 .id(uuid)
                 .claim("uuid", uuid)
@@ -80,7 +80,7 @@ public class JwtTokenService implements InitializingBean {
         long expireTime = loginUser.getExpireTime();
         long currentTime = System.currentTimeMillis();
         if (expireTime - currentTime <= Constant.MILLIS_MINUTE_TEN) {
-            onlineUserService.save(loginUser, jwtProperties.getExpireTime(), true);
+            onlineUserCacheService.save(loginUser, jwtProperties.getExpireTime(), true);
         }
     }
 
@@ -114,6 +114,6 @@ public class JwtTokenService implements InitializingBean {
     public LoginUserVO getLoginUser(String token) {
         Claims claims = parserToken(token);
         String uuid = claims.get("uuid", String.class);
-        return onlineUserService.getLoginUser(uuid);
+        return onlineUserCacheService.getLoginUser(uuid);
     }
 }

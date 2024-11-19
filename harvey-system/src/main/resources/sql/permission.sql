@@ -7,18 +7,18 @@ CREATE TABLE `sys_user`
     `password`        varchar(255) NOT NULL COMMENT '密码',
     `nickname`        varchar(16)  DEFAULT '' COMMENT '昵称',
     `avatar`          varchar(255) DEFAULT '' COMMENT '头像',
-    `gender`          int(1)       DEFAULT '0' COMMENT '性别：0未知，1男，2女',
+    `gender`          int       DEFAULT '0' COMMENT '性别：0未知，1男，2女',
     `email`           varchar(64)  DEFAULT '' COMMENT '邮箱',
     `phone`           varchar(16)  DEFAULT '' COMMENT '手机号',
     `dept_id`         bigint(20)   DEFAULT '0' COMMENT '所属部门id',
     `last_login_ip`   varchar(255) DEFAULT '' COMMENT '最后登录IP',
     `last_login_time` datetime(0)  DEFAULT NULL COMMENT '最后登录时间',
     `remark`          varchar(255) DEFAULT '' COMMENT '描述',
-    `enabled`         int(1)       DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
-    `sort`            int(11)      DEFAULT '0' COMMENT '排序',
+    `enabled`         int       DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
+    `sort`            int      DEFAULT '0' COMMENT '排序',
     `create_time`     datetime(0)  NOT NULL COMMENT '创建时间',
     `update_time`     datetime(0)  NOT NULL COMMENT '修改时间',
-    `deleted`         int(1)       DEFAULT '1' COMMENT '逻辑删除',
+    `deleted`         int       DEFAULT '1' COMMENT '逻辑删除',
     PRIMARY KEY (`id`),
     UNIQUE (`username`)
 ) ENGINE = InnoDB
@@ -32,11 +32,11 @@ CREATE TABLE `sys_dept`
     `dept_name`   varchar(64) NOT NULL COMMENT '部门名称',
     `dept_code`   varchar(64)  DEFAULT '' COMMENT '部门编号',
     `remark`      varchar(255) DEFAULT '' COMMENT '描述',
-    `sort`        int(11)      DEFAULT '99' COMMENT '排序',
-    `enabled`     int(1)       DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
+    `sort`        int      DEFAULT '99' COMMENT '排序',
+    `enabled`     int       DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
     `create_time` datetime(0) NOT NULL COMMENT '创建时间',
     `update_time` datetime(0) NOT NULL COMMENT '修改时间',
-    `deleted`     int(1)       DEFAULT '1' COMMENT '逻辑删除',
+    `deleted`     int       DEFAULT '1' COMMENT '逻辑删除',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
@@ -47,13 +47,13 @@ CREATE TABLE `sys_role`
     `id`          bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键id',
     `role_code`   varchar(32) NOT NULL COMMENT '角色编码',
     `role_name`   varchar(32) NOT NULL COMMENT '角色名称',
-    `data_scope`  int(1)      DEFAULT '3' COMMENT '数据权限：0全部数据，1部门及子部门数据，2本部门数据，3本人数据',
+    `data_scope`  int       DEFAULT '3' COMMENT '数据权限：0全部数据，1部门及子部门数据，2本部门数据，3本人数据',
     `remark`      varchar(255) DEFAULT '' COMMENT '描述',
-    `sort`        int(11)     DEFAULT '99' COMMENT '排序',
-    `enabled`     int(1)      DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
+    `sort`        int      DEFAULT '99' COMMENT '排序',
+    `enabled`     int       DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
     `create_time` datetime(0) NOT NULL COMMENT '创建时间',
     `update_time` datetime(0) NOT NULL COMMENT '修改时间',
-    `deleted`     int(1)      DEFAULT '1' COMMENT '逻辑删除',
+    `deleted`     int       DEFAULT '1' COMMENT '逻辑删除',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
@@ -72,14 +72,14 @@ CREATE TABLE `sys_menu`
     `permission`   varchar(64)  DEFAULT '' COMMENT '权限标识',
     `icon`         varchar(32)  DEFAULT '' COMMENT '图标',
     `redirect`     varchar(255) DEFAULT '' COMMENT '重定向地址',
-    `always_show`  int(1)       DEFAULT '0' COMMENT '始终显示',
-    `keep_alive`   int(1)       DEFAULT '1' COMMENT '缓存页面',
+    `always_show`  int       DEFAULT '0' COMMENT '始终显示',
+    `keep_alive`   int       DEFAULT '1' COMMENT '缓存页面',
     `remark`       varchar(255) DEFAULT '' COMMENT '描述',
-    `sort`         int(11)      DEFAULT '99' COMMENT '排序',
-    `enabled`      int(1)       DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
+    `sort`         int      DEFAULT '99' COMMENT '排序',
+    `enabled`      int       DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
     `create_time`  datetime(0) NOT NULL COMMENT '创建时间',
     `update_time`  datetime(0) NOT NULL COMMENT '修改时间',
-    `deleted`      int(1)       DEFAULT '1' COMMENT '逻辑删除',
+    `deleted`      int       DEFAULT '1' COMMENT '逻辑删除',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
@@ -124,11 +124,11 @@ CREATE TABLE `sys_dict`
     `dict_code`   varchar(32) NOT NULL COMMENT '字典编码',
     `dict_name`   varchar(32) NOT NULL COMMENT '字典名称',
     `remark`      varchar(255) DEFAULT '' COMMENT '描述',
-    `sort`        int(11)     DEFAULT '99' COMMENT '排序',
-    `enabled`     int(1)      DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
+    `sort`        int      DEFAULT '99' COMMENT '排序',
+    `enabled`     int       DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
     `create_time` datetime(0) NOT NULL COMMENT '创建时间',
     `update_time` datetime(0) NOT NULL COMMENT '修改时间',
-    `deleted`     int(1)      DEFAULT '1' COMMENT '逻辑删除',
+    `deleted`     int       DEFAULT '1' COMMENT '逻辑删除',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
@@ -140,13 +140,13 @@ CREATE TABLE `sys_dict_data`
     `dict_code`   varchar(32)  NOT NULL COMMENT '字典编码',
     `label`       varchar(255) NOT NULL COMMENT '字典项',
     `value`       varchar(32)  NOT NULL COMMENT '字典值',
-    `tag`         varchar(32) DEFAULT '' COMMENT '前端标签tag值',
+    `tag`         varchar(32)  DEFAULT '' COMMENT '前端标签tag值',
     `remark`      varchar(255) DEFAULT '' COMMENT '备注',
-    `sort`        int(11)     DEFAULT '99' COMMENT '排序',
-    `enabled`     int(1)      DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
+    `sort`        int      DEFAULT '99' COMMENT '排序',
+    `enabled`     int       DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
     `create_time` datetime(0)  NOT NULL COMMENT '创建时间',
     `update_time` datetime(0)  NOT NULL COMMENT '修改时间',
-    `deleted`     int(1)      DEFAULT '1' COMMENT '逻辑删除',
+    `deleted`     int       DEFAULT '1' COMMENT '逻辑删除',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
@@ -156,13 +156,13 @@ CREATE TABLE `sys_post`
 (
     `id`          bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键id',
     `post_name`   varchar(64) NOT NULL COMMENT '职位名称',
-    `post_level`  int(2)      NOT NULL COMMENT '职级',
+    `post_level`  int      NOT NULL COMMENT '职级',
     `remark`      varchar(255) DEFAULT '' COMMENT '备注',
-    `sort`        int(11)      DEFAULT '99' COMMENT '排序',
-    `enabled`     int(1)       DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
+    `sort`        int      DEFAULT '99' COMMENT '排序',
+    `enabled`     int       DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
     `create_time` datetime(0) NOT NULL COMMENT '创建时间',
     `update_time` datetime(0) NOT NULL COMMENT '修改时间',
-    `deleted`     int(1)       DEFAULT '1' COMMENT '逻辑删除',
+    `deleted`     int       DEFAULT '1' COMMENT '逻辑删除',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
@@ -175,11 +175,11 @@ CREATE TABLE `sys_config`
     `config_key`   varchar(64) NOT NULL COMMENT '配置键key',
     `config_value` varchar(64) NOT NULL COMMENT '配置值value',
     `remark`       varchar(255) DEFAULT '' COMMENT '备注',
-    `sort`         int(11)      DEFAULT '99' COMMENT '排序',
-    `enabled`      int(1)       DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
+    `sort`         int      DEFAULT '99' COMMENT '排序',
+    `enabled`      int       DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
     `create_time`  datetime(0) NOT NULL COMMENT '创建时间',
     `update_time`  datetime(0) NOT NULL COMMENT '修改时间',
-    `deleted`      int(1)       DEFAULT '1' COMMENT '逻辑删除',
+    `deleted`      int       DEFAULT '1' COMMENT '逻辑删除',
     PRIMARY KEY (`id`),
     UNIQUE (`config_key`)
 ) ENGINE = InnoDB
@@ -198,7 +198,30 @@ CREATE TABLE `sys_online_user`
     `os`          varchar(32) DEFAULT '' COMMENT '操作系统',
     `create_time` datetime(0) NOT NULL COMMENT '创建时间',
     `expire_time` datetime(0) NOT NULL COMMENT '过期时间',
-    `status`      int(1)      DEFAULT '0' COMMENT '在线状态',
+    `status`      int      DEFAULT '0' COMMENT '在线状态',
     PRIMARY KEY (`uuid`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT ='系统在线用户表';
+
+CREATE TABLE `sys_notice`
+(
+    `id`           bigint(20)   NOT NULL AUTO_INCREMENT COMMENT '主键id',
+    `title`        varchar(255) NOT NULL COMMENT '通知标题',
+    `content`      text         COMMENT '通知内容',
+    `type`         int       NOT NULL COMMENT '通知类型',
+    `status`       int       NOT NULL COMMENT '通知状态(0未发布，1已发布，2已撤回)',
+    `level`        varchar(16)  NOT NULL COMMENT '通知等级',
+    `target_type`  int       DEFAULT '1' COMMENT '通知目标类型(1全体，2指定人)',
+    `publisher_id` bigint(20)   NOT NULL COMMENT '发布人id',
+    `publish_time` datetime(0)  DEFAULT NULL COMMENT '发布时间',
+    `revoke_time`  datetime(0)  DEFAULT NULL COMMENT '撤回时间',
+    `remark`       varchar(255) DEFAULT '' COMMENT '备注',
+    `sort`         int      DEFAULT '99' COMMENT '排序',
+    `enabled`      int       DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
+    `create_time`  datetime(0)  NOT NULL COMMENT '创建时间',
+    `update_time`  datetime(0)  NOT NULL COMMENT '修改时间',
+    `deleted`      int       DEFAULT '1' COMMENT '逻辑删除',
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8mb4 COMMENT ='系统通知表';

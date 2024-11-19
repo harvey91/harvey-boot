@@ -1,10 +1,10 @@
 package com.harvey.system.security;
 
-import com.harvey.system.entity.SysUser;
 import com.harvey.system.exception.BusinessException;
-import com.harvey.system.service.ISysMenuService;
-import com.harvey.system.service.ISysRoleService;
-import com.harvey.system.service.SysUserService;
+import com.harvey.system.model.entity.User;
+import com.harvey.system.service.MenuService;
+import com.harvey.system.service.RoleService;
+import com.harvey.system.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,13 +24,13 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private final SysUserService sysUserService;
-    private final ISysRoleService sysRoleService;
-    private final ISysMenuService sysMenuService;
+    private final UserService userService;
+    private final RoleService roleService;
+    private final MenuService menuService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        SysUser user = sysUserService.findByUsername(username);
+        User user = userService.findByUsername(username);
         if (Objects.isNull(user)) {
             throw new UsernameNotFoundException("");
         } else if (user.getEnabled() == 0) {
@@ -38,9 +38,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new BusinessException("账号未激活，请联系管理员!");
         }
         // 登陆时把当前用户的数据权限对应的deptId集合查出来，后续所有含有deptId的表格查询都通过deptId过滤
-        List<Long> deptIds = sysRoleService.getDeptIds(user.getId(), user.getDeptId());
+        List<Long> deptIds = roleService.getDeptIds(user.getId(), user.getDeptId());
         // 用户菜单权限列表
-        List<String> permissions = sysMenuService.getPermissionByUserId(user.getId());
+        List<String> permissions = menuService.getPermissionByUserId(user.getId());
         log.debug("permissions list: {}", permissions);
         // 用户角色列表 TODO
         List<SimpleGrantedAuthority> authorities = permissions.stream().map(SimpleGrantedAuthority::new).toList();
