@@ -11,6 +11,7 @@ import com.harvey.system.model.dto.UserDto;
 import com.harvey.system.model.entity.User;
 import com.harvey.system.model.entity.UserRole;
 import com.harvey.system.model.query.UserQuery;
+import com.harvey.system.model.vo.OptionVO;
 import com.harvey.system.model.vo.UserVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -33,10 +36,6 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     private final RoleService roleService;
     private final UserRoleService userRoleService;
     private final PasswordEncoder passwordEncoder;
-
-    public User findById(Long id) {
-        return getById(id);
-    }
 
     public User findByUsername(String username) {
         return sysUserMapper.selectByUsername(username);
@@ -129,5 +128,17 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         user.setId(passwordDto.getId());
         user.setPassword(passwordEncoder.encode(passwordDto.getPassword()));
         sysUserMapper.updateById(user);
+    }
+
+    /**
+     * 用户下拉列表
+     * @return
+     */
+    public List<OptionVO> userOptionList() {
+        List<User> list = this.list();
+        if (ObjectUtils.isEmpty(list)) {
+            return Collections.emptyList();
+        }
+        return list.stream().map(item -> OptionVO.builder().value(item.getId()).label(item.getNickname()).build()).toList();
     }
 }

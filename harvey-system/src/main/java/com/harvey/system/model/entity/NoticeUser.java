@@ -7,6 +7,7 @@ import java.io.Serial;
 import java.time.LocalDateTime;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -18,6 +19,7 @@ import lombok.Data;
  * @since 2024-11-20
  */
 @Data
+@Builder
 @TableName("sys_notice_user")
 @Schema(name = "NoticeUser", description = "系统通知指定用户表")
 public class NoticeUser implements Serializable {

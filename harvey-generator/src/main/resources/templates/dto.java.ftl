@@ -10,5 +10,6 @@ import lombok.Data;
 */
 @Data
 public class ${entity}Dto {
+    /** DTO属性需要自定义，和entity一致可以拷贝或继承 */
 
 }

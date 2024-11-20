@@ -76,9 +76,7 @@ public class DeptController {
         if (collect.containsKey(0L)) {
             List<Dept> deptList = collect.get(0L);
             for (Dept dept : deptList) {
-                OptionVO optionVO = new OptionVO();
-                optionVO.setValue(dept.getId());
-                optionVO.setLabel(dept.getDeptName());
+                OptionVO optionVO = OptionVO.builder().value(dept.getId()).label(dept.getDeptName()).build();
                 optionVOList.add(optionVO);
                 recursionOption(optionVO, collect);
             }
@@ -151,9 +149,7 @@ public class DeptController {
         List<OptionVO> optionVOList = new ArrayList<>();
         List<Dept> childDeptList = collect.get(parentOptionVO.getValue());
         for (Dept dept : childDeptList) {
-            OptionVO optionVO = new OptionVO();
-            optionVO.setValue(dept.getId());
-            optionVO.setLabel(dept.getDeptName());
+            OptionVO optionVO = OptionVO.builder().value(dept.getId()).label(dept.getDeptName()).build();
             optionVOList.add(optionVO);
             recursionOption(optionVO, collect);
         }

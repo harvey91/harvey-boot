@@ -44,13 +44,13 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     }
 
 
-    @Transactional
+    @Transactional(rollbackFor = Throwable.class)
     public void save${entity}(${entity}Dto dto) {
         ${entity} entity = converter.toEntity(dto);
         save(entity);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Throwable.class)
     public void update${entity}(${entity}Dto dto) {
         if (ObjectUtils.isEmpty(dto.getId())) {
             throw new BadParameterException();
@@ -59,7 +59,7 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
         updateById(entity);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Throwable.class)
     public void deleteByIds(List<Long> ids) {
         if (ObjectUtils.isEmpty(ids)) {
             throw new BadParameterException();

@@ -103,9 +103,7 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
         if (collect.containsKey(0L)) {
             List<Menu> parentMenuList = collect.get(0L);
             for (Menu menu : parentMenuList) {
-                OptionVO optionVO = new OptionVO();
-                optionVO.setValue(menu.getId());
-                optionVO.setLabel(menu.getMenuName());
+                OptionVO optionVO = OptionVO.builder().value(menu.getId()).label(menu.getMenuName()).build();
                 optionVOList.add(optionVO);
                 recursionOption(optionVO, collect);
             }
@@ -181,9 +179,7 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
         List<OptionVO> optionVOList = new ArrayList<>();
         List<Menu> childMenuList = collect.get(parentOptionVO.getValue());
         for (Menu menu : childMenuList) {
-            OptionVO optionVO = new OptionVO();
-            optionVO.setValue(menu.getId());
-            optionVO.setLabel(menu.getMenuName());
+            OptionVO optionVO = OptionVO.builder().value(menu.getId()).label(menu.getMenuName()).build();
             optionVOList.add(optionVO);
             recursionOption(optionVO, collect);
         }

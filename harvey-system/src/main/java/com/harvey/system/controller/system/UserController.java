@@ -8,6 +8,7 @@ import com.harvey.system.model.dto.PasswordDto;
 import com.harvey.system.model.dto.UserDto;
 import com.harvey.system.model.entity.User;
 import com.harvey.system.model.query.UserQuery;
+import com.harvey.system.model.vo.OptionVO;
 import com.harvey.system.model.vo.UserInfoVO;
 import com.harvey.system.model.vo.UserVO;
 import com.harvey.system.security.LoginUserVO;
@@ -144,9 +145,8 @@ public class UserController {
 
     @Operation(summary = "用户下拉列表")
     @GetMapping("/options")
-    public RespResult<UserVO> options() {
-
-        return RespResult.success();
+    public RespResult<List<OptionVO>> options() {
+        return RespResult.success(userService.userOptionList());
     }
 
     @Operation(summary = "发送手机/邮箱验证码")

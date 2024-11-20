@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.harvey.system.mapper.NoticeMapper">
+    <resultMap id="NoticeVOResult" type="com.harvey.system.model.vo.NoticeVO">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="type" column="type"/>
+        <result property="status" column="status"/>
+        <result property="level" column="level"/>
+        <result property="targetType" column="target_type"/>
+        <result property="publisherName" column="publisher_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="publishTime" column="publish_time"/>
+        <result property="revokeTime" column="revoke_time"/>
+    </resultMap>
+
+    <select id="getNoticeById" parameterType="Long" resultMap="NoticeVOResult">
+        select `id`, `title`, `status`, `level`, `target_type`, `create_time`, `publish_time`, `revoke_time`
+        from `sys_notice` n
+        where `deleted` = 1
+        and `id` = #{id}
+    </select>
 
 </mapper>

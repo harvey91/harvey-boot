@@ -13,5 +13,4 @@ public enum MenuTypeEnum {
 
     DIRECTORY, MENU, BUTTON;
 
-//    private final String value;
 }

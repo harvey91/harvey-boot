@@ -55,11 +55,8 @@ public class RoleController {
         List<Role> list = roleService.list();
         List<OptionVO> optionVOList = new ArrayList<>();
         if (!ObjectUtils.isEmpty(list)) {
-            for (Role sysRole : list) {
-                OptionVO optionVO = new OptionVO();
-                optionVO.setValue(sysRole.getId());
-                optionVO.setLabel(sysRole.getRoleName());
-                optionVOList.add(optionVO);
+            for (Role role : list) {
+                optionVOList.add(OptionVO.builder().value(role.getId()).label(role.getRoleName()).build());
             }
         }
         return RespResult.success(optionVOList);

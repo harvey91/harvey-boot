@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author Harvey
  * @date 2024-11-20 17:27
@@ -36,4 +38,7 @@ public class NoticeDto {
 
     @Schema(description = "通知目标类型(1全体，2指定人)")
     private Integer targetType;
+
+    @Schema(description = "通知指定人ID集合")
+    private List<Long> targetUserIds;
 }

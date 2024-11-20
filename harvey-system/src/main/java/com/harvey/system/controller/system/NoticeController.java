@@ -1,6 +1,7 @@
 package com.harvey.system.controller.system;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.harvey.system.model.vo.NoticeVO;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import com.harvey.system.model.dto.NoticeDto;
@@ -33,7 +34,7 @@ public class NoticeController {
     @Operation(summary = "id查询表单", description = "根据id查询对象")
     @GetMapping("/form/{id}")
     public RespResult<Notice> formById(@PathVariable(value = "id") Long id) {
-        return RespResult.success(noticeService.getById(id));
+        return RespResult.success(noticeService.getNoticeById(id));
     }
 
     @Operation(summary = "分页列表")
@@ -70,17 +71,17 @@ public class NoticeController {
 
     @Operation(summary = "发布")
     @PreAuthorize("@ex.hasPerm('sys:notice:publish')")
-    @PatchMapping("/publish")
-    public RespResult<String> publish() {
-
+    @PatchMapping("/publish/{id}")
+    public RespResult<String> publish(@PathVariable(value = "id") Long id) {
+        noticeService.publish(id);
         return RespResult.success();
     }
 
     @Operation(summary = "撤回")
     @PreAuthorize("@ex.hasPerm('sys:notice:revoke')")
-    @PatchMapping("/revoke")
-    public RespResult<String> revoke() {
-
+    @PatchMapping("/revoke/{id}")
+    public RespResult<String> revoke(@PathVariable(value = "id") Long id) {
+        noticeService.revoke(id);
         return RespResult.success();
     }
 
