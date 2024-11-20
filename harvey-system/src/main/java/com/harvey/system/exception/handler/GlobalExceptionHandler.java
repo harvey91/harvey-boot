@@ -2,6 +2,7 @@ package com.harvey.system.exception.handler;
 
 import com.harvey.system.base.RespResult;
 import com.harvey.system.enums.ErrorCodeEnum;
+import com.harvey.system.exception.BadParameterException;
 import com.harvey.system.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
@@ -54,5 +55,11 @@ public class GlobalExceptionHandler {
     public RespResult<String> handleServiceException(BusinessException e) {
         log.error(e.getMessage(), e);
         return RespResult.fail(e.getCode(), e.getMessage());
+    }
+
+    @ExceptionHandler(BadParameterException.class)
+    public RespResult<String> handleBadParameterException(BusinessException e) {
+        log.error(e.getMessage(), e);
+        return RespResult.fail(ErrorCodeEnum.PARAM_ERROR.getCode(), e.getMessage());
     }
 }

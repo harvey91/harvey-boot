@@ -7,6 +7,9 @@ package com.harvey.system.constant;
  **/
 public class CacheConstant {
 
-    /** 登录用户 redis key */
+    /** 登录用户token key */
     public static final String LOGIN_TOKEN_KEY = "login_tokens:";
+
+    /** 登录验证码 key */
+    public static final String LOGIN_CAPTCHA_KEY = "login_captcha:";
 }

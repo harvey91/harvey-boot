@@ -3,7 +3,7 @@ package ${package.Parent}.model.query;
 import lombok.Data;
 
 /**
-* ${table.comment!} 查询类
+* ${table.comment!} Query类
 *
 * @author ${author}
 * @since ${date}

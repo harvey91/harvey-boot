@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
-import java.io.File;
 import java.util.Collections;
 
 public class HarveyGenerator {
@@ -32,13 +31,27 @@ public class HarveyGenerator {
 					;
 				})
 				.injectionConfig(builder -> {
-					// 自定义Query查询类
 					builder
-//							.customFile(Collections.singletonMap("Query.java", "/templates/query.java.ftl"))
+							// 自定义Query类
 							.customFile(builder1 ->
-									builder1.packageName("model.query") // 包名
-											.fileName("Query.java") // 文件名后缀
+									builder1.packageName("model.query")
+											.fileName("Query.java")
 											.templatePath("/templates/query.java.ftl"))
+							// 自定义DTO类
+							.customFile(builder1 ->
+									builder1.packageName("model.dto")
+											.fileName("Dto.java")
+											.templatePath("/templates/dto.java.ftl"))
+							// 自定义VO类
+							.customFile(builder1 ->
+									builder1.packageName("model.vo")
+											.fileName("VO.java")
+											.templatePath("/templates/vo.java.ftl"))
+							// 自定义Converter接口
+							.customFile(builder1 ->
+									builder1.packageName("mapstruct")
+											.fileName("Converter.java")
+											.templatePath("/templates/converter.java.ftl"))
 							.build()
 							;
 				})
@@ -48,20 +61,24 @@ public class HarveyGenerator {
 							.build()
 							.entityBuilder()
 							.javaTemplate("/templates/entity.java") // 设置实体类模板
-							.superClass("com.harvey.system.entity.BaseEntity") // 设置实体类父类
+							.superClass("com.harvey.system.model.entity.BaseEntity") // 设置实体类父类
 							.enableLombok() // 开启Lombok
-							.addSuperEntityColumns("id", "enabled", "remark", "sort", "create_time", "update_time", "deleted")
+							.addSuperEntityColumns("id", "enabled", "remark", "sort", "create_time", "update_time", "deleted") // 过滤父类属性
+//							.enableFileOverride() // 开启文件覆盖
 							.serviceBuilder()
 							.disableService() // 禁用service接口，直接使用实现类
 //							.serviceTemplate("/templates/service.java") // 设置 Service 模板
 							.serviceImplTemplate("/templates/serviceImpl.java")// 设置 ServiceImpl 模板
 							.formatServiceImplFileName("%sService") // 格式化 Service 实现类文件名称
+//							.enableFileOverride() //  开启文件覆盖
 							.controllerBuilder()
 							.template("/templates/controller.java") // 设置 Controller 模板
 							.enableRestStyle() // 启用Rest风格
+//							.enableFileOverride() //  开启文件覆盖
 							.mapperBuilder()
 							.mapperTemplate("/templates/mapper.java") // 设置 Mapper 模板
 							.mapperXmlTemplate("/templates/mapper.xml") // 设置 Mapper XML模板
+//							.enableFileOverride() //  开启文件覆盖
 							;
 				})
 				.templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
