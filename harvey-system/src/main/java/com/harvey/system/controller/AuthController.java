@@ -1,4 +1,4 @@
-package com.harvey.system.controller.auth;
+package com.harvey.system.controller;
 
 import cn.hutool.core.util.IdUtil;
 import com.harvey.system.base.RespResult;

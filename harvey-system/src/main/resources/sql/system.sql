@@ -94,7 +94,7 @@ CREATE TABLE `sys_user_role`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8mb4 COMMENT ='系统用户角色关联表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='用户角色关联表';
 
 CREATE TABLE `sys_role_dept`
 (
@@ -105,7 +105,7 @@ CREATE TABLE `sys_role_dept`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8mb4 COMMENT ='系统角色部门关联表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='角色部门关联表';
 
 CREATE TABLE `sys_role_menu`
 (
@@ -116,7 +116,7 @@ CREATE TABLE `sys_role_menu`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8mb4 COMMENT ='系统角色菜单关联表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='角色菜单关联表';
 
 CREATE TABLE `sys_dict`
 (
@@ -150,7 +150,7 @@ CREATE TABLE `sys_dict_data`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8mb4 COMMENT ='系统字典数据表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='字典数据表';
 
 CREATE TABLE `sys_post`
 (
@@ -166,7 +166,7 @@ CREATE TABLE `sys_post`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8mb4 COMMENT ='系统职位表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='职位表';
 
 CREATE TABLE `sys_config`
 (
@@ -201,7 +201,7 @@ CREATE TABLE `sys_online_user`
     `status`      int         DEFAULT '0' COMMENT '在线状态',
     PRIMARY KEY (`uuid`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 COMMENT ='系统在线用户表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='在线用户表';
 
 CREATE TABLE `sys_notice`
 (
@@ -224,17 +224,66 @@ CREATE TABLE `sys_notice`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8mb4 COMMENT ='系统通知表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='通知公告表';
 
 CREATE TABLE `sys_notice_user`
 (
     `id`          bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键id',
     `notice_id`   bigint(20)  NOT NULL COMMENT '通知id',
     `user_id`     bigint(20)  NOT NULL COMMENT '用户id',
-    `is_read`     tinyint(2)  DEFAULT '0' COMMENT '是否已读',
+    `is_read`     tinyint(2) DEFAULT '0' COMMENT '是否已读',
     `create_time` datetime(0) NOT NULL COMMENT '创建时间',
-    `read_time` datetime(0) NOT NULL COMMENT '创建时间',
+    `read_time`   datetime(0) NOT NULL COMMENT '已读时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8mb4 COMMENT ='系统通知指定用户表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='通知指定用户表';
+
+CREATE TABLE `sys_log_op`
+(
+    `id`          bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键id',
+    `user_id`     bigint(20)  NOT NULL COMMENT '操作用户id',
+    `operator`    varchar(32)  DEFAULT '' COMMENT '操作员',
+    `module`      varchar(32)  DEFAULT '' COMMENT '模块',
+    `request_uri` varchar(255) DEFAULT '' COMMENT '请求路径',
+    `method`      varchar(128) DEFAULT '' COMMENT '请求方法',
+    `param`       varchar(255) DEFAULT '' COMMENT '请求参数',
+    `detail`      text COMMENT '详情',
+    `duration`    bigint       DEFAULT '0' COMMENT '执行时长(ms)',
+    `ip`          varchar(32)  DEFAULT '' COMMENT 'IP',
+    `location`    varchar(32)  DEFAULT '' COMMENT '地点',
+    `browser`     varchar(32)  DEFAULT '' COMMENT '浏览器',
+    `os`          varchar(32)  DEFAULT '' COMMENT '操作系统',
+    `remark`      varchar(255) DEFAULT '' COMMENT '备注',
+    `result`      tinyint(2)   DEFAULT '1' COMMENT '结果(1成功，2异常)',
+    `sort`        int          DEFAULT '0' COMMENT '排序',
+    `enabled`     tinyint(2)   DEFAULT '1' COMMENT '是否启用',
+    `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+    `update_time` datetime(0) NOT NULL COMMENT '修改时间',
+    `deleted`     tinyint(2)   DEFAULT '1' COMMENT '逻辑删除',
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8mb4 COMMENT ='操作日志表';
+
+CREATE TABLE `sys_log_login`
+(
+    `id`          bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键id',
+    `user_id`     bigint(20)  NOT NULL COMMENT '用户id',
+    `username`    varchar(32)  DEFAULT '' COMMENT '用户名',
+    `ip`          varchar(32)  DEFAULT '' COMMENT 'IP',
+    `location`    varchar(32)  DEFAULT '' COMMENT '地点',
+    `browser`     varchar(32)  DEFAULT '' COMMENT '浏览器',
+    `os`          varchar(32)  DEFAULT '' COMMENT '操作系统',
+    `duration`    bigint       DEFAULT '0' COMMENT '执行时长(ms)',
+    `result`      varchar(16)  DEFAULT '' COMMENT '结果',
+    `remark`      varchar(255) DEFAULT '' COMMENT '备注',
+    `sort`        int          DEFAULT '0' COMMENT '排序',
+    `enabled`     tinyint(2)   DEFAULT '1' COMMENT '是否启用',
+    `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+    `update_time` datetime(0) NOT NULL COMMENT '修改时间',
+    `deleted`     tinyint(2)   DEFAULT '1' COMMENT '逻辑删除',
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8mb4 COMMENT ='登陆日志表';

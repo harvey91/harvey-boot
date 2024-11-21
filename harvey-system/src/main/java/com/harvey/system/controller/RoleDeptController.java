@@ -1,4 +1,4 @@
-package com.harvey.system.controller.system;
+package com.harvey.system.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.RequestMapping;

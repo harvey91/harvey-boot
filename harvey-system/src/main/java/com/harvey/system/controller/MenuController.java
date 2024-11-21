@@ -1,4 +1,4 @@
-package com.harvey.system.controller.system;
+package com.harvey.system.controller;
 
 import com.harvey.system.base.RespResult;
 import com.harvey.system.enums.MenuTypeEnum;

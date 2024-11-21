@@ -1,4 +1,4 @@
-package com.harvey.system.controller.system;
+package com.harvey.system.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.tags.Tag;
