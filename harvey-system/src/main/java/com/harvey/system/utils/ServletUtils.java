@@ -1,13 +1,11 @@
 package com.harvey.system.utils;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 
-import com.harvey.system.constant.Constant;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -128,7 +126,7 @@ public class ServletUtils {
         }
 
         String result = request.getParameter("__result");
-        return StringUtils.inStringIgnoreCase(result, "json", "xml");
+        return StringUtils.inStringIgnoreCase(result, "json", "mapper");
     }
 
     /**

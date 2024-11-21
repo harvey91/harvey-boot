@@ -2,4 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.harvey.system.mapper.NoticeUserMapper">
 
+    <select id="selectMyPage" resultType="com.harvey.system.model.vo.NoticeUserVO">
+        SELECT n.id, n.title, n.`status`, n.`type`, n.`level`, n.`target_type`, n.`create_time`, n.`publish_time`,
+               nu.`is_read`, nu.read_time,
+               u.nickname publisher_name
+        FROM sys_notice_user nu
+        LEFT JOIN sys_notice n ON nu.notice_id = n.id
+        LEFT JOIN sys_user u ON nu.user_id = u.id
+        WHERE nu.`user_id` = #{query.userId}
+        AND n.`deleted` = 1
+        AND n.`status` = 1
+        <if test="query.isRead != null">
+            AND nu.is_read = #{query.isRead}
+        </if>
+        <if test="query.keywords != null and query.keywords != ''">
+            AND n.title LIKE '%${query.keywords}%'
+        </if>
+    </select>
 </mapper>

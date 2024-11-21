@@ -3,7 +3,6 @@ package com.harvey.system.service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.harvey.system.enums.NoticeTargetTypeEnum;
 import com.harvey.system.enums.PublishStatusEnum;
 import com.harvey.system.exception.BadParameterException;
 import com.harvey.system.exception.BusinessException;
@@ -13,6 +12,7 @@ import com.harvey.system.model.dto.NoticeDto;
 import com.harvey.system.model.entity.Notice;
 import com.harvey.system.model.entity.NoticeUser;
 import com.harvey.system.model.query.NoticeQuery;
+import com.harvey.system.model.vo.NoticeVO;
 import com.harvey.system.security.SecurityUtil;
 import com.harvey.system.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,6 +35,7 @@ public class NoticeService extends ServiceImpl<NoticeMapper, Notice> {
     private final NoticeMapper mapper;
     private final NoticeConverter converter;
     private final NoticeUserService noticeUserService;
+    private final UserService userService;
 
     public Page<Notice> queryPage(NoticeQuery query) {
         Page<Notice> page = new Page<>(query.getPageNum(), query.getPageSize());
@@ -45,42 +45,45 @@ public class NoticeService extends ServiceImpl<NoticeMapper, Notice> {
         return page(page, queryWrapper);
     }
 
-
+    /**
+     * 新增通知
+     *
+     * @param dto
+     */
     @Transactional(rollbackFor = Throwable.class)
     public void saveNotice(NoticeDto dto) {
         Notice entity = converter.toEntity(dto);
-        entity.setStatus(0);
+        entity.setStatus(PublishStatusEnum.UNPUBLISHED.getValue());
         save(entity);
-        if (NoticeTargetTypeEnum.TARGET.getValue() == entity.getTargetType()) {
-            // 指定用户
-            List<Long> targetUserIds = dto.getTargetUserIds();
-            if (ObjectUtils.isEmpty(targetUserIds)) {
-                throw new BadParameterException("指定用户不能为空");
-            }
-            List<NoticeUser> noticeUserList = new ArrayList<>();
-            for (Long userId : targetUserIds) {
-                noticeUserList.add(NoticeUser.builder().noticeId(entity.getId()).userId(userId).build());
-            }
-            noticeUserService.saveBatch(noticeUserList);
-        }
+        // 发送给目标用户
+        noticeUserService.saveNoticeUserBatch(entity.getId(), dto.getTargetUserIds(), dto.getTargetType());
     }
 
+    /**
+     * 更新通知
+     *
+     * @param dto
+     */
     @Transactional(rollbackFor = Throwable.class)
     public void updateNotice(NoticeDto dto) {
         if (ObjectUtils.isEmpty(dto.getId())) {
             throw new BadParameterException();
         }
-        LambdaQueryWrapper<NoticeUser> queryWrapper = new LambdaQueryWrapper<NoticeUser>().eq(NoticeUser::getNoticeId, dto.getId());
-        long count = noticeUserService.count(queryWrapper);
-        if (count > 0) {
-            // 有指定用户
-
-        }
         Notice entity = converter.toEntity(dto);
-        entity.setStatus(0);
+        entity.setStatus(PublishStatusEnum.UNPUBLISHED.getValue());
         updateById(entity);
+        // 删除旧的目标用户
+        LambdaQueryWrapper<NoticeUser> queryWrapper = new LambdaQueryWrapper<NoticeUser>().eq(NoticeUser::getNoticeId, dto.getId());
+        noticeUserService.remove(queryWrapper);
+        // 重新发送给目标用户
+        noticeUserService.saveNoticeUserBatch(entity.getId(), dto.getTargetUserIds(), dto.getTargetType());
     }
 
+    /**
+     * 删除通知
+     *
+     * @param ids
+     */
     @Transactional(rollbackFor = Throwable.class)
     public void deleteByIds(List<Long> ids) {
         if (ObjectUtils.isEmpty(ids)) {
@@ -89,6 +92,11 @@ public class NoticeService extends ServiceImpl<NoticeMapper, Notice> {
         removeByIds(ids);
     }
 
+    /**
+     * 发布通知
+     *
+     * @param id
+     */
     @Transactional(rollbackFor = Throwable.class)
     public void publish(Long id) {
         Notice notice = getNoticeById(id);
@@ -101,6 +109,11 @@ public class NoticeService extends ServiceImpl<NoticeMapper, Notice> {
         updateById(notice);
     }
 
+    /**
+     * 撤回通知
+     *
+     * @param id
+     */
     @Transactional(rollbackFor = Throwable.class)
     public void revoke(Long id) {
         Notice notice = getNoticeById(id);
@@ -113,15 +126,11 @@ public class NoticeService extends ServiceImpl<NoticeMapper, Notice> {
     }
 
     /**
-     * 全部已读
+     * 获取单条通知(不包含通知内容)
+     *
+     * @param id
+     * @return
      */
-    @Transactional(rollbackFor = Throwable.class)
-    public void readAll() {
-        Long userId = SecurityUtil.getUserId();
-        // 查询所有全体类型和指定当前用户的未读通知
-
-    }
-
     public Notice getNoticeById(Long id) {
         LambdaQueryWrapper<Notice> wrapper = new LambdaQueryWrapper<Notice>()
                 // 过滤通知内容text字段
@@ -133,5 +142,15 @@ public class NoticeService extends ServiceImpl<NoticeMapper, Notice> {
             throw new BusinessException("通知不存在");
         }
         return notice;
+    }
+
+    public NoticeVO detail(Long id) {
+        // 已读
+        noticeUserService.read(id);
+        Notice notice = getById(id);
+        NoticeVO noticeVO = converter.toVO(notice);
+        String nickname = userService.findNickname(notice.getPublisherId());
+        noticeVO.setPublisherName(nickname);
+        return noticeVO;
     }
 }

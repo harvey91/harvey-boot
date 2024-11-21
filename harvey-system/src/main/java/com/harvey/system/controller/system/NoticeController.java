@@ -1,18 +1,20 @@
 package com.harvey.system.controller.system;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.harvey.system.model.vo.NoticeVO;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.Operation;
-import com.harvey.system.model.dto.NoticeDto;
-import com.harvey.system.model.query.NoticeQuery;
-import com.harvey.system.model.entity.Notice;
-import com.harvey.system.service.NoticeService;
 import com.harvey.system.base.PageResult;
 import com.harvey.system.base.RespResult;
+import com.harvey.system.model.dto.NoticeDto;
+import com.harvey.system.model.entity.Notice;
+import com.harvey.system.model.query.NoticeQuery;
+import com.harvey.system.model.query.NoticeUserQuery;
+import com.harvey.system.model.vo.NoticeUserVO;
+import com.harvey.system.model.vo.NoticeVO;
+import com.harvey.system.service.NoticeService;
+import com.harvey.system.service.NoticeUserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +32,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class NoticeController {
     private final NoticeService noticeService;
+    private final NoticeUserService noticeUserService;
 
     @Operation(summary = "id查询表单", description = "根据id查询对象")
     @GetMapping("/form/{id}")
@@ -85,23 +88,23 @@ public class NoticeController {
         return RespResult.success();
     }
 
-    @Operation(summary = "id查询详情", description = "包含通知内容text字段")
+    @Operation(summary = "查看详情", description = "包含通知内容text字段")
     @GetMapping("/detail/{id}")
-    public RespResult<Notice> detailById(@PathVariable(value = "id") Long id) {
-        return RespResult.success(noticeService.getById(id));
+    public RespResult<NoticeVO> detailById(@PathVariable(value = "id") Long id) {
+        return RespResult.success(noticeService.detail(id));
     }
 
     @Operation(summary = "全部已读")
     @PutMapping("/read-all")
     public RespResult<String> readAll() {
-
+        noticeUserService.readAll();
         return RespResult.success();
     }
 
     @Operation(summary = "我的通知分页列表")
     @GetMapping("/my-page")
-    public RespResult<Object> myPage() {
-
-        return RespResult.success();
+    public RespResult<PageResult<NoticeUserVO>> myPage(NoticeUserQuery query) {
+        Page<NoticeUserVO> noticeUserVOPage = noticeUserService.myPage(query);
+        return RespResult.success(PageResult.of(noticeUserVOPage));
     }
 }

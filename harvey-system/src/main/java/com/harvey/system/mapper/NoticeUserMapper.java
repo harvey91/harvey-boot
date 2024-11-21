@@ -1,7 +1,10 @@
 package com.harvey.system.mapper;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.harvey.system.model.entity.NoticeUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.harvey.system.model.query.NoticeUserQuery;
+import com.harvey.system.model.vo.NoticeUserVO;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface NoticeUserMapper extends BaseMapper<NoticeUser> {
 
+    Page<NoticeUserVO> selectMyPage(Page<NoticeUserVO> page, NoticeUserQuery query);
 }

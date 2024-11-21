@@ -36,7 +36,13 @@ public class NoticeUser implements Serializable {
     @Schema(description = "用户id")
     private Long userId;
 
+    @Schema(description = "是否已读")
+    private Long isRead;
+
     @Schema(title = "createTime", description = "创建时间")
     @TableField(fill = FieldFill.INSERT)
     public LocalDateTime createTime;
+
+    @Schema(title = "readTime", description = "已读时间")
+    public LocalDateTime readTime;
 }

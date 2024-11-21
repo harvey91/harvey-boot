@@ -11,4 +11,7 @@ import lombok.Data;
 @Data
 public class NoticeUserQuery extends Query {
 
+    private Long userId;
+
+    private Integer isRead;
 }

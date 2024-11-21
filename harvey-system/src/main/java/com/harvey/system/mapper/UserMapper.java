@@ -23,4 +23,12 @@ public interface UserMapper extends BaseMapper<User> {
     @Select("SELECT * FROM sys_user WHERE `username` = #{username} LIMIT 1")
     User selectByUsername(@Param("username") String username);
 
+    /**
+     * id查询昵称
+     * @param id
+     * @return
+     */
+    @Select("SELECT nickname FROM sys_user WHERE `id` = #{id} LIMIT 1")
+    String selectNickname(@Param("id") Long id);
+
 }

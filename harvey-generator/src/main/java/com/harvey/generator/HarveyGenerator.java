@@ -2,8 +2,10 @@ package com.harvey.generator;
 
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
+import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
+import java.sql.Types;
 import java.util.Collections;
 
 public class HarveyGenerator {
@@ -27,7 +29,7 @@ public class HarveyGenerator {
 							.entity("model.entity") // 设置实体类
 							.serviceImpl("service") // 实现类直接替代接口
 							.controller("controller.system")
-							.pathInfo(Collections.singletonMap(OutputFile.xml, OUTPUT_DIR + "resources//mapper")) // 设置mapperXml生成路径
+//							.pathInfo(Collections.singletonMap(OutputFile.xml, OUTPUT_DIR + "resources//mapper")) // 设置mapperXml生成路径
 					;
 				})
 				.injectionConfig(builder -> {
@@ -81,6 +83,16 @@ public class HarveyGenerator {
 //							.enableFileOverride() //  开启文件覆盖
 							;
 				})
+				.dataSourceConfig(builder ->
+						builder.typeConvertHandler((globalConfig, typeRegistry, metaInfo) -> {
+							int typeCode = metaInfo.getJdbcType().TYPE_CODE;
+							if (typeCode == Types.TINYINT) {
+								// 自定义类型转换
+								return DbColumnType.INTEGER;
+							}
+							return typeRegistry.getColumnType(metaInfo);
+						})
+				)
 				.templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
 				.execute();
 	}

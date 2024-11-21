@@ -6,6 +6,7 @@ import ${pkg};
 import java.io.Serial;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * <p>
@@ -16,6 +17,7 @@ import lombok.Data;
  * @since ${date}
  */
 @Data
+@EqualsAndHashCode(callSuper=true)
 @TableName("${schemaName}${table.name}")
 @Schema(name = "${entity}", description = "${table.comment!}")
 public class ${entity} extends ${superEntityClass} {

@@ -6,22 +6,19 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 /**
-* 系统通知表 VO类
+* 通知用户关联 VO类
 *
 * @author harvey
 * @since 2024-11-20
 */
 @Data
-public class NoticeVO {
+public class NoticeUserVO {
 
     @Schema(description = "通知ID")
     private Long id;
 
     @Schema(description = "通知标题")
     private String title;
-
-    @Schema(description = "通知内容")
-    private String content;
 
     @Schema(description = "通知类型")
     private Integer type;
@@ -44,6 +41,9 @@ public class NoticeVO {
     @Schema(description = "发布时间")
     private LocalDateTime publishTime;
 
-    @Schema(description = "撤回时间")
-    private LocalDateTime revokeTime;
+    @Schema(description = "是否已读")
+    private Integer isRead;
+
+    @Schema(description = "已读时间")
+    private LocalDateTime readTime;
 }

@@ -31,14 +31,14 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class UserService extends ServiceImpl<UserMapper, User> {
-    private final UserMapper sysUserMapper;
-    private final UserConverter userConverter;
+    private final UserMapper mapper;
+    private final UserConverter converter;
     private final RoleService roleService;
     private final UserRoleService userRoleService;
     private final PasswordEncoder passwordEncoder;
 
     public User findByUsername(String username) {
-        return sysUserMapper.selectByUsername(username);
+        return mapper.selectByUsername(username);
     }
 
     public Page<UserVO> selectUserPage(UserQuery query) {
@@ -56,8 +56,8 @@ public class UserService extends ServiceImpl<UserMapper, User> {
 //                .between((queryParam.getCreateTime() != null && queryParam.getCreateTime().size() == 2),
 //                        User::getCreateTime, queryParam.getCreateTime().get(0), queryParam.getCreateTime().get(1))
                 .orderByDesc(User::getCreateTime);
-        Page<User> userPage = sysUserMapper.selectPage(page, queryWrapper);
-        return userConverter.toPage(userPage);
+        Page<User> userPage = mapper.selectPage(page, queryWrapper);
+        return converter.toPage(userPage);
     }
 
     /**
@@ -67,15 +67,15 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      */
     @Transactional(rollbackFor = Exception.class)
     public void createUser(UserDto userDto) {
-        long count = sysUserMapper.countByUsername(userDto.getUsername());
+        long count = mapper.countByUsername(userDto.getUsername());
         if (count > 0) {
             throw new BusinessException("用户名已存在");
         }
 
-        User entity = userConverter.toEntity(userDto);
+        User entity = converter.toEntity(userDto);
         // 设置默认密码
         entity.setPassword(passwordEncoder.encode("123456"));
-        sysUserMapper.insert(entity);
+        mapper.insert(entity);
 
         // 保存用户角色
         Set<Long> roleIds = userDto.getRoleIds();
@@ -90,32 +90,32 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      */
     @Transactional
     public void modifyUser(UserDto userDto) {
-        User sysUser = sysUserMapper.selectById(userDto.getId());
-        if (ObjectUtils.isEmpty(sysUser) || ObjectUtils.isEmpty(sysUser.getId())) {
+        User user = this.getById(userDto.getId());
+        if (ObjectUtils.isEmpty(user) || ObjectUtils.isEmpty(user.getId())) {
             throw new BusinessException("找不到用户");
         }
-        if (!userDto.getUsername().equals(sysUser.getUsername())) {
+        if (!userDto.getUsername().equals(user.getUsername())) {
             // 当用户名有变化，需要检测新用户名是否存在
             LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<User>()
                     .eq(User::getUsername, userDto.getUsername())
                     .ne(User::getId, userDto.getId());
-            long count = sysUserMapper.selectCount(queryWrapper);
+            long count = mapper.selectCount(queryWrapper);
             if (count > 0) {
                 throw new BusinessException("用户名已存在");
             }
         }
         // 修改用户
-        User entity = userConverter.toEntity(userDto);
-        sysUserMapper.updateById(entity);
+        User entity = converter.toEntity(userDto);
+        this.updateById(entity);
 
         Set<Long> roleIds = userDto.getRoleIds();
         LambdaQueryWrapper<UserRole> queryWrapper = new LambdaQueryWrapper<UserRole>()
-                .eq(UserRole::getUserId, sysUser.getId());
+                .eq(UserRole::getUserId, user.getId());
         // 先删除原先的用户角色
         userRoleService.remove(queryWrapper);
         if (!ObjectUtils.isEmpty(roleIds)) {
             // 保存新的用户角色
-            userRoleService.create(sysUser.getId(), roleIds);
+            userRoleService.create(user.getId(), roleIds);
         }
     }
 
@@ -127,7 +127,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         User user = new User();
         user.setId(passwordDto.getId());
         user.setPassword(passwordEncoder.encode(passwordDto.getPassword()));
-        sysUserMapper.updateById(user);
+        this.updateById(user);
     }
 
     /**
@@ -140,5 +140,9 @@ public class UserService extends ServiceImpl<UserMapper, User> {
             return Collections.emptyList();
         }
         return list.stream().map(item -> OptionVO.builder().value(item.getId()).label(item.getNickname()).build()).toList();
+    }
+
+    public String findNickname(Long id) {
+        return mapper.selectNickname(id);
     }
 }

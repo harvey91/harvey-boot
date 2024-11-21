@@ -231,20 +231,10 @@ CREATE TABLE `sys_notice_user`
     `id`          bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键id',
     `notice_id`   bigint(20)  NOT NULL COMMENT '通知id',
     `user_id`     bigint(20)  NOT NULL COMMENT '用户id',
+    `is_read`     tinyint(2)  DEFAULT '0' COMMENT '是否已读',
     `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+    `read_time` datetime(0) NOT NULL COMMENT '创建时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8mb4 COMMENT ='系统通知指定用户表';
-
-
-CREATE TABLE `sys_notice_read`
-(
-    `id`          bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键id',
-    `notice_id`   bigint(20)  NOT NULL COMMENT '通知id',
-    `user_id`     bigint(20)  NOT NULL COMMENT '用户id',
-    `create_time` datetime(0) NOT NULL COMMENT '创建时间',
-    PRIMARY KEY (`id`)
-) ENGINE = InnoDB
-  AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8mb4 COMMENT ='系统通知已读用户表';
