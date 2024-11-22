@@ -24,7 +24,7 @@ import java.util.List;
  * @author harvey
  * @since 2024-10-30
  */
-@Tag(name = "菜单管理Controller")
+@Tag(name = "菜单管理")
 @RestController
 @RequestMapping("/system/menu")
 @RequiredArgsConstructor

@@ -22,7 +22,7 @@ import java.util.List;
  * @author ${author}
  * @since ${date}
  */
-@Tag(name = "${table.comment!} Controller")
+@Tag(name = "${table.comment!}")
 @RestController
 @RequestMapping("<#if package.ModuleName?? && package.ModuleName != "">/${package.ModuleName}</#if>/<#if controllerMappingHyphenStyle>${controllerMappingHyphen}<#else>${table.entityPath}</#if>")
 @RequiredArgsConstructor

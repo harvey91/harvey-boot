@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
  * @author harvey
  * @since 2024-11-14
  */
-@Tag(name = "在线用户Controller")
+@Tag(name = "在线用户")
 @RestController
 @RequestMapping("/system/onlineUser")
 @RequiredArgsConstructor

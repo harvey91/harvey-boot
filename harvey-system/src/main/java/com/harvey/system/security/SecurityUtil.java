@@ -16,7 +16,7 @@ public class SecurityUtil {
     public static Long getUserId() {
         LoginUserVO loginUserVO = getLoginUserVO();
         if (ObjectUtils.isEmpty(loginUserVO)) {
-            return -1L;
+            return 0L;
         }
         return loginUserVO.getUserId();
     }
@@ -32,7 +32,7 @@ public class SecurityUtil {
     public static LoginUserVO getLoginUserVO() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (ObjectUtils.isEmpty(authentication)) {
-            throw new BusinessException(ErrorCodeEnum.NOT_LOGIN);
+            return null;
         }
         return (LoginUserVO) authentication.getPrincipal();
     }

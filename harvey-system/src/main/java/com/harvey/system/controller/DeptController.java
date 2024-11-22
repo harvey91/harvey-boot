@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  * @author harvey
  * @since 2024-10-29
  */
-@Tag(name = "部门管理Controller")
+@Tag(name = "部门管理")
 @RestController
 @RequestMapping("/system/dept")
 @RequiredArgsConstructor

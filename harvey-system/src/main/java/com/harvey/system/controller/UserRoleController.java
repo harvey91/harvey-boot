@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author harvey
  * @since 2024-11-07
  */
-@Tag(name = "用户角色关联Controller")
+@Tag(name = "用户角色")
 @RestController
 @RequestMapping("/system/userRole")
 public class UserRoleController {

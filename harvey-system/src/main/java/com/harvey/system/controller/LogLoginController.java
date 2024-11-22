@@ -22,7 +22,7 @@ import java.util.List;
  * @author harvey
  * @since 2024-11-21
  */
-@Tag(name = "登陆日志表 Controller")
+@Tag(name = "登陆日志")
 @RestController
 @RequestMapping("/system/logLogin")
 @RequiredArgsConstructor

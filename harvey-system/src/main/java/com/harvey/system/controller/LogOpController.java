@@ -22,9 +22,9 @@ import java.util.List;
  * @author harvey
  * @since 2024-11-21
  */
-@Tag(name = "操作日志表 Controller")
+@Tag(name = "日志管理")
 @RestController
-@RequestMapping("/system/logOp")
+@RequestMapping("/system/log")
 @RequiredArgsConstructor
 public class LogOpController {
     private final LogOpService logOpService;
@@ -35,10 +35,20 @@ public class LogOpController {
         return RespResult.success(logOpService.getById(id));
     }
 
-    @Operation(summary = "分页列表")
+    @Operation(summary = "操作日志分页列表")
     @PreAuthorize("@ex.hasPerm('sys:log:op:list')")
     @GetMapping("/page")
     public RespResult<PageResult<LogOp>> page(LogOpQuery query) {
+        query.setResult(1);
+        Page<LogOp> page = logOpService.queryPage(query);
+        return RespResult.success(PageResult.of(page));
+    }
+
+    @Operation(summary = "异常日志分页列表")
+    @PreAuthorize("@ex.hasPerm('sys:log:ep:list')")
+    @GetMapping("/exPage")
+    public RespResult<PageResult<LogOp>> exPage(LogOpQuery query) {
+        query.setResult(2);
         Page<LogOp> page = logOpService.queryPage(query);
         return RespResult.success(PageResult.of(page));
     }

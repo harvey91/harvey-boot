@@ -33,7 +33,7 @@ public class LogOpVO {
     private String method;
 
     @Schema(description = "请求参数")
-    private String param;
+    private String params;
 
     @Schema(description = "详情")
     private String detail;

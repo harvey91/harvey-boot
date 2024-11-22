@@ -17,7 +17,7 @@ import java.util.List;
  * @author Harvey
  * @date 2024-11-06 16:54
  **/
-@Tag(name = "角色菜单关联Controller")
+@Tag(name = "角色菜单")
 @RestController
 @RequestMapping("/system/role/menu")
 @RequiredArgsConstructor

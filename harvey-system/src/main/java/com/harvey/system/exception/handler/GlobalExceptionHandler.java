@@ -152,12 +152,6 @@ public class GlobalExceptionHandler {
         return RespResult.error(errorMessage);
     }
 
-    @ExceptionHandler(TypeMismatchException.class)
-    public <T> RespResult<T> processException(TypeMismatchException e) {
-        log.error(e.getMessage(), e);
-        return RespResult.error(e.getMessage());
-    }
-
     @ExceptionHandler(BadSqlGrammarException.class)
     public <T> RespResult<T> handleBadSqlGrammarException(BadSqlGrammarException e) {
         log.error(e.getMessage(), e);

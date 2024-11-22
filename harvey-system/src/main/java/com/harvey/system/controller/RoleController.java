@@ -24,7 +24,7 @@ import java.util.List;
  * @author harvey
  * @since 2024-10-28
  */
-@Tag(name = "角色管理Controller")
+@Tag(name = "角色管理")
 @RestController
 @RequestMapping("/system/role")
 @RequiredArgsConstructor

@@ -33,7 +33,7 @@ public class LogOpService extends ServiceImpl<LogOpMapper, LogOp> {
         LambdaQueryWrapper<LogOp> queryWrapper = new LambdaQueryWrapper<LogOp>()
                 .eq(LogOp::getResult, query.getResult())
                 .like(StringUtils.isNotBlank(query.getKeywords()), LogOp::getModule, query.getKeywords())
-                .orderByDesc(LogOp::getCreateTime);
+                .orderByDesc(LogOp::getId);
         return page(page, queryWrapper);
     }
 

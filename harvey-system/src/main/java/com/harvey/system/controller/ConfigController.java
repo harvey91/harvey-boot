@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  * @author harvey
  * @since 2024-11-13
  */
-@Tag(name = "系统配置Controller")
+@Tag(name = "系统配置")
 @RestController
 @RequestMapping("/system/config")
 @RequiredArgsConstructor

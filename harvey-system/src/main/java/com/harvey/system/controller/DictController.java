@@ -24,7 +24,7 @@ import java.util.List;
  * @author harvey
  * @since 2024-10-31
  */
-@Tag(name = "字典管理Controller")
+@Tag(name = "字典管理")
 @RestController
 @RequestMapping("/system/dict")
 @RequiredArgsConstructor

@@ -22,7 +22,7 @@ import java.util.List;
  * @author harvey
  * @since 2024-11-13
  */
-@Tag(name = "职位管理Controller")
+@Tag(name = "职位管理")
 @RestController
 @RequestMapping("/system/post")
 @RequiredArgsConstructor

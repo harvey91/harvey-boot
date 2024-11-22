@@ -11,7 +11,6 @@ import com.harvey.system.security.OnlineUserCacheService;
 import com.harvey.system.security.SecurityUtil;
 import com.harvey.system.utils.StringUtils;
 import com.pig4cloud.captcha.ArithmeticCaptcha;
-import com.pig4cloud.captcha.SpecCaptcha;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +28,7 @@ import java.util.concurrent.TimeUnit;
  * @author Harvey
  * @date 2024-10-30 10:35
  **/
-@Tag(name = "用户认证Controller")
+@Tag(name = "用户认证")
 @RestController
 @RequestMapping("/authorize")
 @RequiredArgsConstructor

@@ -26,7 +26,7 @@ import java.util.List;
  * @author harvey
  * @since 2024-11-20
  */
-@Tag(name = "系统通知表 Controller")
+@Tag(name = "通知公告")
 @RestController
 @RequestMapping("/system/notice")
 @RequiredArgsConstructor

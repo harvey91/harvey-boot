@@ -12,5 +12,5 @@ import lombok.Data;
 public class LogOpQuery extends Query {
     /* Query属性需要根据查询条件自定义 */
 
-    private Boolean result;
+    private Integer result;
 }

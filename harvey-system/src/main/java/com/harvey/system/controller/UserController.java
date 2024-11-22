@@ -3,6 +3,8 @@ package com.harvey.system.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.harvey.system.base.PageResult;
 import com.harvey.system.base.RespResult;
+import com.harvey.system.enums.ErrorCodeEnum;
+import com.harvey.system.exception.BusinessException;
 import com.harvey.system.mapstruct.UserConverter;
 import com.harvey.system.model.dto.PasswordDto;
 import com.harvey.system.model.dto.UserDto;
@@ -29,7 +31,7 @@ import java.util.List;
  * @author Harvey
  * @date 2024-10-24 21:40
  **/
-@Tag(name = "用户管理Controller")
+@Tag(name = "用户管理")
 @RestController
 @RequestMapping("/system/user")
 @RequiredArgsConstructor
@@ -48,6 +50,9 @@ public class UserController {
     @GetMapping("/me")
     public RespResult<UserInfoVO> me() {
         LoginUserVO loginUserVO = SecurityUtil.getLoginUserVO();
+        if (ObjectUtils.isEmpty(loginUserVO)) {
+            throw new BusinessException(ErrorCodeEnum.NOT_LOGIN);
+        }
         UserInfoVO userInfoVO = new UserInfoVO();
         userInfoVO.setUserId(loginUserVO.getUserId());
         userInfoVO.setUsername(loginUserVO.getUsername());
