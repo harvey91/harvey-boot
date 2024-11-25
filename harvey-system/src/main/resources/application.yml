@@ -78,6 +78,13 @@ jwt:
   # token 过期时间，单位：分钟
   expire-time: 60
 
+executor:
+  core-pool-size: 5
+  max-pool-size: 10
+  queue-capacity: 100
+  keepalive-seconds: 10
+  thread-name-prefix: harvey-
+
 log:
   path: /opt/springboot/web
 

@@ -275,7 +275,6 @@ CREATE TABLE `sys_log_login`
     `location`    varchar(32)  DEFAULT '' COMMENT '地点',
     `browser`     varchar(32)  DEFAULT '' COMMENT '浏览器',
     `os`          varchar(32)  DEFAULT '' COMMENT '操作系统',
-    `duration`    bigint       DEFAULT '0' COMMENT '执行时长(ms)',
     `result`      varchar(16)  DEFAULT '' COMMENT '结果',
     `remark`      varchar(255) DEFAULT '' COMMENT '备注',
     `sort`        int          DEFAULT '0' COMMENT '排序',

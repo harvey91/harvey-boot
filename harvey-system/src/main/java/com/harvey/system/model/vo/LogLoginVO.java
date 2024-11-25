@@ -35,9 +35,9 @@ public class LogLoginVO {
     @Schema(description = "操作系统")
     private String os;
 
-    @Schema(description = "执行时长(ms)")
-    private Long duration;
-
     @Schema(description = "结果")
-    private String result;
+    private Integer result;
+
+    @Schema(description = "备注")
+    private String remark;
 }

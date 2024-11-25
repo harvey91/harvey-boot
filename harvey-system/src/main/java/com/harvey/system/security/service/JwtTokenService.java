@@ -1,7 +1,13 @@
-package com.harvey.system.security;
+package com.harvey.system.security.service;
 
 import cn.hutool.core.util.IdUtil;
 import com.harvey.system.constant.Constant;
+import com.harvey.system.enums.LoginResultEnum;
+import com.harvey.system.security.JwtProperties;
+import com.harvey.system.security.LoginUserVO;
+import com.harvey.system.service.LogService;
+import com.harvey.system.service.MenuService;
+import com.harvey.system.service.RoleService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.JwtParser;
@@ -10,24 +16,31 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.util.List;
 
 
 /**
  * @author Harvey
  * @date 2024-11-05 14:41
  **/
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtTokenService implements InitializingBean {
     private final JwtProperties jwtProperties;
     private final OnlineUserCacheService onlineUserCacheService;
+    private final RoleService roleService;
+    private final MenuService menuService;
+    private final LogService logService;
     private JwtParser jwtParser;
     private JwtBuilder jwtBuilder;
 
@@ -50,14 +63,26 @@ public class JwtTokenService implements InitializingBean {
      * @return
      */
     public String createToken(Authentication authentication) {
-        LoginUserVO loginUser = (LoginUserVO) authentication.getPrincipal();// 缓存登陆用户信息
-        String uuid = IdUtil.fastSimpleUUID();
-        loginUser.setUuid(uuid);
-        onlineUserCacheService.save(loginUser, jwtProperties.getExpireTime(), false);
+        LoginUserVO loginUserVO = (LoginUserVO) authentication.getPrincipal();// 缓存登陆用户信息
+        // 登陆时把当前用户的数据权限对应的deptId集合查出来，后续所有含有deptId的表格查询都通过deptId过滤
+        List<Long> deptIds = roleService.getDeptIds(loginUserVO.getUserId(), loginUserVO.getDeptId());
+        // 用户菜单权限列表
+        List<String> permissions = menuService.getPermissionByUserId(loginUserVO.getUserId());
+        log.debug("permissions list: {}", permissions);
+        // 用户角色列表 TODO
+        List<SimpleGrantedAuthority> authorities = permissions.stream().map(SimpleGrantedAuthority::new).toList();
+        loginUserVO.setDataScopes(deptIds);
+        loginUserVO.setPermissions(permissions);
+        loginUserVO.setAuthorities(authorities);
+        loginUserVO.setUuid(IdUtil.fastSimpleUUID());
+        // 缓存在线用户
+        onlineUserCacheService.save(loginUserVO, jwtProperties.getExpireTime(), false);
+        // 保存登陆日志
+        logService.saveLoginLog(loginUserVO.getUserId(), loginUserVO.getUsername(), LoginResultEnum.LOGIN_SUCCESS.getValue(), "");
         return jwtBuilder
-                .id(uuid)
-                .claim("uuid", uuid)
-                .subject(loginUser.getUsername())
+                .id(loginUserVO.getUuid())
+                .claim("userId", loginUserVO.getUserId())
+                .subject(loginUserVO.getUsername())
                 .compact();
     }
 
@@ -113,7 +138,6 @@ public class JwtTokenService implements InitializingBean {
      */
     public LoginUserVO getLoginUser(String token) {
         Claims claims = parserToken(token);
-        String uuid = claims.get("uuid", String.class);
-        return onlineUserCacheService.getLoginUser(uuid);
+        return onlineUserCacheService.getLoginUser(claims.getId());
     }
 }

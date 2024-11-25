@@ -1,4 +1,4 @@
-package com.harvey.system.security;
+package com.harvey.system.security.exception;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,9 +1,8 @@
-package com.harvey.system.security;
+package com.harvey.system.security.config;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import com.harvey.system.security.LoginUserVO;
+import com.harvey.system.security.SecurityUtil;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
@@ -18,11 +17,11 @@ import java.util.List;
 public class AuthorityConfig {
 
     public boolean hasPerm(String permission) {
-        // 获取当前登录用户认证信息
-        LoginUserVO loginUserVO = SecurityUtil.getLoginUserVO();
-        if (ObjectUtils.isEmpty(loginUserVO)) {
+        if (SecurityUtil.getLoginUserVO().isEmpty()) {
             return false;
         }
+        // 获取当前登录用户认证信息
+        LoginUserVO loginUserVO = SecurityUtil.getLoginUserVO().get();
         List<String> permissions = loginUserVO.getPermissions();
         // TODO 判断当前用户是否为管理员角色，管理员角色可直接放行
         // 判断登录用户权限列表中是否包含参数permission

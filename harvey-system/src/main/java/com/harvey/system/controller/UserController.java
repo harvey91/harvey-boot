@@ -28,6 +28,7 @@ import java.util.List;
 
 /**
  * 用户表 前端控制器
+ *
  * @author Harvey
  * @date 2024-10-24 21:40
  **/
@@ -49,10 +50,10 @@ public class UserController {
     @Operation(summary = "个人信息")
     @GetMapping("/me")
     public RespResult<UserInfoVO> me() {
-        LoginUserVO loginUserVO = SecurityUtil.getLoginUserVO();
-        if (ObjectUtils.isEmpty(loginUserVO)) {
+        if (SecurityUtil.getLoginUserVO().isEmpty()) {
             throw new BusinessException(ErrorCodeEnum.NOT_LOGIN);
         }
+        LoginUserVO loginUserVO = SecurityUtil.getLoginUserVO().get();
         UserInfoVO userInfoVO = new UserInfoVO();
         userInfoVO.setUserId(loginUserVO.getUserId());
         userInfoVO.setUsername(loginUserVO.getUsername());

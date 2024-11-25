@@ -5,6 +5,7 @@ import com.harvey.system.model.entity.BaseEntity;
 import java.io.Serializable;
 import java.io.Serial;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -14,6 +15,7 @@ import lombok.Data;
 * @since 2024-11-21
 */
 @Data
+@Builder
 public class LogLoginDto {
 
     private Long id;
@@ -36,9 +38,9 @@ public class LogLoginDto {
     @Schema(description = "操作系统")
     private String os;
 
-    @Schema(description = "执行时长(ms)")
-    private Long duration;
-
     @Schema(description = "结果")
-    private String result;
+    private Integer result;
+
+    @Schema(description = "备注")
+    private String remark;
 }

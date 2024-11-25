@@ -1,19 +1,18 @@
-package com.harvey.system.security;
+package com.harvey.system.security.service;
 
+import com.harvey.system.enums.LoginResultEnum;
 import com.harvey.system.exception.BusinessException;
 import com.harvey.system.model.entity.User;
-import com.harvey.system.service.MenuService;
-import com.harvey.system.service.RoleService;
+import com.harvey.system.security.LoginUserVO;
+import com.harvey.system.service.LogService;
 import com.harvey.system.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -25,25 +24,20 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserService userService;
-    private final RoleService roleService;
-    private final MenuService menuService;
+    private final LogService logService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userService.findByUsername(username);
         if (Objects.isNull(user)) {
-            throw new UsernameNotFoundException("");
+            logService.saveLoginLog(0L, username, LoginResultEnum.LOGIN_FAILED.getValue(), "用户名不存在");
+            throw new UsernameNotFoundException("用户名或密码错误");
         } else if (user.getEnabled() == 0) {
             // 账号被禁用
+            logService.saveLoginLog(0L, username, LoginResultEnum.LOGIN_FAILED.getValue(), "账号被禁用");
             throw new BusinessException("账号未激活，请联系管理员!");
         }
-        // 登陆时把当前用户的数据权限对应的deptId集合查出来，后续所有含有deptId的表格查询都通过deptId过滤
-        List<Long> deptIds = roleService.getDeptIds(user.getId(), user.getDeptId());
-        // 用户菜单权限列表
-        List<String> permissions = menuService.getPermissionByUserId(user.getId());
-        log.debug("permissions list: {}", permissions);
-        // 用户角色列表 TODO
-        List<SimpleGrantedAuthority> authorities = permissions.stream().map(SimpleGrantedAuthority::new).toList();
+
         return LoginUserVO.builder()
                 .userId(user.getId())
                 .username(user.getUsername())
@@ -53,9 +47,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .isAdmin(user.getId() == 1L)
                 .deptId(user.getDeptId())
                 .enabled(Objects.equals(user.getEnabled(), 1))
-                .dataScopes(deptIds)
-                .permissions(permissions)
-                .authorities(authorities)
                 .build();
     }
 }

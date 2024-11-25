@@ -2,18 +2,20 @@ package com.harvey.system.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.harvey.system.model.query.LogOpQuery;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.harvey.system.exception.BadParameterException;
+import com.harvey.system.mapper.LogOpMapper;
 import com.harvey.system.mapstruct.LogOpConverter;
 import com.harvey.system.model.dto.LogOpDto;
 import com.harvey.system.model.entity.LogOp;
-import com.harvey.system.mapper.LogOpMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.harvey.system.model.query.LogOpQuery;
 import com.harvey.system.utils.StringUtils;
-import com.harvey.system.exception.BadParameterException;
-import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
+
 import java.util.List;
 
 /**
@@ -37,7 +39,7 @@ public class LogOpService extends ServiceImpl<LogOpMapper, LogOp> {
         return page(page, queryWrapper);
     }
 
-
+    @Async("asyncExecutor")
     @Transactional(rollbackFor = Throwable.class)
     public void saveLogOp(LogOpDto dto) {
         LogOp entity = converter.toEntity(dto);

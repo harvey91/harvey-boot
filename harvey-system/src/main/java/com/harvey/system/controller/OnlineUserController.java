@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.harvey.system.base.PageResult;
 import com.harvey.system.base.RespResult;
 import com.harvey.system.model.entity.OnlineUser;
-import com.harvey.system.security.OnlineUserCacheService;
+import com.harvey.system.security.service.OnlineUserCacheService;
 import com.harvey.system.service.OnlineUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

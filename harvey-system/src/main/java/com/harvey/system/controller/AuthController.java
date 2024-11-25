@@ -3,12 +3,15 @@ package com.harvey.system.controller;
 import cn.hutool.core.util.IdUtil;
 import com.harvey.system.base.RespResult;
 import com.harvey.system.constant.CacheConstant;
+import com.harvey.system.enums.LoginResultEnum;
 import com.harvey.system.model.dto.LoginDto;
 import com.harvey.system.model.vo.CaptchaVO;
 import com.harvey.system.redis.RedisCache;
-import com.harvey.system.security.JwtTokenService;
-import com.harvey.system.security.OnlineUserCacheService;
+import com.harvey.system.security.LoginUserVO;
 import com.harvey.system.security.SecurityUtil;
+import com.harvey.system.security.service.JwtTokenService;
+import com.harvey.system.security.service.OnlineUserCacheService;
+import com.harvey.system.service.LogService;
 import com.harvey.system.utils.StringUtils;
 import com.pig4cloud.captcha.ArithmeticCaptcha;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -36,18 +40,21 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenService jwtTokenService;
     private final OnlineUserCacheService onlineUserCacheService;
+    private final LogService logService;
     private final RedisCache redisCache;
 
-    @Operation(summary = "登录")
+//    @Operation(summary = "登录")
     @PostMapping("/login")
     public RespResult<Object> login(LoginDto loginDto) {
         String cacheCode = redisCache.getCacheObject(CacheConstant.LOGIN_CAPTCHA_KEY + loginDto.getCaptchaKey());
         if (StringUtils.isBlank(cacheCode)) {
+            logService.saveLoginLog(0L, loginDto.getUsername(), LoginResultEnum.LOGIN_FAILED.getValue(), "验证码已失效");
             return RespResult.fail("验证码已失效");
         }
         // 不管正不正确，使用过的验证码都先删除，防止撞库
         redisCache.deleteObject(CacheConstant.LOGIN_CAPTCHA_KEY + loginDto.getCaptchaKey());
         if (!cacheCode.equals(loginDto.getCaptchaCode().toLowerCase())) {
+            logService.saveLoginLog(0L, loginDto.getUsername(), LoginResultEnum.LOGIN_FAILED.getValue(), "验证码不正确");
             return RespResult.fail("验证码不正确");
         }
 
@@ -60,9 +67,13 @@ public class AuthController {
         return RespResult.success(data);
     }
 
-    @Operation(summary = "登出")
+//    @Operation(summary = "登出")
     @DeleteMapping("/logout")
     public RespResult<Object> logout() {
+        Optional<LoginUserVO> loginUserVO = SecurityUtil.getLoginUserVO();
+        Long userId = loginUserVO.map(LoginUserVO::getUserId).orElse(0L);
+        String username = loginUserVO.map(LoginUserVO::getUsername).orElse("");
+        logService.saveLoginLog(userId, username, LoginResultEnum.LOGOUT_SUCCESS.getValue(), "");
         onlineUserCacheService.delete(SecurityUtil.getUuid());
         return RespResult.success();
     }

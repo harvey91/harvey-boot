@@ -1,11 +1,10 @@
 package com.harvey.system.security;
 
-import com.harvey.system.base.RespResult;
-import com.harvey.system.enums.ErrorCodeEnum;
-import com.harvey.system.exception.BusinessException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.ObjectUtils;
+
+import java.util.Optional;
 
 /**
  * @author Harvey
@@ -14,26 +13,18 @@ import org.springframework.util.ObjectUtils;
 public class SecurityUtil {
 
     public static Long getUserId() {
-        LoginUserVO loginUserVO = getLoginUserVO();
-        if (ObjectUtils.isEmpty(loginUserVO)) {
-            return 0L;
-        }
-        return loginUserVO.getUserId();
+        return getLoginUserVO().map(LoginUserVO::getUserId).orElse(0L);
     }
 
     public static String getUuid() {
-        LoginUserVO loginUserVO = getLoginUserVO();
-        if (ObjectUtils.isEmpty(loginUserVO)) {
-            return "";
-        }
-        return loginUserVO.getUuid();
+        return getLoginUserVO().map(LoginUserVO::getUuid).orElse("");
     }
 
-    public static LoginUserVO getLoginUserVO() {
+    public static Optional<LoginUserVO> getLoginUserVO() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (ObjectUtils.isEmpty(authentication)) {
-            return null;
+            return Optional.empty();
         }
-        return (LoginUserVO) authentication.getPrincipal();
+        return Optional.of((LoginUserVO) authentication.getPrincipal());
     }
 }

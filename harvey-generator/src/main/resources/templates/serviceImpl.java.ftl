@@ -43,7 +43,6 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
         return page(page, queryWrapper);
     }
 
-
     @Transactional(rollbackFor = Throwable.class)
     public void save${entity}(${entity}Dto dto) {
         ${entity} entity = converter.toEntity(dto);
