@@ -62,6 +62,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
 
     /**
      * 新增用户
+     *
      * @param userDto
      * @return
      */
@@ -86,6 +87,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
 
     /**
      * 修改用户信息
+     *
      * @param userDto
      */
     @Transactional
@@ -121,6 +123,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
 
     /**
      * 重置密码
+     *
      * @param passwordDto 修改密码参数
      */
     public void resetPassword(PasswordDto passwordDto) {
@@ -132,14 +135,16 @@ public class UserService extends ServiceImpl<UserMapper, User> {
 
     /**
      * 用户下拉列表
+     *
      * @return
      */
-    public List<OptionVO> userOptionList() {
+    public List<OptionVO<Long>> userOptionList() {
         List<User> list = this.list();
         if (ObjectUtils.isEmpty(list)) {
             return Collections.emptyList();
         }
-        return list.stream().map(item -> OptionVO.builder().value(item.getId()).label(item.getNickname()).build()).toList();
+        return list.stream().map(item ->
+                OptionVO.<Long>builder().value(item.getId()).label(item.getNickname()).build()).toList();
     }
 
     public String findNickname(Long id) {

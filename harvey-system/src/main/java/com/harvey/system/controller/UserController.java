@@ -151,7 +151,7 @@ public class UserController {
 
     @Operation(summary = "用户下拉列表")
     @GetMapping("/options")
-    public RespResult<List<OptionVO>> options() {
+    public RespResult<List<OptionVO<Long>>> options() {
         return RespResult.success(userService.userOptionList());
     }
 

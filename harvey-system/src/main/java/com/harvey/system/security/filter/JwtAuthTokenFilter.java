@@ -43,13 +43,13 @@ public class JwtAuthTokenFilter extends GenericFilterBean {
             return;
         }
 
-        LoginUserVO loginUser = jwtTokenService.getLoginUser(token);
-        if (ObjectUtils.isEmpty(loginUser)) {
+        LoginUserVO loginUserVO = jwtTokenService.getLoginUser(token);
+        if (ObjectUtils.isEmpty(loginUserVO)) {
             ServletUtils.renderString(response, JSON.toJSONString(RespResult.fail(ErrorCodeEnum.NOT_LOGIN)));
             return;
         }
-        jwtTokenService.verifyToken(loginUser);
-        Authentication authentication = jwtTokenService.getAuthentication(loginUser);
+        jwtTokenService.verifyToken(loginUserVO);
+        Authentication authentication = jwtTokenService.getAuthentication(loginUserVO);
         // 把token认证设置到security上下文
         SecurityContextHolder.getContext().setAuthentication(authentication);
 

@@ -83,7 +83,7 @@ public class MenuController {
 
     @Operation(summary = "菜单下拉列表")
     @GetMapping("/option")
-    public RespResult<List<OptionVO>> option() {
+    public RespResult<List<OptionVO<Long>>> option() {
         return RespResult.success(menuService.options());
     }
 }

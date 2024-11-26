@@ -51,12 +51,12 @@ public class RoleController {
 
     @Operation(summary = "角色下拉列表-键值对")
     @GetMapping("/option")
-    public RespResult<List<OptionVO>> option() {
+    public RespResult<List<OptionVO<Long>>> option() {
         List<Role> list = roleService.list();
-        List<OptionVO> optionVOList = new ArrayList<>();
+        List<OptionVO<Long>> optionVOList = new ArrayList<>();
         if (!ObjectUtils.isEmpty(list)) {
             for (Role role : list) {
-                optionVOList.add(OptionVO.builder().value(role.getId()).label(role.getRoleName()).build());
+                optionVOList.add(OptionVO.<Long>builder().value(role.getId()).label(role.getRoleName()).build());
             }
         }
         return RespResult.success(optionVOList);

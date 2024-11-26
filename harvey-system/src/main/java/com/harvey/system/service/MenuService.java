@@ -91,10 +91,10 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
      * 菜单下拉列表-树形
      * @return
      */
-    public List<OptionVO> options() {
+    public List<OptionVO<Long>> options() {
         LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<Menu>().orderByAsc(Menu::getSort);
         List<Menu> menuList = mapper.selectList(queryWrapper);
-        List<OptionVO> optionVOList = new ArrayList<>();
+        List<OptionVO<Long>> optionVOList = new ArrayList<>();
         if (CollectionUtils.isEmpty(menuList)) {
             return Collections.emptyList();
         }
@@ -103,7 +103,7 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
         if (collect.containsKey(0L)) {
             List<Menu> parentMenuList = collect.get(0L);
             for (Menu menu : parentMenuList) {
-                OptionVO optionVO = OptionVO.builder().value(menu.getId()).label(menu.getMenuName()).build();
+                OptionVO<Long> optionVO = OptionVO.<Long>builder().value(menu.getId()).label(menu.getMenuName()).build();
                 optionVOList.add(optionVO);
                 recursionOption(optionVO, collect);
             }
@@ -172,14 +172,14 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
      * @param parentOptionVO
      * @param collect
      */
-    public void recursionOption(OptionVO parentOptionVO, Map<Long, List<Menu>> collect) {
+    public void recursionOption(OptionVO<Long> parentOptionVO, Map<Long, List<Menu>> collect) {
         if (!collect.containsKey(parentOptionVO.getValue())) {
             return;
         }
-        List<OptionVO> optionVOList = new ArrayList<>();
+        List<OptionVO<Long>> optionVOList = new ArrayList<>();
         List<Menu> childMenuList = collect.get(parentOptionVO.getValue());
         for (Menu menu : childMenuList) {
-            OptionVO optionVO = OptionVO.builder().value(menu.getId()).label(menu.getMenuName()).build();
+            OptionVO<Long> optionVO = OptionVO.<Long>builder().value(menu.getId()).label(menu.getMenuName()).build();
             optionVOList.add(optionVO);
             recursionOption(optionVO, collect);
         }

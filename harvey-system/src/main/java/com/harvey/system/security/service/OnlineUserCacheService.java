@@ -11,6 +11,7 @@ import com.harvey.system.utils.ip.IpUtils;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.concurrent.TimeUnit;
 
@@ -30,7 +31,7 @@ public class OnlineUserCacheService {
         setUserAgent(loginUserVO);
         // 缓存
         String userKey = getLoginUserKey(loginUserVO.getUuid());
-        redisCache.setCacheObject(userKey, loginUserVO, expireTime, TimeUnit.MINUTES);
+        redisCache.setEx(userKey, loginUserVO, expireTime, TimeUnit.MINUTES);
         // 入库
         if (refresh) {
             onlineUserService.updateExpireTime(loginUserVO);
@@ -42,11 +43,11 @@ public class OnlineUserCacheService {
 
     public void delete(String uuid) {
         onlineUserService.offline(uuid);
-        redisCache.deleteObject(getLoginUserKey(uuid));
+        redisCache.delete(getLoginUserKey(uuid));
     }
 
     public LoginUserVO getLoginUser(String uuid) {
-        return redisCache.getCacheObject(getLoginUserKey(uuid));
+        return redisCache.get(getLoginUserKey(uuid));
     }
 
     /**

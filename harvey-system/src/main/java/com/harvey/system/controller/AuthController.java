@@ -46,13 +46,13 @@ public class AuthController {
 //    @Operation(summary = "登录")
     @PostMapping("/login")
     public RespResult<Object> login(LoginDto loginDto) {
-        String cacheCode = redisCache.getCacheObject(CacheConstant.LOGIN_CAPTCHA_KEY + loginDto.getCaptchaKey());
+        String cacheCode = redisCache.get(CacheConstant.LOGIN_CAPTCHA_KEY + loginDto.getCaptchaKey());
         if (StringUtils.isBlank(cacheCode)) {
             logService.saveLoginLog(0L, loginDto.getUsername(), LoginResultEnum.LOGIN_FAILED.getValue(), "验证码已失效");
             return RespResult.fail("验证码已失效");
         }
         // 不管正不正确，使用过的验证码都先删除，防止撞库
-        redisCache.deleteObject(CacheConstant.LOGIN_CAPTCHA_KEY + loginDto.getCaptchaKey());
+        redisCache.delete(CacheConstant.LOGIN_CAPTCHA_KEY + loginDto.getCaptchaKey());
         if (!cacheCode.equals(loginDto.getCaptchaCode().toLowerCase())) {
             logService.saveLoginLog(0L, loginDto.getUsername(), LoginResultEnum.LOGIN_FAILED.getValue(), "验证码不正确");
             return RespResult.fail("验证码不正确");
@@ -96,7 +96,7 @@ public class AuthController {
         // redis缓存key
         String uuid = IdUtil.fastSimpleUUID();
         // 5分钟内有效
-        redisCache.setCacheObject(CacheConstant.LOGIN_CAPTCHA_KEY + uuid, code, 5, TimeUnit.MINUTES);
+        redisCache.setEx(CacheConstant.LOGIN_CAPTCHA_KEY + uuid, code, 5, TimeUnit.MINUTES);
         return RespResult.success(CaptchaVO.builder().captchaKey(uuid).captchaBase64(base64).build());
     }
 }
