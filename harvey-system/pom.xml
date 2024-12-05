@@ -66,6 +66,12 @@
             <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
         </dependency>
 
+        <!-- 动态切换数据源 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
+        </dependency>
+
         <!-- swagger  -->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>

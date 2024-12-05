@@ -180,4 +180,5 @@
     </root>
     <logger name="com.harvey" level="DEBUG" />
     <logger name="org.springframework" level="ERROR" />
+    <logger name="com.baomidou.dynamic.datasource" level="DEBUG" />
 </configuration>

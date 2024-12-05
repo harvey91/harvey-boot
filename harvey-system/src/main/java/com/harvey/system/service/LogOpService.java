@@ -1,8 +1,10 @@
 package com.harvey.system.service;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.harvey.system.constant.DynamicDSConstant;
 import com.harvey.system.exception.BadParameterException;
 import com.harvey.system.mapper.LogOpMapper;
 import com.harvey.system.mapstruct.LogOpConverter;
@@ -30,6 +32,7 @@ public class LogOpService extends ServiceImpl<LogOpMapper, LogOp> {
     private final LogOpMapper mapper;
     private final LogOpConverter converter;
 
+    @DS(DynamicDSConstant.SLAVE_1)
     public Page<LogOp> queryPage(LogOpQuery query) {
         Page<LogOp> page = new Page<>(query.getPageNum(), query.getPageSize());
         LambdaQueryWrapper<LogOp> queryWrapper = new LambdaQueryWrapper<LogOp>()

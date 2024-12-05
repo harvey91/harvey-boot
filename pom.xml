@@ -26,6 +26,7 @@
         <spring-boot.version>3.3.4</spring-boot.version>
 
         <mybatis-plus-spring-boot3-starter.version>3.5.5</mybatis-plus-spring-boot3-starter.version>
+        <dynamic-datasource-spring-boot3-starter.version>4.3.1</dynamic-datasource-spring-boot3-starter.version>
         <druid-spring-boot-3-starter.version>1.2.20</druid-spring-boot-3-starter.version>
         <knife4j-openapi3-jakarta-spring-boot-starter.version>4.4.0</knife4j-openapi3-jakarta-spring-boot-starter.version>
         <hutool-all.version>5.8.25</hutool-all.version>
@@ -67,6 +68,13 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
                 <version>${mybatis-plus-spring-boot3-starter.version}</version>
+            </dependency>
+
+            <!-- 动态切换数据源 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
+                <version>${dynamic-datasource-spring-boot3-starter.version}</version>
             </dependency>
 
             <!-- swagger  -->
@@ -227,7 +235,7 @@
         </plugins>
     </build>
 
-    <repositories>
+    <!--<repositories>
         <repository>
             <id>public</id>
             <name>aliyun nexus</name>
@@ -250,5 +258,5 @@
                 <enabled>false</enabled>
             </snapshots>
         </pluginRepository>
-    </pluginRepositories>
+    </pluginRepositories>-->
 </project>
