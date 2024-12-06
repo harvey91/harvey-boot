@@ -23,7 +23,7 @@ CREATE TABLE `sys_user`
     UNIQUE (`username`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8mb4 COMMENT ='系统用户表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='用户管理';
 
 CREATE TABLE `sys_dept`
 (
@@ -40,7 +40,7 @@ CREATE TABLE `sys_dept`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8mb4 COMMENT ='系统部门表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='部门管理';
 
 CREATE TABLE `sys_role`
 (
@@ -57,7 +57,7 @@ CREATE TABLE `sys_role`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8mb4 COMMENT ='系统角色表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='角色管理';
 
 CREATE TABLE `sys_menu`
 (
@@ -83,7 +83,7 @@ CREATE TABLE `sys_menu`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8mb4 COMMENT ='系统菜单表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='菜单管理';
 
 CREATE TABLE `sys_user_role`
 (
@@ -94,7 +94,7 @@ CREATE TABLE `sys_user_role`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8mb4 COMMENT ='用户角色关联表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='用户角色关联';
 
 CREATE TABLE `sys_role_dept`
 (
@@ -105,7 +105,7 @@ CREATE TABLE `sys_role_dept`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8mb4 COMMENT ='角色部门关联表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='角色部门关联';
 
 CREATE TABLE `sys_role_menu`
 (
@@ -116,7 +116,7 @@ CREATE TABLE `sys_role_menu`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8mb4 COMMENT ='角色菜单关联表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='角色菜单关联';
 
 CREATE TABLE `sys_dict`
 (
@@ -132,7 +132,7 @@ CREATE TABLE `sys_dict`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8mb4 COMMENT ='系统字典表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='字典管理';
 
 CREATE TABLE `sys_dict_data`
 (
@@ -150,7 +150,7 @@ CREATE TABLE `sys_dict_data`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8mb4 COMMENT ='字典数据表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='字典数据';
 
 CREATE TABLE `sys_post`
 (
@@ -166,7 +166,7 @@ CREATE TABLE `sys_post`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8mb4 COMMENT ='职位表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='职位管理';
 
 CREATE TABLE `sys_config`
 (
@@ -184,7 +184,7 @@ CREATE TABLE `sys_config`
     UNIQUE (`config_key`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8mb4 COMMENT ='系统配置表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='系统配置';
 
 CREATE TABLE `sys_online_user`
 (
@@ -201,7 +201,7 @@ CREATE TABLE `sys_online_user`
     `status`      int         DEFAULT '0' COMMENT '在线状态',
     PRIMARY KEY (`uuid`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 COMMENT ='在线用户表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='在线用户';
 
 CREATE TABLE `sys_notice`
 (
@@ -224,7 +224,7 @@ CREATE TABLE `sys_notice`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8mb4 COMMENT ='通知公告表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='通知公告';
 
 CREATE TABLE `sys_notice_user`
 (
@@ -237,7 +237,7 @@ CREATE TABLE `sys_notice_user`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8mb4 COMMENT ='通知指定用户表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='通知指定用户';
 
 CREATE TABLE `sys_log_op`
 (
@@ -264,7 +264,7 @@ CREATE TABLE `sys_log_op`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8mb4 COMMENT ='操作日志表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='操作日志';
 
 CREATE TABLE `sys_log_login`
 (
@@ -285,4 +285,25 @@ CREATE TABLE `sys_log_login`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8mb4 COMMENT ='登陆日志表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='登陆日志';
+
+CREATE TABLE `sys_file_manage`
+(
+    `id`          bigint(20)   NOT NULL AUTO_INCREMENT COMMENT '主键id',
+    `user_id`     bigint(20)   NOT NULL COMMENT '上传者id',
+    `name`        varchar(255) NOT NULL COMMENT '文件名',
+    `md5`         varchar(32)  NOT NULL COMMENT 'MD5',
+    `size`        bigint(20)   NOT NULL COMMENT '文件大小',
+    `suffix`      varchar(32)  DEFAULT '' COMMENT '文件后缀',
+    `type`        varchar(32)  DEFAULT '' COMMENT '类型',
+    `path`        varchar(255) DEFAULT '' COMMENT '文件路径',
+    `remark`      varchar(255) DEFAULT '' COMMENT '备注',
+    `sort`        int          DEFAULT '0' COMMENT '排序',
+    `enabled`     tinyint(2)   DEFAULT '1' COMMENT '是否启用',
+    `create_time` datetime(0)  NOT NULL COMMENT '创建时间',
+    `update_time` datetime(0)  NOT NULL COMMENT '修改时间',
+    `deleted`     tinyint(2)   DEFAULT '1' COMMENT '逻辑删除',
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8mb4 COMMENT ='文件管理';

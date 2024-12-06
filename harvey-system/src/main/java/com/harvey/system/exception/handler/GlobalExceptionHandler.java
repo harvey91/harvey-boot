@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.jdbc.BadSqlGrammarException;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -92,6 +93,13 @@ public class GlobalExceptionHandler {
         String msg = e.getBindingResult().getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining("；"));
         return RespResult.error(msg);
     }
+
+    @ExceptionHandler(AuthorizationDeniedException.class)
+    public <T> RespResult<T> processException(AuthorizationDeniedException e) {
+        log.error(e.getMessage(), e);
+        return RespResult.error("权限不足！");
+    }
+
 
     @ExceptionHandler(NoHandlerFoundException.class)
     public <T> RespResult<T> processException(NoHandlerFoundException e) {

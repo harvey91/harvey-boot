@@ -106,6 +106,7 @@ public class WebSecurityConfig {
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/druid/**"))
                 // 允许所有OPTIONS请求
                 .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.OPTIONS, "/**"))
+                .requestMatchers(AntPathRequestMatcher.antMatcher("/system/file/manage/**"))
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/authorize/login"))
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/authorize/captcha"));
         // TODO
