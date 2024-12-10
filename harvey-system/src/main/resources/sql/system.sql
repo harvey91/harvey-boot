@@ -295,7 +295,7 @@ CREATE TABLE `sys_file_manage`
     `md5`         varchar(32)  NOT NULL COMMENT 'MD5',
     `size`        bigint(20)   NOT NULL COMMENT '文件大小',
     `suffix`      varchar(32)  DEFAULT '' COMMENT '文件后缀',
-    `type`        varchar(32)  DEFAULT '' COMMENT '类型',
+    `platform`    varchar(32)  DEFAULT '' COMMENT '上传平台',
     `path`        varchar(255) DEFAULT '' COMMENT '文件路径',
     `remark`      varchar(255) DEFAULT '' COMMENT '备注',
     `sort`        int          DEFAULT '0' COMMENT '排序',

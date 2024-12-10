@@ -3,6 +3,10 @@ package com.harvey.system.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 通知发布状态 枚举类
  * @author Harvey
@@ -21,12 +25,8 @@ public enum PublishStatusEnum {
 
     private final String label;
 
-    public static PublishStatusEnum get(int value) {
-        for (PublishStatusEnum enum1 : PublishStatusEnum.values()) {
-            if (enum1.getValue() == value) {
-                return enum1;
-            }
-        }
-        return null;
+    public static Map<Integer, String> map = new HashMap<>();
+    static {
+        Arrays.stream(PublishStatusEnum.values()).forEach(item -> map.put(item.value, item.label));
     }
 }

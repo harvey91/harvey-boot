@@ -29,8 +29,8 @@ public class FileManageDto {
     @Schema(description = "文件后缀")
     private String suffix;
 
-    @Schema(description = "类型")
-    private String type;
+    @Schema(description = "上传平台")
+    private String platform;
 
     @Schema(description = "文件路径")
     private String path;

@@ -30,7 +30,7 @@ public class StorageService {
     private String active;
     private IStorage storage;
 
-    public FileManageDto store(MultipartFile file, Long userId) throws IOException {
+    public FileManageDto store(MultipartFile file, Long userId, String platform) throws IOException {
         long fileSize = file.getSize();
         String fileType = file.getContentType();
         String fileName = file.getOriginalFilename();
@@ -47,7 +47,7 @@ public class StorageService {
         FileManageDto fileManageDto = new FileManageDto();
         fileManageDto.setName(fileName);
         fileManageDto.setSize(fileSize);
-        fileManageDto.setType("");
+        fileManageDto.setPlatform(platform);
         fileManageDto.setMd5(md5);
         fileManageDto.setPath(url);
         fileManageDto.setSuffix(suffix);

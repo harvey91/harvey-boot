@@ -33,7 +33,7 @@ public class FileManageService extends ServiceImpl<FileManageMapper, FileManage>
         Page<FileManage> page = new Page<>(query.getPageNum(), query.getPageSize());
         LambdaQueryWrapper<FileManage> queryWrapper = new LambdaQueryWrapper<FileManage>()
                 .like(StringUtils.isNotBlank(query.getKeywords()), FileManage::getName, query.getKeywords())
-                .orderByAsc(FileManage::getSort);
+                .orderByDesc(FileManage::getId);
         return page(page, queryWrapper);
     }
 
