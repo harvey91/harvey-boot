@@ -4,6 +4,10 @@ server:
 spring:
   application:
     name: harvey-admin
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
   jackson:
     default-property-inclusion: non_null
   datasource:
@@ -127,9 +131,9 @@ storage:
   active: local
   # 本地对象存储配置信息
   local:
-    storagePath: E:/storage
-    # 这个地方应该是wx模块的WxStorageController的fetch方法对应的地址
-    address: http://192.168.1.9:8080/storage/fetch/
+    storagePath: G:/storage
+    # fetch方法对应的地址
+    address: /storage/fetch/
   # 阿里云对象存储配置信息
   aliyun:
     endpoint: oss-cn-shenzhen.aliyuncs.com

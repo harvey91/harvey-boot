@@ -6,6 +6,7 @@ import com.harvey.system.base.RespResult;
 import com.harvey.system.model.dto.FileManageDto;
 import com.harvey.system.model.entity.FileManage;
 import com.harvey.system.model.query.FileManageQuery;
+import com.harvey.system.security.SecurityUtil;
 import com.harvey.system.service.FileManageService;
 import com.harvey.system.storage.StorageService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,7 +41,7 @@ public class FileManageController {
     }
 
     @Operation(summary = "分页列表")
-    @PreAuthorize("@ex.hasPerm('sys:FileManage:list')")
+    @PreAuthorize("@ex.hasPerm('sys:file:manage:list')")
     @GetMapping("/page")
     public RespResult<PageResult<FileManage>> page(FileManageQuery query) {
         Page<FileManage> page = fileManageService.queryPage(query);
@@ -48,15 +49,16 @@ public class FileManageController {
     }
 
     @Operation(summary = "新增")
-    @PreAuthorize("@ex.hasPerm('sys:FileManage:create')")
+    @PreAuthorize("@ex.hasPerm('sys:file:manage:create')")
     @PostMapping("/create")
     public RespResult<String> create(@RequestParam("file") MultipartFile file) throws IOException {
-        storageService.store(file.getInputStream(), file.getSize(), file.getContentType(), file.getOriginalFilename());
+        Long userId = SecurityUtil.getUserId();
+        storageService.store(file, userId);
         return RespResult.success();
     }
 
     @Operation(summary = "修改")
-    @PreAuthorize("@ex.hasPerm('sys:FileManage:modify')")
+    @PreAuthorize("@ex.hasPerm('sys:file:manage:modify')")
     @PutMapping("/modify")
     public RespResult<String> modify(@RequestBody @Validated FileManageDto dto) {
         fileManageService.updateFileManage(dto);
@@ -64,7 +66,7 @@ public class FileManageController {
     }
 
     @Operation(summary = "删除")
-    @PreAuthorize("@ex.hasPerm('sys:FileManage:delete')")
+    @PreAuthorize("@ex.hasPerm('sys:file:manage:delete')")
     @DeleteMapping("/delete")
     public RespResult<String> delete(@RequestBody List<Long> ids) {
         fileManageService.deleteByIds(ids);

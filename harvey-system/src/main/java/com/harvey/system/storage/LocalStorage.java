@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -40,7 +41,7 @@ public class LocalStorage implements IStorage {
     public void store(InputStream inputStream, long contentLength, String contentType, String keyName) {
         try {
             Files.copy(inputStream, rootLocation.resolve(keyName), StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException("Failed to store file " + keyName, e);
         }
     }
@@ -91,6 +92,6 @@ public class LocalStorage implements IStorage {
     @Override
     public String generateUrl(String keyName) {
 
-        return address + keyName;
+        return address.endsWith(File.separator) ? address + keyName : address + File.separator + keyName;
     }
 }

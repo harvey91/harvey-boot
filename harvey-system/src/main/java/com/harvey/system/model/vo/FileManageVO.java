@@ -18,7 +18,7 @@ public class FileManageVO {
     private Long id;
 
     @Schema(description = "上传者id")
-    private String userId;
+    private Long userId;
 
     @Schema(description = "文件名")
     private String name;

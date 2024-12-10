@@ -60,7 +60,7 @@ public class UserController {
         userInfoVO.setNickname(loginUserVO.getNickname());
         userInfoVO.setAvatar(loginUserVO.getAvatar());
         // TODO 角色列表
-//        userInfoVO.setRoles(loginUserVO.getAuthorities());
+        userInfoVO.setRoles(List.of("ROOT"));
         userInfoVO.setPerms(loginUserVO.getPermissions());
         return RespResult.success(userInfoVO);
     }

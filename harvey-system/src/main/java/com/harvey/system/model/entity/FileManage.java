@@ -25,7 +25,7 @@ public class FileManage extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @Schema(description = "上传者id")
-    private String userId;
+    private Long userId;
 
     @Schema(description = "文件名")
     private String name;
