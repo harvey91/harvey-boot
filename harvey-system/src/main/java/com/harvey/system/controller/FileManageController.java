@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * 文件管理 前端控制器
@@ -68,9 +67,9 @@ public class FileManageController {
 
     @Operation(summary = "删除")
     @PreAuthorize("@ex.hasPerm('sys:file:manage:delete')")
-    @DeleteMapping("/delete")
-    public RespResult<String> delete(@RequestBody List<Long> ids) {
-        fileManageService.deleteByIds(ids);
+    @DeleteMapping("/delete/{id}")
+    public RespResult<String> delete(@PathVariable(value = "id") Long id) {
+        fileManageService.deleteById(id);
         return RespResult.success();
     }
 }

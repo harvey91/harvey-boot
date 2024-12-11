@@ -133,7 +133,7 @@ storage:
   local:
     storagePath: G:/storage
     # fetch方法对应的地址
-    address: /storage/fetch/
+    address: /storage/fetch
   # 阿里云对象存储配置信息
   aliyun:
     endpoint: oss-cn-shenzhen.aliyuncs.com

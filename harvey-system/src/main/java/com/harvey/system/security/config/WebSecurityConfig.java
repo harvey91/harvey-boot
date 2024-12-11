@@ -102,6 +102,7 @@ public class WebSecurityConfig {
                 // 文件
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/avatar/**"))
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/file/**"))
+                .requestMatchers(AntPathRequestMatcher.antMatcher("/storage/fetch/**"))
                 // 阿里巴巴 druid
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/druid/**"))
                 // 允许所有OPTIONS请求

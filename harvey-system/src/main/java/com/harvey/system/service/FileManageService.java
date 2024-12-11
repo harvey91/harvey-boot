@@ -59,4 +59,9 @@ public class FileManageService extends ServiceImpl<FileManageMapper, FileManage>
         }
         removeByIds(ids);
     }
+
+    @Transactional(rollbackFor = Throwable.class)
+    public void deleteById(Long id) {
+        removeById(id);
+    }
 }

@@ -1,5 +1,6 @@
 package com.harvey.system.storage;
 
+import com.harvey.system.utils.FileUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -40,7 +41,8 @@ public class LocalStorage implements IStorage {
     @Override
     public void store(InputStream inputStream, long contentLength, String contentType, String keyName) {
         try {
-            Files.copy(inputStream, rootLocation.resolve(keyName), StandardCopyOption.REPLACE_EXISTING);
+            FileUtil.writeFromStream(inputStream, rootLocation.resolve(keyName).toString());
+//            Files.copy(inputStream, rootLocation.resolve(keyName), StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {
             throw new RuntimeException("Failed to store file " + keyName, e);
         }
