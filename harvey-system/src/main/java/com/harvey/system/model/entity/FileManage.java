@@ -43,5 +43,5 @@ public class FileManage extends BaseEntity {
     private String platform;
 
     @Schema(description = "文件路径")
-    private String path;
+    private String url;
 }

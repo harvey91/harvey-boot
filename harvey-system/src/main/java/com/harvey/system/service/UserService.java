@@ -6,13 +6,17 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.system.exception.BusinessException;
 import com.harvey.system.mapper.UserMapper;
 import com.harvey.system.mapstruct.UserConverter;
+import com.harvey.system.model.dto.ModifyPasswordDto;
 import com.harvey.system.model.dto.PasswordDto;
+import com.harvey.system.model.dto.ProfileDto;
 import com.harvey.system.model.dto.UserDto;
 import com.harvey.system.model.entity.User;
 import com.harvey.system.model.entity.UserRole;
 import com.harvey.system.model.query.UserQuery;
 import com.harvey.system.model.vo.OptionVO;
 import com.harvey.system.model.vo.UserVO;
+import com.harvey.system.security.SecurityUtil;
+import com.harvey.system.security.service.OnlineUserCacheService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -36,6 +40,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     private final RoleService roleService;
     private final UserRoleService userRoleService;
     private final PasswordEncoder passwordEncoder;
+    private final OnlineUserCacheService onlineUserCacheService;
 
     public User findByUsername(String username) {
         return mapper.selectByUsername(username);
@@ -122,6 +127,20 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     }
 
     /**
+     * 更新个人信息
+     * @param profileDto
+     */
+    @Transactional
+    public void modifyProfile(ProfileDto profileDto) {
+        User entity = new User();
+        entity.setId(SecurityUtil.getUserId());
+        entity.setNickname(profileDto.getNickname());
+        entity.setGender(profileDto.getGender());
+        entity.setAvatar(profileDto.getAvatar());
+        this.updateById(entity);
+    }
+
+    /**
      * 重置密码
      *
      * @param passwordDto 修改密码参数
@@ -131,6 +150,33 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         user.setId(passwordDto.getId());
         user.setPassword(passwordEncoder.encode(passwordDto.getPassword()));
         this.updateById(user);
+    }
+
+    /**
+     * 修改密码
+     * @param passwordDto
+     */
+    public void modifyPassword(ModifyPasswordDto passwordDto) {
+        if (!passwordDto.getNewPassword().equals(passwordDto.getConfirmPassword())) {
+            throw new BusinessException("两次密码不一致");
+        }
+        Long userId = SecurityUtil.getUserId();
+        User user = this.getById(userId);
+        if (ObjectUtils.isEmpty(user)) {
+            throw new BusinessException("用户不存在");
+        }
+        if (!passwordEncoder.matches(passwordDto.getOldPassword(), user.getPassword())) {
+            throw new BusinessException("原密码不正确");
+        }
+        if (passwordEncoder.matches(passwordDto.getNewPassword(), user.getPassword())) {
+            throw new BusinessException("新密码不能与原密码相同");
+        }
+        User entity = new User();
+        entity.setId(userId);
+        entity.setPassword(passwordEncoder.encode(passwordDto.getNewPassword()));
+        this.updateById(entity);
+        // 改完密码强制下线
+        onlineUserCacheService.delete(SecurityUtil.getUuid());
     }
 
     /**

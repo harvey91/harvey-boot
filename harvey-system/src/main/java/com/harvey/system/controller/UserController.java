@@ -3,11 +3,14 @@ package com.harvey.system.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.harvey.system.base.PageResult;
 import com.harvey.system.base.RespResult;
+import com.harvey.system.enums.ContactTypeEnum;
 import com.harvey.system.enums.ErrorCodeEnum;
+import com.harvey.system.enums.PlatformEnum;
+import com.harvey.system.enums.VerifyTypeEnum;
+import com.harvey.system.exception.BadParameterException;
 import com.harvey.system.exception.BusinessException;
 import com.harvey.system.mapstruct.UserConverter;
-import com.harvey.system.model.dto.PasswordDto;
-import com.harvey.system.model.dto.UserDto;
+import com.harvey.system.model.dto.*;
 import com.harvey.system.model.entity.User;
 import com.harvey.system.model.query.UserQuery;
 import com.harvey.system.model.vo.OptionVO;
@@ -16,6 +19,7 @@ import com.harvey.system.model.vo.UserVO;
 import com.harvey.system.security.LoginUserVO;
 import com.harvey.system.security.SecurityUtil;
 import com.harvey.system.service.UserService;
+import com.harvey.system.service.VerifyCodeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +43,7 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
     private final UserConverter userConverter;
+    private final VerifyCodeService verifyCodeService;
 
     @Operation(summary = "id查询表单")
     @GetMapping("/form/{id}")
@@ -123,28 +128,28 @@ public class UserController {
 
     @Operation(summary = "获取个人信息")
     @PutMapping("/profile")
-    public RespResult<UserVO> modifyProfile() {
-
+    public RespResult<UserVO> modifyProfile(@RequestBody ProfileDto profileDto) {
+        userService.modifyProfile(profileDto);
         return RespResult.success();
     }
 
     @Operation(summary = "修改个人密码")
     @PutMapping("/password")
-    public RespResult<UserVO> password() {
-
+    public RespResult<UserVO> password(@RequestBody @Validated ModifyPasswordDto modifyPasswordDto) {
+        userService.modifyPassword(modifyPasswordDto);
         return RespResult.success();
     }
 
     @Operation(summary = "绑定手机号")
     @PutMapping("/phone")
-    public RespResult<UserVO> phone() {
+    public RespResult<UserVO> phone(@RequestBody @Validated PhoneDto phoneDto) {
 
         return RespResult.success();
     }
 
     @Operation(summary = "绑定邮箱号")
     @PutMapping("/email")
-    public RespResult<UserVO> email() {
+    public RespResult<UserVO> email(@RequestBody @Validated EmailDto emailDto) {
 
         return RespResult.success();
     }
@@ -157,8 +162,17 @@ public class UserController {
 
     @Operation(summary = "发送手机/邮箱验证码")
     @GetMapping("/send-verification-code")
-    public RespResult<UserVO> sendCode() {
-
+    public RespResult<UserVO> sendCode(@RequestParam("contact") String contact,
+                                       @RequestParam("contactType") String contactTypeStr) {
+        int contactType = 0;
+        if (contactTypeStr.equals(ContactTypeEnum.PHONE.name())) {
+            contactType = ContactTypeEnum.PHONE.getValue();
+        } else if (contactTypeStr.equals(ContactTypeEnum.EMAIL.name())) {
+            contactType = ContactTypeEnum.EMAIL.getValue();
+        } else {
+            throw new BadParameterException("未知的验证类型");
+        }
+        verifyCodeService.sendCode(contact, contactType, VerifyTypeEnum.BIND.getValue(), PlatformEnum.SYSTEM.getValue());
         return RespResult.success();
     }
 }

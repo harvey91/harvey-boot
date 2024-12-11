@@ -61,7 +61,7 @@ public class HarveyGenerator {
                     ;
                 })
                 .strategyConfig(builder -> {
-                    builder.addInclude("sys_storage") // 设置需要生成的表名
+                    builder.addInclude("sys_verify_code") // 设置需要生成的表名
                             .addTablePrefix("t_", "c_", "sys_")   // 设置过滤表前缀
                             .build()
                             .entityBuilder()

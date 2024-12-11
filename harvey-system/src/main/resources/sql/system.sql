@@ -296,7 +296,7 @@ CREATE TABLE `sys_file_manage`
     `size`        bigint(20)   NOT NULL COMMENT '文件大小',
     `suffix`      varchar(32)  DEFAULT '' COMMENT '文件后缀',
     `platform`    varchar(32)  DEFAULT '' COMMENT '上传平台',
-    `path`        varchar(255) DEFAULT '' COMMENT '文件路径',
+    `url`         varchar(255) DEFAULT '' COMMENT '文件路径',
     `remark`      varchar(255) DEFAULT '' COMMENT '备注',
     `sort`        int          DEFAULT '0' COMMENT '排序',
     `enabled`     tinyint(2)   DEFAULT '1' COMMENT '是否启用',
@@ -307,3 +307,24 @@ CREATE TABLE `sys_file_manage`
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8mb4 COMMENT ='文件管理';
+
+CREATE TABLE `sys_verify_code`
+(
+    `id`           bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键id',
+    `contact`      varchar(32) NOT NULL COMMENT '联系方式',
+    `contact_type` tinyint(2)  NOT NULL COMMENT '联系类型',
+    `verify_code`  varchar(16) NOT NULL COMMENT '验证码',
+    `verify_type`  tinyint(2)  NOT NULL COMMENT '验证类型',
+    `platform`     tinyint(2)  NOT NULL COMMENT '平台',
+    `expire_time`  datetime(0) NOT NULL COMMENT '过期时间',
+    `verify_time`  datetime(0) COMMENT '验证时间',
+    `remark`       varchar(255) DEFAULT '' COMMENT '备注',
+    `sort`         int          DEFAULT '0' COMMENT '排序',
+    `enabled`      tinyint(2)   DEFAULT '1' COMMENT '是否启用',
+    `create_time`  datetime(0) NOT NULL COMMENT '创建时间',
+    `update_time`  datetime(0) NOT NULL COMMENT '修改时间',
+    `deleted`      tinyint(2)   DEFAULT '1' COMMENT '逻辑删除',
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8mb4 COMMENT ='验证码';

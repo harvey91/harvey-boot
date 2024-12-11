@@ -51,10 +51,10 @@ public class FileManageController {
     @Operation(summary = "新增")
     @PreAuthorize("@ex.hasPerm('sys:file:manage:create')")
     @PostMapping("/create")
-    public RespResult<String> create(@RequestParam("file") MultipartFile file) throws IOException {
+    public RespResult<FileManageDto> create(@RequestParam("file") MultipartFile file) throws IOException {
         Long userId = SecurityUtil.getUserId();
-        storageService.store(file, userId, PlatformEnum.SYSTEM.name());
-        return RespResult.success();
+        FileManageDto manageDto = storageService.store(file, userId, PlatformEnum.SYSTEM.name());
+        return RespResult.success(manageDto);
     }
 
     @Operation(summary = "修改")

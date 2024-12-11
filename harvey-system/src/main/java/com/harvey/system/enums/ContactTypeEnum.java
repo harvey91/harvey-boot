@@ -4,16 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * 系统平台 枚举类
+ * 联系类型 枚举类
  * @author Harvey
- * @date 2024-11-20 18:07
+ * @date 2024-12-11 22:35
  **/
 @Getter
 @AllArgsConstructor
-public enum PlatformEnum {
+public enum ContactTypeEnum {
 
-    SYSTEM(1, "后台管理"),
-    MALL(2, "商城"),
+    PHONE(1, "手机"),
+    EMAIL(2, "邮箱"),
     ;
 
     private final int value;

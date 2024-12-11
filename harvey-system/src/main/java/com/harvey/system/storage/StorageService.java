@@ -49,7 +49,7 @@ public class StorageService {
         fileManageDto.setSize(fileSize);
         fileManageDto.setPlatform(platform);
         fileManageDto.setMd5(md5);
-        fileManageDto.setPath(url);
+        fileManageDto.setUrl(url);
         fileManageDto.setSuffix(suffix);
         fileManageDto.setUserId(userId);
         fileManageService.saveFileManage(fileManageDto);
