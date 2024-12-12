@@ -12,4 +12,7 @@ public class CacheConstant {
 
     /** 登录验证码 key */
     public static final String LOGIN_CAPTCHA_KEY = "login_captcha:";
+
+    /** 手机邮箱等联系方式验证码 key */
+    public static final String CONTACT_VERIFY_KEY = "contact_verify_key:";
 }

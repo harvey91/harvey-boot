@@ -311,13 +311,13 @@ CREATE TABLE `sys_file_manage`
 CREATE TABLE `sys_verify_code`
 (
     `id`           bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键id',
+    `user_id`      bigint(20)  COMMENT '用户id',
     `contact`      varchar(32) NOT NULL COMMENT '联系方式',
     `contact_type` tinyint(2)  NOT NULL COMMENT '联系类型',
     `verify_code`  varchar(16) NOT NULL COMMENT '验证码',
     `verify_type`  tinyint(2)  NOT NULL COMMENT '验证类型',
     `platform`     tinyint(2)  NOT NULL COMMENT '平台',
     `expire_time`  datetime(0) NOT NULL COMMENT '过期时间',
-    `verify_time`  datetime(0) COMMENT '验证时间',
     `remark`       varchar(255) DEFAULT '' COMMENT '备注',
     `sort`         int          DEFAULT '0' COMMENT '排序',
     `enabled`      tinyint(2)   DEFAULT '1' COMMENT '是否启用',

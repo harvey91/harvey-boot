@@ -19,6 +19,9 @@ public class VerifyCodeDto {
 
     private Long id;
 
+    @Schema(description = "用户id")
+    private String userId;
+
     @Schema(description = "联系方式")
     private String contact;
 
@@ -36,7 +39,4 @@ public class VerifyCodeDto {
 
     @Schema(description = "过期时间")
     private LocalDateTime expireTime;
-
-    @Schema(description = "验证时间")
-    private LocalDateTime verifyTime;
 }

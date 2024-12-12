@@ -25,6 +25,9 @@ public class VerifyCode extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    @Schema(description = "用户id")
+    private String userId;
+
     @Schema(description = "联系方式")
     private String contact;
 
@@ -42,7 +45,4 @@ public class VerifyCode extends BaseEntity {
 
     @Schema(description = "过期时间")
     private LocalDateTime expireTime;
-
-    @Schema(description = "验证时间")
-    private LocalDateTime verifyTime;
 }

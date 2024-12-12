@@ -3,13 +3,11 @@ package com.harvey.system.service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.harvey.system.enums.VerifyTypeEnum;
 import com.harvey.system.exception.BusinessException;
 import com.harvey.system.mapper.UserMapper;
 import com.harvey.system.mapstruct.UserConverter;
-import com.harvey.system.model.dto.ModifyPasswordDto;
-import com.harvey.system.model.dto.PasswordDto;
-import com.harvey.system.model.dto.ProfileDto;
-import com.harvey.system.model.dto.UserDto;
+import com.harvey.system.model.dto.*;
 import com.harvey.system.model.entity.User;
 import com.harvey.system.model.entity.UserRole;
 import com.harvey.system.model.query.UserQuery;
@@ -41,6 +39,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     private final UserRoleService userRoleService;
     private final PasswordEncoder passwordEncoder;
     private final OnlineUserCacheService onlineUserCacheService;
+    private final VerifyCodeService verifyCodeService;
 
     public User findByUsername(String username) {
         return mapper.selectByUsername(username);
@@ -95,7 +94,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      *
      * @param userDto
      */
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void modifyUser(UserDto userDto) {
         User user = this.getById(userDto.getId());
         if (ObjectUtils.isEmpty(user) || ObjectUtils.isEmpty(user.getId())) {
@@ -130,7 +129,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      * 更新个人信息
      * @param profileDto
      */
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void modifyProfile(ProfileDto profileDto) {
         User entity = new User();
         entity.setId(SecurityUtil.getUserId());
@@ -145,6 +144,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      *
      * @param passwordDto 修改密码参数
      */
+    @Transactional(rollbackFor = Exception.class)
     public void resetPassword(PasswordDto passwordDto) {
         User user = new User();
         user.setId(passwordDto.getId());
@@ -156,6 +156,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      * 修改密码
      * @param passwordDto
      */
+    @Transactional(rollbackFor = Exception.class)
     public void modifyPassword(ModifyPasswordDto passwordDto) {
         if (!passwordDto.getNewPassword().equals(passwordDto.getConfirmPassword())) {
             throw new BusinessException("两次密码不一致");
@@ -177,6 +178,26 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         this.updateById(entity);
         // 改完密码强制下线
         onlineUserCacheService.delete(SecurityUtil.getUuid());
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void bindPhone(PhoneDto phoneDto) {
+        verifyCodeService.verify(phoneDto.getPhone(), phoneDto.getCode(), VerifyTypeEnum.BIND.getValue());
+        Long userId = SecurityUtil.getUserId();
+        User entity = new User();
+        entity.setId(userId);
+        entity.setPhone(phoneDto.getPhone());
+        this.updateById(entity);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void bindEmail(EmailDto emailDto) {
+        verifyCodeService.verify(emailDto.getEmail(), emailDto.getCode(), VerifyTypeEnum.BIND.getValue());
+        Long userId = SecurityUtil.getUserId();
+        User entity = new User();
+        entity.setId(userId);
+        entity.setEmail(emailDto.getEmail());
+        this.updateById(entity);
     }
 
     /**
