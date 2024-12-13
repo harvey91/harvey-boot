@@ -3,6 +3,7 @@ package com.harvey.system.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.harvey.system.base.PageResult;
 import com.harvey.system.base.RespResult;
+import com.harvey.system.model.dto.DictDto;
 import com.harvey.system.model.entity.Dict;
 import com.harvey.system.model.query.DictQuery;
 import com.harvey.system.model.vo.DictVO;
@@ -12,13 +13,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.ObjectUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /**
  * <p>
- * 系统字典表 前端控制器
+ * 字典管理 前端控制器
  * </p>
  *
  * @author harvey
@@ -38,13 +40,6 @@ public class DictController {
         return RespResult.success(sysDict);
     }
 
-    @Operation(summary = "字典键值对列表")
-    @GetMapping("/list")
-    public RespResult<List<DictVO>> list() {
-        List<DictVO> dictVOList = dictService.queryDictVOList();
-        return RespResult.success(dictVOList);
-    }
-
     @Operation(summary = "字典分页列表")
     @PreAuthorize("@ex.hasPerm('sys:dept:list')")
     @GetMapping("/page")
@@ -56,16 +51,16 @@ public class DictController {
     @Operation(summary = "新增字典")
     @PreAuthorize("@ex.hasPerm('sys:dept:create')")
     @PostMapping("/create")
-    public RespResult<String> create(@RequestBody Dict entity) {
-        dictService.save(entity);
+    public RespResult<String> create(@RequestBody @Validated DictDto dto) {
+        dictService.saveDict(dto);
         return RespResult.success();
     }
 
     @Operation(summary = "编辑字典")
     @PreAuthorize("@ex.hasPerm('sys:dept:modify')")
     @PutMapping("/modify")
-    public RespResult<String> modify(@RequestBody Dict entity) {
-        dictService.updateById(entity);
+    public RespResult<String> modify(@RequestBody @Validated DictDto dto) {
+        dictService.updateDict(dto);
         return RespResult.success();
     }
 
@@ -76,7 +71,14 @@ public class DictController {
         if (ObjectUtils.isEmpty(ids)) {
             return RespResult.fail("id不能为空");
         }
-        dictService.removeByIds(ids);
+        dictService.deleteByIds(ids);
         return RespResult.success();
+    }
+
+    @Operation(summary = "字典键值对列表")
+    @GetMapping("/list")
+    public RespResult<List<DictVO>> list() {
+        List<DictVO> dictVOList = dictService.queryDictVOList();
+        return RespResult.success(dictVOList);
     }
 }

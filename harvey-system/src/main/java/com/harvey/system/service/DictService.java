@@ -4,13 +4,17 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.system.mapper.DictMapper;
+import com.harvey.system.mapstruct.DictConverter;
+import com.harvey.system.model.dto.DictDto;
 import com.harvey.system.model.entity.Dict;
 import com.harvey.system.model.entity.DictData;
+import com.harvey.system.model.entity.Dict;
 import com.harvey.system.model.query.DictQuery;
 import com.harvey.system.model.vo.DictVO;
 import com.harvey.system.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -31,6 +35,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class DictService extends ServiceImpl<DictMapper, Dict> {
     private final DictDataService dictDataService;
+    private final DictConverter converter;
 
     public Page<Dict> queryPage(DictQuery query) {
         Page<Dict> page = new Page<>(query.getPageNum(), query.getPageSize());
@@ -39,6 +44,23 @@ public class DictService extends ServiceImpl<DictMapper, Dict> {
                 .like(StringUtils.isNotBlank(query.getKeywords()), Dict::getDictName, query.getKeywords())
                 .orderByAsc(Dict::getSort);
         return page(page, queryWrapper);
+    }
+
+    @Transactional(rollbackFor = Throwable.class)
+    public void saveDict(DictDto dto) {
+        Dict entity = converter.toEntity(dto);
+        this.save(entity);
+    }
+
+    @Transactional(rollbackFor = Throwable.class)
+    public void updateDict(DictDto dto) {
+        Dict entity = converter.toEntity(dto);
+        this.updateById(entity);
+    }
+
+    @Transactional(rollbackFor = Throwable.class)
+    public void deleteByIds(List<Long> ids) {
+        this.removeByIds(ids);
     }
 
     public List<DictVO> queryDictVOList() {

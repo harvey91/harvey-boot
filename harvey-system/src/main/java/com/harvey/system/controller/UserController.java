@@ -25,6 +25,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -65,8 +66,8 @@ public class UserController {
         userInfoVO.setUsername(loginUserVO.getUsername());
         userInfoVO.setNickname(loginUserVO.getNickname());
         userInfoVO.setAvatar(loginUserVO.getAvatar());
-        // TODO 角色列表
-        userInfoVO.setRoles(List.of("ROOT"));
+        List<String> roleCodeList = loginUserVO.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
+        userInfoVO.setRoles(roleCodeList);
         userInfoVO.setPerms(loginUserVO.getPermissions());
         return RespResult.success(userInfoVO);
     }
@@ -186,7 +187,8 @@ public class UserController {
             throw new BadParameterException("未知的验证类型");
         }
 
-        verifyCodeService.sendCode(contact, contactType, VerifyTypeEnum.BIND.getValue(), PlatformEnum.SYSTEM.getValue());
+        verifyCodeService.sendCode(userId, contact, contactType,
+                VerifyTypeEnum.BIND.getValue(), PlatformEnum.SYSTEM.getValue());
         return RespResult.success();
     }
 }

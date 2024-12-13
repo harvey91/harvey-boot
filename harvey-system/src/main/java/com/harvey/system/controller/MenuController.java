@@ -1,7 +1,7 @@
 package com.harvey.system.controller;
 
 import com.harvey.system.base.RespResult;
-import com.harvey.system.enums.MenuTypeEnum;
+import com.harvey.system.model.dto.MenuDto;
 import com.harvey.system.model.entity.Menu;
 import com.harvey.system.model.query.MenuQuery;
 import com.harvey.system.model.vo.MenuVO;
@@ -12,13 +12,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /**
  * <p>
- * 系统菜单表 前端控制器
+ * 菜单管理 前端控制器
  * </p>
  *
  * @author harvey
@@ -48,22 +49,16 @@ public class MenuController {
     @Operation(summary = "新增菜单")
     @PreAuthorize("@ex.hasPerm('sys:menu:create')")
     @PostMapping("/create")
-    public RespResult<String> create(@RequestBody Menu entity) {
-        if (MenuTypeEnum.DIRECTORY.toString().equals(entity.getType())) {
-            entity.setComponent("Layout");
-            if (!entity.getRoutePath().startsWith("/")) {
-                entity.setRoutePath("/" + entity.getRoutePath());
-            }
-        }
-        menuService.save(entity);
+    public RespResult<String> create(@RequestBody @Validated MenuDto dto) {
+        menuService.saveMenu(dto);
         return RespResult.success();
     }
 
     @Operation(summary = "编辑菜单")
     @PreAuthorize("@ex.hasPerm('sys:menu:modify')")
     @PutMapping("/modify")
-    public RespResult<String> modify(@RequestBody Menu entity) {
-        menuService.updateById(entity);
+    public RespResult<String> modify(@RequestBody @Validated MenuDto dto) {
+        menuService.updateMenu(dto);
         return RespResult.success();
     }
 
@@ -71,7 +66,7 @@ public class MenuController {
     @PreAuthorize("@ex.hasPerm('sys:menu:delete')")
     @DeleteMapping("/delete/{menuId}")
     public RespResult<String> delete(@PathVariable("menuId") Long menuId) {
-        menuService.removeById(menuId);
+        menuService.deleteById(menuId);
         return RespResult.success();
     }
 

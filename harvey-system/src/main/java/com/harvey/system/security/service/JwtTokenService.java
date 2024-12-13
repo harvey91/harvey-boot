@@ -69,8 +69,9 @@ public class JwtTokenService implements InitializingBean {
         // 用户菜单权限列表
         List<String> permissions = menuService.getPermissionByUserId(loginUserVO.getUserId());
         log.debug("permissions list: {}", permissions);
-        // 用户角色列表 TODO
-        List<SimpleGrantedAuthority> authorities = permissions.stream().map(SimpleGrantedAuthority::new).toList();
+        // 用户角色列表
+        List<String> roleCodeList = roleService.getRoleCodeList(loginUserVO.getUserId());
+        List<SimpleGrantedAuthority> authorities = roleCodeList.stream().map(SimpleGrantedAuthority::new).toList();
         loginUserVO.setDataScopes(deptIds);
         loginUserVO.setPermissions(permissions);
         loginUserVO.setAuthorities(authorities);

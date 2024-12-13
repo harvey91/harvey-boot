@@ -1,14 +1,22 @@
 package com.harvey.system.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.system.enums.DataScopeEnum;
 import com.harvey.system.mapper.RoleMapper;
+import com.harvey.system.mapstruct.RoleConverter;
+import com.harvey.system.model.dto.RoleDto;
 import com.harvey.system.model.entity.Dept;
+import com.harvey.system.model.entity.Notice;
 import com.harvey.system.model.entity.Role;
 import com.harvey.system.model.entity.RoleDept;
+import com.harvey.system.model.query.NoticeQuery;
+import com.harvey.system.model.query.RoleQuery;
+import com.harvey.system.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.util.*;
@@ -26,8 +34,40 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class RoleService extends ServiceImpl<RoleMapper, Role> {
     private final RoleMapper mapper;
+    private final RoleConverter converter;
     private final RoleDeptService roleDeptService;
     private final DeptService deptService;
+
+    public Page<Role> queryPage(RoleQuery query) {
+        Page<Role> page = new Page<>(query.getPageNum(), query.getPageSize());
+        LambdaQueryWrapper<Role> queryWrapper = new LambdaQueryWrapper<Role>()
+                .like(StringUtils.isNotBlank(query.getKeywords()), Role::getRoleName, query.getKeywords())
+                .orderByAsc(Role::getSort);
+        return page(page, queryWrapper);
+    }
+
+    @Transactional(rollbackFor = Throwable.class)
+    public void saveRole(RoleDto roleDto) {
+        Role entity = converter.toEntity(roleDto);
+        // 大写
+        entity.setRoleCode(entity.getRoleCode().toUpperCase());
+        this.save(entity);
+    }
+
+    @Transactional(rollbackFor = Throwable.class)
+    public void updateRole(RoleDto roleDto) {
+        Role entity = converter.toEntity(roleDto);
+        // 大写
+        entity.setRoleCode(entity.getRoleCode().toUpperCase());
+        this.updateById(entity);
+    }
+
+    @Transactional(rollbackFor = Throwable.class)
+    public void deleteByIds(List<Long> ids) {
+        // 超级管理员角色不能被删除
+        ids.remove(1L);
+        this.removeByIds(ids);
+    }
 
     public List<Long> getDeptIds(Long userId, Long deptId) {
         Set<Long> deptIds = new HashSet<>();
@@ -111,5 +151,14 @@ public class RoleService extends ServiceImpl<RoleMapper, Role> {
                 new LambdaQueryWrapper<RoleDept>()
                         .select(RoleDept::getDeptId)
                         .eq(RoleDept::getRoleId, roleId));
+    }
+
+    /**
+     * 获取用户角色编码列表
+     * @param userId
+     * @return
+     */
+    public List<String> getRoleCodeList(Long userId) {
+        return mapper.selectRoleCodeByUserId(userId);
     }
 }

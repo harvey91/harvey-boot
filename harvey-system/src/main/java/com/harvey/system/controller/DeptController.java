@@ -1,7 +1,11 @@
 package com.harvey.system.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.harvey.system.base.PageResult;
 import com.harvey.system.base.RespResult;
+import com.harvey.system.model.dto.DeptDto;
 import com.harvey.system.model.entity.Dept;
+import com.harvey.system.model.query.DeptQuery;
 import com.harvey.system.model.vo.DeptVO;
 import com.harvey.system.model.vo.OptionVO;
 import com.harvey.system.service.DeptService;
@@ -12,6 +16,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -21,7 +26,7 @@ import java.util.stream.Collectors;
 
 /**
  * <p>
- * 系统部门表 前端控制器
+ * 部门管理 前端控制器
  * </p>
  *
  * @author harvey
@@ -39,6 +44,41 @@ public class DeptController {
     public RespResult<Dept> formById(@PathVariable(value = "id") Long id) {
         Dept entity = deptService.getById(id);
         return RespResult.success(entity);
+    }
+
+    @Operation(summary = "分页查询")
+    @PreAuthorize("@ex.hasPerm('sys:dept:list')")
+    @GetMapping("/page")
+    public RespResult<PageResult<Dept>> page(DeptQuery query) {
+        Page<Dept> page = deptService.queryPage(query);
+        return RespResult.success(PageResult.of(page));
+    }
+
+    @Operation(summary = "新增部门")
+    @PreAuthorize("@ex.hasPerm('sys:dept:create')")
+    @PostMapping("/create")
+    public RespResult<String> create(@RequestBody @Validated DeptDto dto) {
+        deptService.saveDept(dto);
+        return RespResult.success();
+    }
+
+    @Operation(summary = "编辑部门")
+    @PreAuthorize("@ex.hasPerm('sys:dept:modify')")
+    @PostMapping("/modify")
+    public RespResult<String> modify(@RequestBody @Validated DeptDto dto) {
+        deptService.updateDept(dto);
+        return RespResult.success();
+    }
+
+    @Operation(summary = "删除部门")
+    @PreAuthorize("@ex.hasPerm('sys:dept:delete')")
+    @PostMapping("/delete")
+    public RespResult<String> delete(@RequestBody List<Long> ids) {
+        if (ObjectUtils.isEmpty(ids)) {
+            return RespResult.fail("id不能为空");
+        }
+        deptService.deleteByIds(ids);
+        return RespResult.success();
     }
 
     @Operation(summary = "部门列表-tree")
@@ -82,39 +122,6 @@ public class DeptController {
             }
         }
         return RespResult.success(optionVOList);
-    }
-
-    @Operation(summary = "新增部门")
-    @PreAuthorize("@ex.hasPerm('sys:dept:create')")
-    @PostMapping("/create")
-    public RespResult<String> create(@RequestBody Dept entity) {
-        if (entity.getParentId() == null) {
-            entity.setParentId(0L);
-        }
-        deptService.save(entity);
-        return RespResult.success();
-    }
-
-    @Operation(summary = "编辑部门")
-    @PreAuthorize("@ex.hasPerm('sys:dept:modify')")
-    @PostMapping("/modify")
-    public RespResult<String> modify(@RequestBody Dept entity) {
-        if (entity.getParentId() == null) {
-            entity.setParentId(0L);
-        }
-        deptService.updateById(entity);
-        return RespResult.success();
-    }
-
-    @Operation(summary = "删除部门")
-    @PreAuthorize("@ex.hasPerm('sys:dept:delete')")
-    @PostMapping("/delete")
-    public RespResult<String> delete(@RequestBody List<Long> ids) {
-        if (ObjectUtils.isEmpty(ids)) {
-            return RespResult.fail("id不能为空");
-        }
-        deptService.removeByIds(ids);
-        return RespResult.success();
     }
 
     /**

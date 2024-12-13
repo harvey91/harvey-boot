@@ -1,8 +1,12 @@
 package com.harvey.system.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.harvey.system.enums.MenuTypeEnum;
 import com.harvey.system.mapper.MenuMapper;
+import com.harvey.system.mapstruct.MenuConverter;
+import com.harvey.system.model.dto.MenuDto;
 import com.harvey.system.model.entity.Menu;
 import com.harvey.system.model.query.MenuQuery;
 import com.harvey.system.model.vo.MenuVO;
@@ -12,6 +16,7 @@ import com.harvey.system.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -22,7 +27,7 @@ import java.util.stream.Collectors;
 
 /**
  * <p>
- * 系统菜单表 服务实现类
+ * 菜单管理 服务实现类
  * </p>
  *
  * @author harvey
@@ -32,6 +37,46 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MenuService extends ServiceImpl<MenuMapper, Menu> {
     private final MenuMapper mapper;
+    private final MenuConverter converter;
+
+    public Page<Menu> queryPage(MenuQuery query) {
+        Page<Menu> page = new Page<>(query.getPageNum(), query.getPageSize());
+        LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<Menu>()
+                .like(StringUtils.isNotBlank(query.getKeywords()), Menu::getMenuName, query.getKeywords())
+                .orderByAsc(Menu::getSort);
+        return this.page(page, queryWrapper);
+    }
+
+    @Transactional(rollbackFor = Throwable.class)
+    public void saveMenu(MenuDto dto) {
+        Menu entity = converter.toEntity(dto);
+        if (MenuTypeEnum.DIRECTORY.toString().equals(entity.getType())) {
+            entity.setComponent("Layout");
+            if (!entity.getRoutePath().startsWith("/")) {
+                entity.setRoutePath("/" + entity.getRoutePath());
+            }
+        }
+        if (entity.getParentId() == null) {
+            entity.setParentId(0L);
+        }
+        this.save(entity);
+    }
+
+    @Transactional(rollbackFor = Throwable.class)
+    public void updateMenu(MenuDto dto) {
+        Menu entity = converter.toEntity(dto);
+        this.updateById(entity);
+    }
+
+    @Transactional(rollbackFor = Throwable.class)
+    public void deleteByIds(List<Long> ids) {
+        this.removeByIds(ids);
+    }
+
+    @Transactional(rollbackFor = Throwable.class)
+    public void deleteById(Long id) {
+        this.removeById(id);
+    }
 
     /**
      * 所有菜单列表-树形结构

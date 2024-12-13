@@ -1,28 +1,37 @@
-package com.harvey.system.model.vo;
+package com.harvey.system.model.dto;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.harvey.system.model.entity.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.io.Serializable;
 
 /**
- * @author Harvey
- * @date 2024-10-31 10:56
- **/
+ * <p>
+ * 菜单管理
+ * </p>
+ *
+ * @author harvey
+ * @since 2024-10-30
+ */
 @Data
-public class MenuVO {
-    private Long id;
+@Schema(title = "MenuDto")
+public class MenuDto {
 
     @Schema(title = "parentId", description = "上级id")
     private Long parentId;
 
+    @NotBlank(message = "菜单名称不能为空")
     @Schema(title = "menuName", description = "菜单名称")
     private String menuName;
 
     @Schema(title = "menuNameEn", description = "菜单英文名称")
     private String menuNameEn;
 
+    @NotBlank(message = "菜单类型不能为空")
     @Schema(title = "type", description = "菜单类型")
     private String type;
 
@@ -50,17 +59,4 @@ public class MenuVO {
     @Schema(title = "keepAlive", description = "缓存页面")
     private Integer keepAlive;
 
-    @Schema(title = "remark", description = "描述")
-    private String remark;
-
-    @Schema(title = "sort", description = "排序", defaultValue = "99")
-    private Integer sort;
-
-    @Schema(title = "enabled", description = "是否启用(0禁用，1启用)", defaultValue = "1")
-    private Integer enabled;
-
-    @Schema(title = "createTime", description = "创建时间")
-    public LocalDateTime createTime;
-
-    private List<MenuVO> children;
 }

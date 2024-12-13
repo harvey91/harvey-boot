@@ -3,21 +3,23 @@ package com.harvey.system.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.harvey.system.base.PageResult;
 import com.harvey.system.base.RespResult;
+import com.harvey.system.model.dto.DictDataDto;
 import com.harvey.system.model.entity.DictData;
-import com.harvey.system.model.query.DictQuery;
+import com.harvey.system.model.query.DictDataQuery;
 import com.harvey.system.service.DictDataService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.ObjectUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /**
  * <p>
- * 系统字典数据表 前端控制器
+ * 字典数据 前端控制器
  * </p>
  *
  * @author harvey
@@ -37,10 +39,10 @@ public class DictDataController {
         return RespResult.success(dictData);
     }
 
-    @Operation(summary = "字典数据列表")
+    @Operation(summary = "分页查询")
     @PreAuthorize("@ex.hasPerm('sys:dict:data:list')")
     @GetMapping("/page")
-    public RespResult<PageResult<DictData>> page(DictQuery query) {
+    public RespResult<PageResult<DictData>> page(DictDataQuery query) {
         Page<DictData> page = dictDataService.queryPage(query);
         return RespResult.success(PageResult.of(page));
     }
@@ -48,16 +50,16 @@ public class DictDataController {
     @Operation(summary = "新增字典数据")
     @PreAuthorize("@ex.hasPerm('sys:dict:data:create')")
     @PostMapping("/create")
-    public RespResult<String> create(@RequestBody DictData entity) {
-        dictDataService.save(entity);
+    public RespResult<String> create(@RequestBody @Validated DictDataDto dto) {
+        dictDataService.saveDictData(dto);
         return RespResult.success();
     }
 
     @Operation(summary = "编辑字典数据")
     @PreAuthorize("@ex.hasPerm('sys:dict:data:modify')")
     @PutMapping("/modify")
-    public RespResult<String> modify(@RequestBody DictData entity) {
-        dictDataService.updateById(entity);
+    public RespResult<String> modify(@RequestBody @Validated DictDataDto dto) {
+        dictDataService.updateDictData(dto);
         return RespResult.success();
     }
 
@@ -68,7 +70,7 @@ public class DictDataController {
         if (ObjectUtils.isEmpty(ids)) {
             return RespResult.fail("id不能为空");
         }
-        dictDataService.removeByIds(ids);
+        dictDataService.deleteByIds(ids);
         return RespResult.success();
     }
 }

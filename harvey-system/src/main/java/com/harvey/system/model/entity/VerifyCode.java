@@ -26,7 +26,7 @@ public class VerifyCode extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @Schema(description = "用户id")
-    private String userId;
+    private Long userId;
 
     @Schema(description = "联系方式")
     private String contact;

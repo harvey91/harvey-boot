@@ -80,9 +80,10 @@ public class VerifyCodeService extends ServiceImpl<VerifyCodeMapper, VerifyCode>
      * @param platform 平台
      */
     @Transactional(rollbackFor = Throwable.class)
-    public void sendCode(String contact, Integer contactType, Integer verifyType, Integer platform) {
+    public void sendCode(Long userId, String contact, Integer contactType, Integer verifyType, Integer platform) {
         String verifyCode = RandomUtil.randomNumbers(4);
         VerifyCode entity = new VerifyCode();
+        entity.setUserId(userId);
         entity.setContact(contact);
         entity.setContactType(contactType);
         entity.setVerifyCode(verifyCode);

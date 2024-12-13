@@ -3,7 +3,9 @@ package com.harvey.system.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.harvey.system.base.PageResult;
 import com.harvey.system.base.RespResult;
+import com.harvey.system.model.dto.RoleDto;
 import com.harvey.system.model.entity.Role;
+import com.harvey.system.model.query.RoleQuery;
 import com.harvey.system.model.vo.OptionVO;
 import com.harvey.system.service.RoleService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.ObjectUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -41,12 +44,36 @@ public class RoleController {
     @Operation(summary = "角色分页列表")
     @PreAuthorize("@ex.hasPerm('sys:role:list')")
     @GetMapping("/page")
-    public RespResult<PageResult<Role>> page(@RequestParam("pageNum") int pageNum,
-                                                @RequestParam("pageSize") int pageSize) {
-        // TODO 查询条件
-        Page<Role> page = new Page<>(pageNum, pageSize);
-        Page<Role> rolePage = roleService.page(page);
+    public RespResult<PageResult<Role>> page(RoleQuery query) {
+        Page<Role> rolePage = roleService.queryPage(query);
         return RespResult.success(PageResult.of(rolePage));
+    }
+
+    @Operation(summary = "新增角色")
+    @PreAuthorize("@ex.hasPerm('sys:role:create')")
+    @PostMapping("/create")
+    public RespResult<String> create(@RequestBody @Validated RoleDto roleDto) {
+        roleService.saveRole(roleDto);
+        return RespResult.success();
+    }
+
+    @Operation(summary = "编辑角色")
+    @PreAuthorize("@ex.hasPerm('sys:role:modify')")
+    @PutMapping("/modify")
+    public RespResult<String> modify(@RequestBody @Validated RoleDto roleDto) {
+        roleService.updateRole(roleDto);
+        return RespResult.success();
+    }
+
+    @Operation(summary = "删除角色")
+    @PreAuthorize("@ex.hasPerm('sys:role:delete')")
+    @DeleteMapping("/delete")
+    public RespResult<String> delete(@RequestBody List<Long> ids) {
+        if (ObjectUtils.isEmpty(ids)) {
+            return RespResult.fail("id不能为空");
+        }
+        roleService.deleteByIds(ids);
+        return RespResult.success();
     }
 
     @Operation(summary = "角色下拉列表-键值对")
@@ -60,32 +87,5 @@ public class RoleController {
             }
         }
         return RespResult.success(optionVOList);
-    }
-
-    @Operation(summary = "新增角色")
-    @PreAuthorize("@ex.hasPerm('sys:role:create')")
-    @PostMapping("/create")
-    public RespResult<String> create(@RequestBody Role sysRole) {
-        roleService.save(sysRole);
-        return RespResult.success();
-    }
-
-    @Operation(summary = "编辑角色")
-    @PreAuthorize("@ex.hasPerm('sys:role:modify')")
-    @PutMapping("/modify")
-    public RespResult<String> modify(@RequestBody Role sysRole) {
-        roleService.updateById(sysRole);
-        return RespResult.success();
-    }
-
-    @Operation(summary = "删除角色")
-    @PreAuthorize("@ex.hasPerm('sys:role:delete')")
-    @DeleteMapping("/delete")
-    public RespResult<String> delete(@RequestBody List<Long> ids) {
-        if (ObjectUtils.isEmpty(ids)) {
-            return RespResult.fail("id不能为空");
-        }
-            roleService.removeByIds(ids);
-        return RespResult.success();
     }
 }
