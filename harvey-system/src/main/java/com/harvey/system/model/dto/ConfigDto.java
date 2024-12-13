@@ -16,6 +16,8 @@ import lombok.Data;
 @Schema(title = "ConfigDto")
 public class ConfigDto {
 
+    private Long id;
+
     @NotBlank(message = "配置名称不能为空")
     @Schema(title = "configName", description = "配置名称")
     private String configName;

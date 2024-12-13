@@ -16,6 +16,8 @@ import lombok.Data;
 @Schema(title = "DictDto")
 public class DictDto {
 
+    private Long id;
+
     @NotBlank(message = "字典编码不能为空")
     @Schema(title = "dictCode",description = "字典编码")
     private String dictCode;

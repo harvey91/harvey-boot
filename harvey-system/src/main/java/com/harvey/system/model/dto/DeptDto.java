@@ -17,6 +17,8 @@ import lombok.Data;
 @Schema(title = "DeptDto")
 public class DeptDto {
 
+    private Long id;
+
     @NotNull(message = "上级id不能为空")
     @Schema(title = "parentId",description = "父级id")
     private Long parentId;

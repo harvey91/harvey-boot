@@ -12,6 +12,7 @@ import java.util.List;
  **/
 @Data
 public class MenuVO {
+
     private Long id;
 
     @Schema(title = "parentId", description = "上级id")

@@ -36,7 +36,7 @@ public class StorageService {
         String fileName = file.getOriginalFilename();
         String suffix = FileUtil.getSuffix(fileName);
         // 根据日期划分文件夹
-        String folder = DateUtil.format(LocalDateTime.now(), "yyyyMMdd") + File.separator;
+        String folder = DateUtil.format(LocalDateTime.now(), "yyyyMMdd");
         // InputStream会被读取流，不可和存储共用一个流
         String md5 = SecureUtil.md5(file.getInputStream()).toUpperCase();
         String key = folder + File.separator + md5 + "." + suffix;

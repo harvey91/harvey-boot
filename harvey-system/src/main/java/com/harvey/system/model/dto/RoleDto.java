@@ -22,6 +22,8 @@ import java.io.Serializable;
 @Schema(title = "RoleDto")
 public class RoleDto {
 
+    private Long id;
+
     @NotBlank(message = "角色编码不能为空")
     @Schema(title = "roleCode", description = "角色编码")
     private String roleCode;

@@ -92,8 +92,7 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
         if (collect.containsKey(0L)) {
             List<Menu> parentMenuList = collect.get(0L);
             for (Menu menu : parentMenuList) {
-                MenuVO menuVO = new MenuVO();
-                BeanUtils.copyProperties(menu, menuVO);
+                MenuVO menuVO = converter.toVO(menu);
                 menuVO.setChildren(recursionMenu(menuVO, collect));
                 menuVOList.add(menuVO);
             }
@@ -171,8 +170,7 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
         if (collect.containsKey(parentMenuVO.getId())) {
             List<Menu> childMenuList = collect.get(parentMenuVO.getId());
             for (Menu menu : childMenuList) {
-                MenuVO menuVO = new MenuVO();
-                BeanUtils.copyProperties(menu, menuVO);
+                MenuVO menuVO = converter.toVO(menu);
                 menuVOList.add(menuVO);
                 menuVO.setChildren(recursionMenu(menuVO, collect));
             }

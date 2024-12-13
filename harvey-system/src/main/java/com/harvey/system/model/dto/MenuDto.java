@@ -21,6 +21,8 @@ import java.io.Serializable;
 @Schema(title = "MenuDto")
 public class MenuDto {
 
+    private Long id;
+
     @Schema(title = "parentId", description = "上级id")
     private Long parentId;
 

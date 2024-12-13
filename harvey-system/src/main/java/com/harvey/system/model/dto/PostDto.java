@@ -14,6 +14,8 @@ import lombok.Data;
 @Schema(title = "PostDto")
 public class PostDto {
 
+    private Long id;
+
     @NotBlank(message = "职位名称不能为空")
     @Schema(title = "postName", description = "职位名称")
     private String postName;
