@@ -2,6 +2,8 @@ package com.harvey.system.model.vo;
 
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -10,7 +12,9 @@ import java.util.List;
  * @date 2024-10-31 10:28
  **/
 @Data
-public class RouteVO {
+public class RouteVO implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private String path;
 
@@ -28,7 +32,9 @@ public class RouteVO {
     private List<RouteVO> children;
 
     @Data
-    public static class Meta {
+    public static class Meta implements Serializable {
+        @Serial
+        private static final long serialVersionUID = 1L;
 
         /** 菜单名称 */
         private String title;

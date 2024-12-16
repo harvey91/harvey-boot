@@ -15,4 +15,10 @@ public class CacheConstant {
 
     /** 手机邮箱等联系方式验证码 key */
     public static final String CONTACT_VERIFY_KEY = "contact_verify_key:";
+
+    /** 菜单路由缓存 */
+    public static final String MENU_KEY = "menu";
+
+    /** 系统配置缓存 */
+    public static final String SYS_CONFIG_KEY = "sys_config_key";
 }

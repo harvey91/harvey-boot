@@ -70,7 +70,7 @@ public class ConfigController {
     @PreAuthorize("@ex.hasPerm('sys:config:refresh')")
     @PatchMapping("/refresh")
     public RespResult<String> refresh() {
-        // TODO
+        configService.refresh();
         return RespResult.success();
     }
 }

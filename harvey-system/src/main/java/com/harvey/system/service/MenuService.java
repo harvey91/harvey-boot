@@ -3,6 +3,7 @@ package com.harvey.system.service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.harvey.system.constant.CacheConstant;
 import com.harvey.system.enums.MenuTypeEnum;
 import com.harvey.system.mapper.MenuMapper;
 import com.harvey.system.mapstruct.MenuConverter;
@@ -15,6 +16,8 @@ import com.harvey.system.model.vo.RouteVO;
 import com.harvey.system.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -47,6 +50,7 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
         return this.page(page, queryWrapper);
     }
 
+    @CacheEvict(value = CacheConstant.MENU_KEY, key = "'all'")
     @Transactional(rollbackFor = Throwable.class)
     public void saveMenu(MenuDto dto) {
         Menu entity = converter.toEntity(dto);
@@ -62,17 +66,20 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
         this.save(entity);
     }
 
+    @CacheEvict(value = CacheConstant.MENU_KEY, key = "'all'")
     @Transactional(rollbackFor = Throwable.class)
     public void updateMenu(MenuDto dto) {
         Menu entity = converter.toEntity(dto);
         this.updateById(entity);
     }
 
+    @CacheEvict(value = CacheConstant.MENU_KEY, key = "'all'")
     @Transactional(rollbackFor = Throwable.class)
     public void deleteByIds(List<Long> ids) {
         this.removeByIds(ids);
     }
 
+    @CacheEvict(value = CacheConstant.MENU_KEY, key = "'all'")
     @Transactional(rollbackFor = Throwable.class)
     public void deleteById(Long id) {
         this.removeById(id);
@@ -104,8 +111,10 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
      * 动态路由
      * @return
      */
+    @Cacheable(value = CacheConstant.MENU_KEY, key = "'all'")
     public List<RouteVO> routes() {
         LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<Menu>().orderByAsc(Menu::getSort);
+        // TODO 获取当前用户的菜单列表
         List<Menu> menuList = mapper.selectList(queryWrapper);
         Map<Long, List<Menu>> collect = menuList.stream().collect(Collectors.groupingBy(Menu::getParentId));
         // 获取顶级目录列表
