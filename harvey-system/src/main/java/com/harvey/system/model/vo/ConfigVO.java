@@ -4,6 +4,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * <p>
  * 系统配置
@@ -14,7 +17,9 @@ import lombok.Data;
  */
 @Data
 @Schema(title = "ConfigVO")
-public class ConfigVO {
+public class ConfigVO implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private Long id;
 

@@ -3,6 +3,8 @@ package com.harvey.system.model.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,7 +14,9 @@ import java.util.List;
  **/
 @Data
 @Schema(title = "DeptVO")
-public class DeptVO {
+public class DeptVO implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private Long id;
 

@@ -7,19 +7,19 @@ package com.harvey.system.constant;
  **/
 public class Constant {
 
-    /**
-     * www主域
-     */
+    /** 超级管理员角色ROOT */
+    public static final String ROOT = "ROOT";
+
+    /** 默认密码 */
+    public static final String DEFAULT_PASSWORD = "123456";
+
+    /** www主域 */
     public static final String WWW = "www.";
 
-    /**
-     * http请求
-     */
+    /** http请求 */
     public static final String HTTP = "http://";
 
-    /**
-     * https请求
-     */
+    /** https请求 */
     public static final String HTTPS = "https://";
 
     public static final long MILLIS_SECOND = 1000;

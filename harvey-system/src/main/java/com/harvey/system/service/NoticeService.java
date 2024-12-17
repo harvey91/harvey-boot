@@ -14,6 +14,7 @@ import com.harvey.system.model.entity.NoticeUser;
 import com.harvey.system.model.query.NoticeQuery;
 import com.harvey.system.model.vo.NoticeVO;
 import com.harvey.system.security.SecurityUtil;
+import com.harvey.system.utils.AssertUtil;
 import com.harvey.system.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -100,9 +101,8 @@ public class NoticeService extends ServiceImpl<NoticeMapper, Notice> {
     @Transactional(rollbackFor = Throwable.class)
     public void publish(Long id) {
         Notice notice = getNoticeById(id);
-        if (PublishStatusEnum.PUBLISHED.getValue() == notice.getStatus()) {
-            throw new BusinessException("该通知已经发布，无需再发布");
-        }
+        AssertUtil.isTrue(PublishStatusEnum.PUBLISHED.getValue() == notice.getStatus(), "该通知已经发布，无需再发布");
+
         notice.setStatus(PublishStatusEnum.PUBLISHED.getValue());
         notice.setPublisherId(SecurityUtil.getUserId());
         notice.setPublishTime(LocalDateTime.now());
@@ -117,9 +117,8 @@ public class NoticeService extends ServiceImpl<NoticeMapper, Notice> {
     @Transactional(rollbackFor = Throwable.class)
     public void revoke(Long id) {
         Notice notice = getNoticeById(id);
-        if (PublishStatusEnum.PUBLISHED.getValue() != notice.getStatus()) {
-            throw new BusinessException("该通知还未发布，无需撤回");
-        }
+        AssertUtil.isTrue(PublishStatusEnum.PUBLISHED.getValue() != notice.getStatus(), "该通知还未发布，无需撤回");
+
         notice.setStatus(PublishStatusEnum.REVOKED.getValue());
         notice.setRevokeTime(LocalDateTime.now());
         updateById(notice);
@@ -138,9 +137,8 @@ public class NoticeService extends ServiceImpl<NoticeMapper, Notice> {
                         Notice::getTargetType, Notice::getCreateTime, Notice::getPublishTime, Notice::getRevokeTime)
                 .eq(Notice::getId, id);
         Notice notice = mapper.selectOne(wrapper);
-        if (ObjectUtils.isEmpty(notice)) {
-            throw new BusinessException("通知不存在");
-        }
+        AssertUtil.isEmpty(notice, "通知不存在");
+
         return notice;
     }
 

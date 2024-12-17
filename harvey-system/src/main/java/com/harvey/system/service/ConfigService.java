@@ -80,8 +80,8 @@ public class ConfigService extends ServiceImpl<ConfigMapper, Config> {
 
     /**
      * 根据键key获取配置值value
-     * @param key
-     * @return
+     * @param key 配置key
+     * @return 配置value
      */
     public Object getConfigValue(String key) {
         if (StringUtils.isNotBlank(key)) {

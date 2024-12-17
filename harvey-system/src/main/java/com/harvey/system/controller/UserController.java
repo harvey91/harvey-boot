@@ -21,6 +21,7 @@ import com.harvey.system.security.LoginUserVO;
 import com.harvey.system.security.SecurityUtil;
 import com.harvey.system.service.UserService;
 import com.harvey.system.service.VerifyCodeService;
+import com.harvey.system.utils.AssertUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -168,20 +169,13 @@ public class UserController {
                                        @RequestParam("contactType") String contactTypeStr) {
         Long userId = SecurityUtil.getUserId();
         User user = userService.getById(userId);
-
         int contactType = 0;
         if (contactTypeStr.equals(ContactTypeEnum.PHONE.name())) {
-            if (!PhoneUtil.isPhone(contact)) {
-                throw new BadParameterException("手机号格式不正确");
-            }
-            if (contact.equals(user.getPhone())) {
-                throw new BusinessException("手机号已绑定，无需再绑定");
-            }
+            AssertUtil.isTrue(!PhoneUtil.isPhone(contact), "手机号格式不正确");
+            AssertUtil.isTrue(contact.equals(user.getPhone()), "手机号已绑定，无需再绑定");
             contactType = ContactTypeEnum.PHONE.getValue();
         } else if (contactTypeStr.equals(ContactTypeEnum.EMAIL.name())) {
-            if (contact.equals(user.getEmail())) {
-                throw new BusinessException("邮箱已绑定，无需再绑定");
-            }
+            AssertUtil.isTrue(contact.equals(user.getEmail()), "邮箱已绑定，无需再绑定");
             contactType = ContactTypeEnum.EMAIL.getValue();
         } else {
             throw new BadParameterException("未知的验证类型");

@@ -3,6 +3,7 @@ package com.harvey.system.service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.harvey.system.constant.CacheConstant;
 import com.harvey.system.mapper.DictMapper;
 import com.harvey.system.mapstruct.DictConverter;
 import com.harvey.system.model.dto.DictDto;
@@ -13,6 +14,8 @@ import com.harvey.system.model.query.DictQuery;
 import com.harvey.system.model.vo.DictVO;
 import com.harvey.system.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -46,23 +49,27 @@ public class DictService extends ServiceImpl<DictMapper, Dict> {
         return page(page, queryWrapper);
     }
 
+    @CacheEvict(value = CacheConstant.DICT_KEY, key = "'all'")
     @Transactional(rollbackFor = Throwable.class)
     public void saveDict(DictDto dto) {
         Dict entity = converter.toEntity(dto);
         this.save(entity);
     }
 
+    @CacheEvict(value = CacheConstant.DICT_KEY, key = "'all'")
     @Transactional(rollbackFor = Throwable.class)
     public void updateDict(DictDto dto) {
         Dict entity = converter.toEntity(dto);
         this.updateById(entity);
     }
 
+    @CacheEvict(value = CacheConstant.DICT_KEY, key = "'all'")
     @Transactional(rollbackFor = Throwable.class)
     public void deleteByIds(List<Long> ids) {
         this.removeByIds(ids);
     }
 
+    @Cacheable(value = CacheConstant.DICT_KEY, key = "'all'")
     public List<DictVO> queryDictVOList() {
         List<Dict> dictList = list();
         if (CollectionUtils.isEmpty(dictList)) {

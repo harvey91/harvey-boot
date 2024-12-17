@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 /**
  * <p>
- * 系统角色表 服务实现类
+ * 角色管理 服务实现类
  * </p>
  *
  * @author harvey

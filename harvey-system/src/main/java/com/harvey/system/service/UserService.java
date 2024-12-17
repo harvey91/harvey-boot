@@ -3,8 +3,8 @@ package com.harvey.system.service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.harvey.system.constant.Constant;
 import com.harvey.system.enums.VerifyTypeEnum;
-import com.harvey.system.exception.BusinessException;
 import com.harvey.system.mapper.UserMapper;
 import com.harvey.system.mapstruct.UserConverter;
 import com.harvey.system.model.dto.*;
@@ -15,6 +15,7 @@ import com.harvey.system.model.vo.OptionVO;
 import com.harvey.system.model.vo.UserVO;
 import com.harvey.system.security.SecurityUtil;
 import com.harvey.system.security.service.OnlineUserCacheService;
+import com.harvey.system.utils.AssertUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -73,13 +74,11 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     @Transactional(rollbackFor = Exception.class)
     public void createUser(UserDto userDto) {
         long count = mapper.countByUsername(userDto.getUsername());
-        if (count > 0) {
-            throw new BusinessException("用户名已存在");
-        }
+        AssertUtil.isTrue(count > 0, "用户名已存在");
 
         User entity = converter.toEntity(userDto);
         // 设置默认密码
-        entity.setPassword(passwordEncoder.encode("123456"));
+        entity.setPassword(passwordEncoder.encode(Constant.DEFAULT_PASSWORD));
         mapper.insert(entity);
 
         // 保存用户角色
@@ -97,18 +96,16 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     @Transactional(rollbackFor = Exception.class)
     public void modifyUser(UserDto userDto) {
         User user = this.getById(userDto.getId());
-        if (ObjectUtils.isEmpty(user) || ObjectUtils.isEmpty(user.getId())) {
-            throw new BusinessException("找不到用户");
-        }
+        AssertUtil.isEmpty(user, "找不到用户");
+        AssertUtil.isEmpty(user.getId(), "找不到用户");
+
         if (!userDto.getUsername().equals(user.getUsername())) {
             // 当用户名有变化，需要检测新用户名是否存在
             LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<User>()
                     .eq(User::getUsername, userDto.getUsername())
                     .ne(User::getId, userDto.getId());
             long count = mapper.selectCount(queryWrapper);
-            if (count > 0) {
-                throw new BusinessException("用户名已存在");
-            }
+            AssertUtil.isTrue(count > 0, "用户名已存在");
         }
         // 修改用户
         User entity = converter.toEntity(userDto);
@@ -158,20 +155,14 @@ public class UserService extends ServiceImpl<UserMapper, User> {
      */
     @Transactional(rollbackFor = Exception.class)
     public void modifyPassword(ModifyPasswordDto passwordDto) {
-        if (!passwordDto.getNewPassword().equals(passwordDto.getConfirmPassword())) {
-            throw new BusinessException("两次密码不一致");
-        }
+        AssertUtil.isTrue(!passwordDto.getNewPassword().equals(passwordDto.getConfirmPassword()), "两次密码不一致");
+
         Long userId = SecurityUtil.getUserId();
         User user = this.getById(userId);
-        if (ObjectUtils.isEmpty(user)) {
-            throw new BusinessException("用户不存在");
-        }
-        if (!passwordEncoder.matches(passwordDto.getOldPassword(), user.getPassword())) {
-            throw new BusinessException("原密码不正确");
-        }
-        if (passwordEncoder.matches(passwordDto.getNewPassword(), user.getPassword())) {
-            throw new BusinessException("新密码不能与原密码相同");
-        }
+        AssertUtil.isTrue(ObjectUtils.isEmpty(user), "用户不存在");
+        AssertUtil.isTrue(!passwordEncoder.matches(passwordDto.getOldPassword(), user.getPassword()), "原密码不正确");
+        AssertUtil.isTrue(passwordEncoder.matches(passwordDto.getNewPassword(), user.getPassword()), "新密码不能与原密码相同");
+
         User entity = new User();
         entity.setId(userId);
         entity.setPassword(passwordEncoder.encode(passwordDto.getNewPassword()));

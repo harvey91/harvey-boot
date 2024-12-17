@@ -16,6 +16,7 @@ import com.harvey.system.model.entity.VerifyCode;
 import com.harvey.system.mapper.VerifyCodeMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.system.redis.RedisCache;
+import com.harvey.system.utils.AssertUtil;
 import com.harvey.system.utils.StringUtils;
 import com.harvey.system.exception.BadParameterException;
 import org.springframework.stereotype.Service;
@@ -124,12 +125,9 @@ public class VerifyCodeService extends ServiceImpl<VerifyCodeMapper, VerifyCode>
                 .eq(VerifyCode::getVerifyCode, code)
                 .eq(VerifyCode::getEnabled, EnabledEnum.ENABLE.getValue());
         VerifyCode one = this.getOne(queryWrapper);
-        if (ObjectUtils.isEmpty(one)) {
-            throw new BusinessException("验证码错误");
-        }
-        if (!code.equals(one.getVerifyCode())) {
-            throw new BusinessException("验证码错误");
-        }
+        AssertUtil.isEmpty(one, "验证码错误");
+        AssertUtil.isTrue(!code.equals(one.getVerifyCode()), "验证码错误");
+
         VerifyCode entity = new VerifyCode();
         entity.setId(one.getId());
         entity.setEnabled(EnabledEnum.DISABLE.getValue());

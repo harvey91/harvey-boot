@@ -3,6 +3,9 @@ package com.harvey.system.model.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * <p>
  * 字典数据
@@ -13,7 +16,9 @@ import lombok.Data;
  */
 @Data
 @Schema(title = "DictDataVO")
-public class DictDataVO {
+public class DictDataVO implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private Long id;
 

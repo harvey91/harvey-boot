@@ -7,6 +7,7 @@ import com.harvey.system.model.query.MenuQuery;
 import com.harvey.system.model.vo.MenuVO;
 import com.harvey.system.model.vo.OptionVO;
 import com.harvey.system.model.vo.RouteVO;
+import com.harvey.system.security.SecurityUtil;
 import com.harvey.system.service.MenuService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -73,7 +74,7 @@ public class MenuController {
     @Operation(summary = "动态路由菜单")
     @GetMapping("/routes")
     public RespResult<List<RouteVO>> routes() {
-        return RespResult.success(menuService.routes());
+        return RespResult.success(menuService.routes(SecurityUtil.getUserId()));
     }
 
     @Operation(summary = "菜单下拉列表")

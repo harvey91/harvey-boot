@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,7 +17,9 @@ import java.util.List;
 @Schema(description = "下拉列表-可选树形")
 @Data
 @Builder
-public class OptionVO<T> {
+public class OptionVO<T>  implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Schema(description = "值")
     private T value;

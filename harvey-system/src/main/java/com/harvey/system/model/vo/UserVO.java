@@ -2,6 +2,8 @@ package com.harvey.system.model.vo;
 
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -9,7 +11,9 @@ import java.time.LocalDateTime;
  * @date 2024-11-07 17:26
  **/
 @Data
-public class UserVO {
+public class UserVO implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     public Long id;
 

@@ -5,6 +5,7 @@ import com.harvey.system.base.RespResult;
 import com.harvey.system.model.entity.RoleMenu;
 import com.harvey.system.exception.BusinessException;
 import com.harvey.system.service.RoleMenuService;
+import com.harvey.system.utils.AssertUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -42,9 +43,7 @@ public class RoleMenuController {
     @PostMapping("/ids/{roleId}")
     public RespResult<String> save(@PathVariable(value = "roleId") Long roleId,
                                    @RequestBody List<Long> menuIds) {
-        if (ObjectUtils.isEmpty(menuIds)) {
-            throw new BusinessException("菜单id不能为空");
-        }
+        AssertUtil.isEmpty(menuIds, "菜单id不能为空");
         roleMenuService.save(roleId, menuIds);
         return RespResult.success();
     }

@@ -21,7 +21,7 @@ public final class BusinessException extends RuntimeException {
         this.code = ErrorCodeEnum.ERROR.getCode();
     }
 
-    public BusinessException(String msg, Integer code) {
+    public BusinessException(Integer code, String msg) {
         super(msg);
         this.code = code;
     }

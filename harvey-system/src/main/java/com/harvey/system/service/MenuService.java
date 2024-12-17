@@ -3,7 +3,7 @@ package com.harvey.system.service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.harvey.system.constant.CacheConstant;
+import com.harvey.system.constant.Constant;
 import com.harvey.system.enums.MenuTypeEnum;
 import com.harvey.system.mapper.MenuMapper;
 import com.harvey.system.mapstruct.MenuConverter;
@@ -15,12 +15,10 @@ import com.harvey.system.model.vo.OptionVO;
 import com.harvey.system.model.vo.RouteVO;
 import com.harvey.system.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,6 +39,7 @@ import java.util.stream.Collectors;
 public class MenuService extends ServiceImpl<MenuMapper, Menu> {
     private final MenuMapper mapper;
     private final MenuConverter converter;
+    private final RoleService roleService;
 
     public Page<Menu> queryPage(MenuQuery query) {
         Page<Menu> page = new Page<>(query.getPageNum(), query.getPageSize());
@@ -50,7 +49,6 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
         return this.page(page, queryWrapper);
     }
 
-    @CacheEvict(value = CacheConstant.MENU_KEY, key = "'all'")
     @Transactional(rollbackFor = Throwable.class)
     public void saveMenu(MenuDto dto) {
         Menu entity = converter.toEntity(dto);
@@ -66,20 +64,17 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
         this.save(entity);
     }
 
-    @CacheEvict(value = CacheConstant.MENU_KEY, key = "'all'")
     @Transactional(rollbackFor = Throwable.class)
     public void updateMenu(MenuDto dto) {
         Menu entity = converter.toEntity(dto);
         this.updateById(entity);
     }
 
-    @CacheEvict(value = CacheConstant.MENU_KEY, key = "'all'")
     @Transactional(rollbackFor = Throwable.class)
     public void deleteByIds(List<Long> ids) {
         this.removeByIds(ids);
     }
 
-    @CacheEvict(value = CacheConstant.MENU_KEY, key = "'all'")
     @Transactional(rollbackFor = Throwable.class)
     public void deleteById(Long id) {
         this.removeById(id);
@@ -111,11 +106,18 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
      * 动态路由
      * @return
      */
-    @Cacheable(value = CacheConstant.MENU_KEY, key = "'all'")
-    public List<RouteVO> routes() {
-        LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<Menu>().orderByAsc(Menu::getSort);
-        // TODO 获取当前用户的菜单列表
-        List<Menu> menuList = mapper.selectList(queryWrapper);
+    public List<RouteVO> routes(Long userId) {
+        List<Menu> menuList = null;
+        List<String> roleCodeList = roleService.getRoleCodeList(userId);
+        if (!ObjectUtils.isEmpty(roleCodeList) && roleCodeList.contains(Constant.ROOT)) {
+            // 超级管理员，获取所有菜单列表
+            LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<Menu>().orderByAsc(Menu::getSort);
+            menuList = mapper.selectList(queryWrapper);
+        } else {
+            // 获取当前用户的菜单列表
+            menuList = mapper.selectMenuByUserId(userId);
+        }
+
         Map<Long, List<Menu>> collect = menuList.stream().collect(Collectors.groupingBy(Menu::getParentId));
         // 获取顶级目录列表
         List<Menu> parentMenuList = collect.get(0L);
@@ -125,7 +127,7 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
             routeVO.setName(menu.getRouteName());
             routeVO.setPath(menu.getRoutePath());
             routeVO.setComponent(menu.getComponent());
-            routeVO.setRedirect(org.springframework.util.StringUtils.hasLength(menu.getRedirect()) ? menu.getRedirect() : null);
+            routeVO.setRedirect(StringUtils.isBlank(menu.getRedirect()) ? null : menu.getRedirect());
 
             RouteVO.Meta meta = new RouteVO.Meta();
             meta.setTitle(menu.getMenuName());
@@ -202,7 +204,7 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
                 routeVO.setName(menu.getRouteName());
                 routeVO.setPath(menu.getRoutePath());
                 routeVO.setComponent(menu.getComponent());
-                routeVO.setRedirect(org.springframework.util.StringUtils.hasLength(menu.getRedirect()) ? menu.getRedirect() : null);
+                routeVO.setRedirect(StringUtils.isBlank(menu.getRedirect()) ? null : menu.getRedirect());
 
                 RouteVO.Meta meta = new RouteVO.Meta();
                 meta.setTitle(menu.getMenuName());
