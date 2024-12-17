@@ -2,7 +2,7 @@ package com.harvey.system.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.harvey.system.base.PageResult;
-import com.harvey.system.base.RespResult;
+import com.harvey.common.base.RespResult;
 import com.harvey.system.model.dto.RoleDto;
 import com.harvey.system.model.entity.Role;
 import com.harvey.system.model.query.RoleQuery;

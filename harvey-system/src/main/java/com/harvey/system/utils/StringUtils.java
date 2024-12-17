@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import cn.hutool.core.text.StrFormatter;
-import com.harvey.system.constant.Constant;
+import com.harvey.common.constant.Constant;
 import org.springframework.util.AntPathMatcher;
 
 /**

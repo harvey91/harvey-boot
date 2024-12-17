@@ -13,6 +13,7 @@
 
     <modules>
         <module>harvey-core</module>
+        <module>harvey-common</module>
         <module>harvey-system</module>
         <module>harvey-generator</module>
     </modules>
@@ -56,6 +57,12 @@
             <dependency>
                 <groupId>com.harvey</groupId>
                 <artifactId>harvey-system</artifactId>
+                <version>${harvey-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.harvey</groupId>
+                <artifactId>harvey-common</artifactId>
                 <version>${harvey-version}</version>
             </dependency>
 

@@ -1,8 +1,8 @@
 package com.harvey.system.security.service;
 
 import cn.hutool.core.util.IdUtil;
-import com.harvey.system.constant.Constant;
-import com.harvey.system.enums.LoginResultEnum;
+import com.harvey.common.constant.Constant;
+import com.harvey.common.enums.LoginResultEnum;
 import com.harvey.system.security.JwtProperties;
 import com.harvey.system.security.LoginUserVO;
 import com.harvey.system.service.LogService;

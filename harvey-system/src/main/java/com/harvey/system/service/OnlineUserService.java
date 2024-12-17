@@ -3,7 +3,7 @@ package com.harvey.system.service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.harvey.system.constant.Constant;
+import com.harvey.common.constant.Constant;
 import com.harvey.system.mapper.OnlineUserMapper;
 import com.harvey.system.model.entity.OnlineUser;
 import com.harvey.system.security.LoginUserVO;

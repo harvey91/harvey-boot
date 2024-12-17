@@ -1,4 +1,4 @@
-package com.harvey.system.enums;
+package com.harvey.common.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

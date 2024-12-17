@@ -1,8 +1,8 @@
 package com.harvey.system.exception.handler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.harvey.system.base.RespResult;
-import com.harvey.system.enums.ErrorCodeEnum;
+import com.harvey.common.base.RespResult;
+import com.harvey.common.enums.ErrorCodeEnum;
 import com.harvey.system.exception.BadParameterException;
 import com.harvey.system.exception.BusinessException;
 import com.harvey.system.utils.StringUtils;

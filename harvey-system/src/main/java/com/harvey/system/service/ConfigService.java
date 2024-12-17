@@ -3,7 +3,7 @@ package com.harvey.system.service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.harvey.system.constant.CacheConstant;
+import com.harvey.common.constant.CacheConstant;
 import com.harvey.system.mapper.ConfigMapper;
 import com.harvey.system.mapstruct.ConfigConverter;
 import com.harvey.system.model.dto.ConfigDto;

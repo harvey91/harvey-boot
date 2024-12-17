@@ -1,6 +1,6 @@
 package com.harvey.system.controller;
 
-import com.harvey.system.base.RespResult;
+import com.harvey.common.base.RespResult;
 import com.harvey.system.model.vo.VisitStatsVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

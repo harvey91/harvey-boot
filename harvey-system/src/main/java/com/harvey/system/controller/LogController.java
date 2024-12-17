@@ -2,7 +2,7 @@ package com.harvey.system.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.harvey.system.base.PageResult;
-import com.harvey.system.base.RespResult;
+import com.harvey.common.base.RespResult;
 import com.harvey.system.model.entity.LogLogin;
 import com.harvey.system.model.entity.LogOp;
 import com.harvey.system.model.query.LogLoginQuery;

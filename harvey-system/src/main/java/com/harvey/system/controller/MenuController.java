@@ -1,6 +1,6 @@
 package com.harvey.system.controller;
 
-import com.harvey.system.base.RespResult;
+import com.harvey.common.base.RespResult;
 import com.harvey.system.model.dto.MenuDto;
 import com.harvey.system.model.entity.Menu;
 import com.harvey.system.model.query.MenuQuery;

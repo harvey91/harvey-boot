@@ -1,4 +1,4 @@
-package com.harvey.system.constant;
+package com.harvey.common.constant;
 
 /**
  * 通用常量类

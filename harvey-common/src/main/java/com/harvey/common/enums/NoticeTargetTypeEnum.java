@@ -1,28 +1,27 @@
-package com.harvey.system.enums;
+package com.harvey.common.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * 登陆结果 枚举类
+ * 通知目标类型 枚举类
  * @author Harvey
  * @date 2024-11-20 18:07
  **/
 @Getter
 @AllArgsConstructor
-public enum LoginResultEnum {
+public enum NoticeTargetTypeEnum {
 
-    LOGIN_SUCCESS(1, "登陆成功"),
-    LOGOUT_SUCCESS(2, "登出成功"),
-    LOGIN_FAILED(3, "登陆失败"),
+    ALL(1, "全体"),
+    TARGET(2, "指定"),
     ;
 
     private final int value;
 
     private final String label;
 
-    public static LoginResultEnum get(int value) {
-        for (LoginResultEnum enum1 : LoginResultEnum.values()) {
+    public static NoticeTargetTypeEnum get(int value) {
+        for (NoticeTargetTypeEnum enum1 : NoticeTargetTypeEnum.values()) {
             if (enum1.getValue() == value) {
                 return enum1;
             }

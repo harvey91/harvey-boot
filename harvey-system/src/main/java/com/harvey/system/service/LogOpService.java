@@ -4,7 +4,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.harvey.system.constant.DynamicDSConstant;
+import com.harvey.common.constant.DynamicDSConstant;
 import com.harvey.system.exception.BadParameterException;
 import com.harvey.system.mapper.LogOpMapper;
 import com.harvey.system.mapstruct.LogOpConverter;

@@ -1,6 +1,6 @@
-package com.harvey.system.base;
+package com.harvey.common.base;
 
-import com.harvey.system.enums.ErrorCodeEnum;
+import com.harvey.common.enums.ErrorCodeEnum;
 import lombok.Data;
 
 import java.io.Serializable;

@@ -8,11 +8,15 @@
         <version>1.0.0</version>
     </parent>
     <artifactId>harvey-system</artifactId>
-<!--    <version>0.0.1-SNAPSHOT</version>-->
     <name>harvey-system</name>
     <description>harvey-system</description>
 
     <dependencies>
+        <dependency>
+            <groupId>com.harvey</groupId>
+            <artifactId>harvey-common</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -51,12 +55,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-3-starter</artifactId>
         </dependency>
@@ -76,11 +74,6 @@
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
         </dependency>
 
         <!-- jwt -->
@@ -106,11 +99,6 @@
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-processor</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
         </dependency>
 
         <!-- 解析客户端操作系统、浏览器等 -->

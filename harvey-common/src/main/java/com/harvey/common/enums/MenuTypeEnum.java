@@ -1,7 +1,5 @@
-package com.harvey.system.enums;
+package com.harvey.common.enums;
 
-import com.baomidou.mybatisplus.annotation.EnumValue;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**

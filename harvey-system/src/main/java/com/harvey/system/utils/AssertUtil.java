@@ -1,13 +1,11 @@
 package com.harvey.system.utils;
 
-import com.harvey.system.enums.ErrorCodeEnum;
+import com.harvey.common.enums.ErrorCodeEnum;
 import com.harvey.system.exception.BusinessException;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
 
 /**

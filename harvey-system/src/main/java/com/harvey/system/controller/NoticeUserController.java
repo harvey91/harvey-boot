@@ -7,7 +7,7 @@ import com.harvey.system.model.query.NoticeUserQuery;
 import com.harvey.system.model.entity.NoticeUser;
 import com.harvey.system.service.NoticeUserService;
 import com.harvey.system.base.PageResult;
-import com.harvey.system.base.RespResult;
+import com.harvey.common.base.RespResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.ObjectUtils;

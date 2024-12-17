@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -13,8 +12,7 @@ import java.util.List;
  **/
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class PageResult<T> implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class PageResult<T> {
 
     private long current;
 

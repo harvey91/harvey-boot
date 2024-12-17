@@ -1,19 +1,19 @@
-package com.harvey.system.enums;
+package com.harvey.common.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * 验证类型 枚举类
+ * 系统平台 枚举类
  * @author Harvey
- * @date 2024-12-11 22:35
+ * @date 2024-11-20 18:07
  **/
 @Getter
 @AllArgsConstructor
-public enum VerifyTypeEnum {
+public enum PlatformEnum {
 
-    LOGIN(1, "登陆"),
-    BIND(2, "绑定"),
+    SYSTEM(1, "后台管理"),
+    MALL(2, "商城"),
     ;
 
     private final int value;

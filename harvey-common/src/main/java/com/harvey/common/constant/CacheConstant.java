@@ -1,4 +1,4 @@
-package com.harvey.system.constant;
+package com.harvey.common.constant;
 
 /**
  * 缓存key 常量

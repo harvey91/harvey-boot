@@ -8,7 +8,7 @@ import com.harvey.system.model.query.VerifyCodeQuery;
 import com.harvey.system.model.entity.VerifyCode;
 import com.harvey.system.service.VerifyCodeService;
 import com.harvey.system.base.PageResult;
-import com.harvey.system.base.RespResult;
+import com.harvey.common.base.RespResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
