@@ -1,4 +1,4 @@
-package com.harvey.system.exception;
+package com.harvey.common.exception;
 
 import com.harvey.common.enums.ErrorCodeEnum;
 import lombok.Getter;

@@ -15,7 +15,7 @@ import com.harvey.system.model.vo.OptionVO;
 import com.harvey.system.model.vo.UserVO;
 import com.harvey.system.security.SecurityUtil;
 import com.harvey.system.security.service.OnlineUserCacheService;
-import com.harvey.system.utils.AssertUtil;
+import com.harvey.common.utils.AssertUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

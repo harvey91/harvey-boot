@@ -11,7 +11,7 @@ import com.harvey.system.model.entity.Dept;
 import com.harvey.system.model.entity.Role;
 import com.harvey.system.model.entity.RoleDept;
 import com.harvey.system.model.query.RoleQuery;
-import com.harvey.system.utils.StringUtils;
+import com.harvey.common.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

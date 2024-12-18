@@ -13,7 +13,7 @@ import com.harvey.system.model.query.MenuQuery;
 import com.harvey.system.model.vo.MenuVO;
 import com.harvey.system.model.vo.OptionVO;
 import com.harvey.system.model.vo.RouteVO;
-import com.harvey.system.utils.StringUtils;
+import com.harvey.common.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

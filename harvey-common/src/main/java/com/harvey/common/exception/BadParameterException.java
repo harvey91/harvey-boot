@@ -1,4 +1,4 @@
-package com.harvey.system.exception;
+package com.harvey.common.exception;
 
 import lombok.Getter;
 

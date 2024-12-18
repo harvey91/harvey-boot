@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.harvey.common.enums.NoticeTargetTypeEnum;
-import com.harvey.system.exception.BadParameterException;
+import com.harvey.common.exception.BadParameterException;
 import com.harvey.system.model.entity.User;
 import com.harvey.system.model.query.NoticeUserQuery;
 import com.harvey.system.model.entity.NoticeUser;

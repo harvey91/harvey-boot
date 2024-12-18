@@ -1,17 +1,8 @@
 package com.harvey.system.aspect;
 
-import com.harvey.system.model.dto.LogOpDto;
-import com.harvey.system.security.LoginUserVO;
-import com.harvey.system.security.SecurityUtil;
-import com.harvey.system.service.LogOpService;
 import com.harvey.system.service.LogService;
-import com.harvey.system.utils.ServletUtils;
-import com.harvey.system.utils.ip.AddressUtils;
-import com.harvey.system.utils.ip.IpUtils;
-import eu.bitwalker.useragentutils.UserAgent;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -25,7 +16,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 /**
  * 操作日志 AOP切面

@@ -12,7 +12,7 @@ import com.harvey.system.security.SecurityUtil;
 import com.harvey.system.security.service.JwtTokenService;
 import com.harvey.system.security.service.OnlineUserCacheService;
 import com.harvey.system.service.LogService;
-import com.harvey.system.utils.StringUtils;
+import com.harvey.common.utils.StringUtils;
 import com.pig4cloud.captcha.ArithmeticCaptcha;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

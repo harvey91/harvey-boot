@@ -11,7 +11,7 @@ import com.harvey.system.model.entity.Dict;
 import com.harvey.system.model.entity.DictData;
 import com.harvey.system.model.query.DictQuery;
 import com.harvey.system.model.vo.DictVO;
-import com.harvey.system.utils.StringUtils;
+import com.harvey.common.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;

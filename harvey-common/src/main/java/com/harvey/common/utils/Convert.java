@@ -1,4 +1,4 @@
-package com.harvey.system.utils;
+package com.harvey.common.utils;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

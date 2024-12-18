@@ -8,7 +8,7 @@ import com.harvey.system.mapstruct.PostConverter;
 import com.harvey.system.model.dto.PostDto;
 import com.harvey.system.model.entity.Post;
 import com.harvey.system.model.query.PostQuery;
-import com.harvey.system.utils.StringUtils;
+import com.harvey.common.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

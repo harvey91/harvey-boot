@@ -1,7 +1,7 @@
 package com.harvey.system.security.service;
 
 import com.harvey.common.enums.LoginResultEnum;
-import com.harvey.system.exception.BusinessException;
+import com.harvey.common.exception.BusinessException;
 import com.harvey.system.model.entity.User;
 import com.harvey.system.security.LoginUserVO;
 import com.harvey.system.service.LogService;

@@ -1,6 +1,6 @@
-package com.harvey.system.utils.ip;
+package com.harvey.common.utils.ip;
 
-import com.harvey.system.utils.StringUtils;
+import com.harvey.common.utils.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.net.InetAddress;

@@ -1,19 +1,18 @@
-package com.harvey.system.utils.ip;
+package com.harvey.common.utils.ip;
 
 import cn.hutool.http.HttpUtil;
-import com.harvey.system.utils.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 获取地址类
  *
  * @author Harvey
  */
+@Slf4j
 public class AddressUtils {
-    private static final Logger log = LoggerFactory.getLogger(AddressUtils.class);
 
     // IP地址查询
     public static final String IP_URL = "http://whois.pconline.com.cn/ipJson.jsp";

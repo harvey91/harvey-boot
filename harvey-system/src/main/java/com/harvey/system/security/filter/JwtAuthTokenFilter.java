@@ -5,7 +5,7 @@ import com.harvey.common.base.RespResult;
 import com.harvey.common.enums.ErrorCodeEnum;
 import com.harvey.system.security.LoginUserVO;
 import com.harvey.system.security.service.JwtTokenService;
-import com.harvey.system.utils.ServletUtils;
+import com.harvey.common.utils.ServletUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;

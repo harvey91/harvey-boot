@@ -8,7 +8,7 @@ import com.harvey.system.mapstruct.DeptConverter;
 import com.harvey.system.model.dto.DeptDto;
 import com.harvey.system.model.entity.Dept;
 import com.harvey.system.model.query.DeptQuery;
-import com.harvey.system.utils.StringUtils;
+import com.harvey.common.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

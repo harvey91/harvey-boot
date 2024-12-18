@@ -6,7 +6,7 @@ import com.harvey.system.model.vo.server.CpuVO;
 import com.harvey.system.model.vo.server.ServerVO;
 import com.harvey.system.model.vo.server.StorageVO;
 import com.harvey.system.model.vo.server.SysVO;
-import com.harvey.system.utils.FileUtil;
+import com.harvey.common.utils.FileUtil;
 import org.springframework.stereotype.Service;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
