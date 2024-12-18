@@ -3,7 +3,7 @@
 <mapper namespace="com.harvey.system.mapper.RoleMapper">
 
 
-    <select id="selectRoleByUserId" parameterType="Long" resultType="Role">
+    <select id="selectRoleByUserId" parameterType="Long" resultType="com.harvey.system.model.entity.Role">
         SELECT r.*
         FROM sys_role r
                  LEFT JOIN sys_user_role ur ON r.id = ur.role_id

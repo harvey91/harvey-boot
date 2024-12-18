@@ -1,4 +1,4 @@
-package com.harvey.system.config;
+package com.harvey.core.config;
 
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;

@@ -1,4 +1,4 @@
-package com.harvey.system.config;
+package com.harvey.core.mybatis;
 
 import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
 

@@ -1,4 +1,4 @@
-package com.harvey.system.redis;
+package com.harvey.core.redis;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.connection.DataType;

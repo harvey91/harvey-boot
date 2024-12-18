@@ -40,6 +40,10 @@
         <UserAgentUtils.version>1.21</UserAgentUtils.version>
         <xxl-job-core.version>2.4.2</xxl-job-core.version>
         <oshi-core.version>6.1.4</oshi-core.version>
+        <jackson-datatype-jsr310-version>2.17.2</jackson-datatype-jsr310-version>
+        <aliyun-sdk-oss-version>2.5.0</aliyun-sdk-oss-version>
+        <qiniu-java-sdk-version>[7.2.0, 7.2.99]</qiniu-java-sdk-version>
+        <cos_api-version>5.6.8</cos_api-version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -57,6 +61,12 @@
             <dependency>
                 <groupId>com.harvey</groupId>
                 <artifactId>harvey-system</artifactId>
+                <version>${harvey-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.harvey</groupId>
+                <artifactId>harvey-core</artifactId>
                 <version>${harvey-version}</version>
             </dependency>
 
@@ -157,6 +167,33 @@
                 <groupId>com.xuxueli</groupId>
                 <artifactId>xxl-job-core</artifactId>
                 <version>${xxl-job-core.version}</version>
+            </dependency>
+
+            <!-- 阿里云OSS 云存储 -->
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${aliyun-sdk-oss-version}</version>
+            </dependency>
+
+            <!-- 七牛云 -->
+            <dependency>
+                <groupId>com.qiniu</groupId>
+                <artifactId>qiniu-java-sdk</artifactId>
+                <version>${qiniu-java-sdk-version}</version>
+            </dependency>
+
+            <!-- 腾讯云COS 云存储 -->
+            <dependency>
+                <groupId>com.qcloud</groupId>
+                <artifactId>cos_api</artifactId>
+                <version>${cos_api-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jsr310</artifactId>
+                <version>${jackson-datatype-jsr310-version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

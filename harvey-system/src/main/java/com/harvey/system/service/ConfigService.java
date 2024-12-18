@@ -9,7 +9,7 @@ import com.harvey.system.mapstruct.ConfigConverter;
 import com.harvey.system.model.dto.ConfigDto;
 import com.harvey.system.model.entity.Config;
 import com.harvey.system.model.query.ConfigQuery;
-import com.harvey.system.redis.RedisCache;
+import com.harvey.core.redis.RedisCache;
 import com.harvey.system.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

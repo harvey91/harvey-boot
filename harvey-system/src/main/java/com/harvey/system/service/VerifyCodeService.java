@@ -12,7 +12,7 @@ import com.harvey.system.model.dto.VerifyCodeDto;
 import com.harvey.system.model.entity.VerifyCode;
 import com.harvey.system.mapper.VerifyCodeMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.harvey.system.redis.RedisCache;
+import com.harvey.core.redis.RedisCache;
 import com.harvey.system.utils.AssertUtil;
 import com.harvey.system.utils.StringUtils;
 import com.harvey.system.exception.BadParameterException;

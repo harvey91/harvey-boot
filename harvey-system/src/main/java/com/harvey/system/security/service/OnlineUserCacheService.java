@@ -2,7 +2,7 @@ package com.harvey.system.security.service;
 
 import com.harvey.common.constant.CacheConstant;
 import com.harvey.common.constant.Constant;
-import com.harvey.system.redis.RedisCache;
+import com.harvey.core.redis.RedisCache;
 import com.harvey.system.security.LoginUserVO;
 import com.harvey.system.service.OnlineUserService;
 import com.harvey.system.utils.ServletUtils;

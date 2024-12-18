@@ -6,7 +6,7 @@ import com.harvey.common.constant.CacheConstant;
 import com.harvey.common.enums.LoginResultEnum;
 import com.harvey.system.model.dto.LoginDto;
 import com.harvey.system.model.vo.CaptchaVO;
-import com.harvey.system.redis.RedisCache;
+import com.harvey.core.redis.RedisCache;
 import com.harvey.system.security.LoginUserVO;
 import com.harvey.system.security.SecurityUtil;
 import com.harvey.system.security.service.JwtTokenService;
