@@ -261,6 +261,8 @@
                 <filtering>true</filtering>
                 <includes>
                     <include>application.yml</include>
+                    <!-- core模块的yml文件默认打包，公共配置不存在多环境 -->
+                    <include>application-core.yml</include>
                     <include>application-${activeProfile}.yml</include>
                 </includes>
             </resource>

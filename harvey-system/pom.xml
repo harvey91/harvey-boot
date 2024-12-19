@@ -8,6 +8,7 @@
         <version>1.0.0</version>
     </parent>
     <artifactId>harvey-system</artifactId>
+    <packaging>jar</packaging>
     <name>harvey-system</name>
     <description>harvey-system</description>
 
@@ -51,14 +52,14 @@
     </dependencies>
 
     <build>
-        <finalName>${project.artifactId}-${pName}</finalName>
+        <finalName>${project.artifactId}-${pName}-${version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.1.1.RELEASE</version>
+                <version>3.3.4</version>
                 <configuration>
-                    <fork>true</fork> <!-- 如果没有该配置，devtools不会生效 -->
+                    <includeSystemScope>true</includeSystemScope>
                 </configuration>
                 <executions>
                     <execution>

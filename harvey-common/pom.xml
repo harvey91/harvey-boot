@@ -8,6 +8,7 @@
         <version>1.0.0</version>
     </parent>
     <artifactId>harvey-common</artifactId>
+    <packaging>jar</packaging>
     <name>harvey-common</name>
     <description>harvey-common</description>
 
