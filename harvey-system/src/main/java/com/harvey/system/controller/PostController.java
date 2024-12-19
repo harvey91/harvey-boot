@@ -2,7 +2,7 @@ package com.harvey.system.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.harvey.system.result.PageResult;
-import com.harvey.common.base.RespResult;
+import com.harvey.common.result.RespResult;
 import com.harvey.system.model.dto.PostDto;
 import com.harvey.system.model.entity.Post;
 import com.harvey.system.model.query.PostQuery;

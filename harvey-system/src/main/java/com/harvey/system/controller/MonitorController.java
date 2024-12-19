@@ -1,6 +1,6 @@
 package com.harvey.system.controller;
 
-import com.harvey.common.base.RespResult;
+import com.harvey.common.result.RespResult;
 import com.harvey.system.model.vo.server.ServerVO;
 import com.harvey.system.service.MonitorService;
 import io.swagger.v3.oas.annotations.Operation;

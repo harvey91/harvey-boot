@@ -3,7 +3,7 @@ package com.harvey.system.controller;
 import cn.hutool.core.util.PhoneUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.harvey.system.result.PageResult;
-import com.harvey.common.base.RespResult;
+import com.harvey.common.result.RespResult;
 import com.harvey.common.enums.ContactTypeEnum;
 import com.harvey.common.enums.ErrorCodeEnum;
 import com.harvey.common.enums.PlatformEnum;

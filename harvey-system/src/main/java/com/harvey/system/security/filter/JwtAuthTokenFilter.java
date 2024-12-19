@@ -1,7 +1,7 @@
 package com.harvey.system.security.filter;
 
 import com.alibaba.fastjson2.JSON;
-import com.harvey.common.base.RespResult;
+import com.harvey.common.result.RespResult;
 import com.harvey.common.enums.ErrorCodeEnum;
 import com.harvey.system.security.LoginUserVO;
 import com.harvey.system.security.service.JwtTokenService;

@@ -1,7 +1,7 @@
 package com.harvey.system.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.harvey.common.base.RespResult;
+import com.harvey.common.result.RespResult;
 import com.harvey.system.model.entity.RoleMenu;
 import com.harvey.system.service.RoleMenuService;
 import com.harvey.common.utils.AssertUtil;

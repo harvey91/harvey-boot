@@ -1,4 +1,4 @@
-package com.harvey.common.base;
+package com.harvey.common.result;
 
 import com.harvey.common.enums.ErrorCodeEnum;
 import lombok.Data;

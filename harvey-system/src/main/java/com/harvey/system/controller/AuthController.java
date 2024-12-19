@@ -1,7 +1,7 @@
 package com.harvey.system.controller;
 
 import cn.hutool.core.util.IdUtil;
-import com.harvey.common.base.RespResult;
+import com.harvey.common.result.RespResult;
 import com.harvey.common.constant.CacheConstant;
 import com.harvey.common.enums.LoginResultEnum;
 import com.harvey.system.model.dto.LoginDto;

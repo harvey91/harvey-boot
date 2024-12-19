@@ -1,7 +1,7 @@
 package com.harvey.system.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.harvey.common.base.RespResult;
+import com.harvey.common.result.RespResult;
 import com.harvey.common.enums.PlatformEnum;
 import com.harvey.system.result.PageResult;
 import com.harvey.system.model.dto.FileManageDto;
