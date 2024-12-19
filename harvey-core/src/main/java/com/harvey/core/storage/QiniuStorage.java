@@ -1,4 +1,4 @@
-package com.harvey.system.storage;
+package com.harvey.core.storage;
 
 import com.qiniu.common.QiniuException;
 import com.qiniu.storage.BucketManager;

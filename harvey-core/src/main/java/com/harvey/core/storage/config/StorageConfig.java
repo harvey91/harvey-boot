@@ -1,7 +1,8 @@
-package com.harvey.system.storage.config;
+package com.harvey.core.storage.config;
 
-import com.harvey.system.storage.*;
+import com.harvey.core.storage.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Harvey
  * @date 2024-12-05 22:44
  **/
+@Slf4j
 @Configuration
 @EnableConfigurationProperties(StorageProperties.class)
 @RequiredArgsConstructor
@@ -28,7 +30,7 @@ public class StorageConfig {
             case "qiniu" -> storageService.setStorage(qiniuStorage());
             default -> throw new RuntimeException("当前存储模式 " + active + " 不支持");
         }
-
+        log.info("StorageService bean init. active = {}", active);
         return storageService;
     }
 

@@ -1,4 +1,4 @@
-package com.harvey.system.storage;
+package com.harvey.core.storage;
 
 import org.springframework.core.io.Resource;
 

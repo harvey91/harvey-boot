@@ -1,4 +1,4 @@
-package com.harvey.system.storage;
+package com.harvey.core.storage;
 
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;

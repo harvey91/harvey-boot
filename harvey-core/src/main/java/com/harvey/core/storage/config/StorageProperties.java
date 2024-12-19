@@ -1,4 +1,4 @@
-package com.harvey.system.storage.config;
+package com.harvey.core.storage.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -1,4 +1,4 @@
-package com.harvey.system.storage;
+package com.harvey.core.storage;
 
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.ObjectMetadata;

@@ -1,9 +1,8 @@
 package com.harvey.system.config;
 
-import com.harvey.system.storage.config.StorageProperties;
+import com.harvey.core.storage.config.StorageProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
