@@ -1,15 +1,14 @@
 package com.harvey.system.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.harvey.system.base.PageResult;
 import com.harvey.common.base.RespResult;
 import com.harvey.common.enums.PlatformEnum;
+import com.harvey.system.base.PageResult;
 import com.harvey.system.model.dto.FileManageDto;
 import com.harvey.system.model.entity.FileManage;
 import com.harvey.system.model.query.FileManageQuery;
 import com.harvey.system.security.SecurityUtil;
 import com.harvey.system.service.FileManageService;
-import com.harvey.system.storage.StorageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +31,6 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class FileManageController {
     private final FileManageService fileManageService;
-    private final StorageService storageService;
 
     @Operation(summary = "id查询表单", description = "根据id查询对象")
     @GetMapping("/form/{id}")
@@ -53,7 +51,7 @@ public class FileManageController {
     @PostMapping("/create")
     public RespResult<FileManageDto> create(@RequestParam("file") MultipartFile file) throws IOException {
         Long userId = SecurityUtil.getUserId();
-        FileManageDto manageDto = storageService.store(file, userId, PlatformEnum.SYSTEM.name());
+        FileManageDto manageDto = fileManageService.saveFileManage(file, userId, PlatformEnum.SYSTEM.name());
         return RespResult.success(manageDto);
     }
 

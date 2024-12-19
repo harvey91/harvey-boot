@@ -1,8 +1,12 @@
 package com.harvey.system.service;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.harvey.common.enums.PlatformEnum;
 import com.harvey.common.exception.BadParameterException;
 import com.harvey.system.mapper.FileManageMapper;
 import com.harvey.system.mapstruct.FileManageConverter;
@@ -10,11 +14,16 @@ import com.harvey.system.model.dto.FileManageDto;
 import com.harvey.system.model.entity.FileManage;
 import com.harvey.system.model.query.FileManageQuery;
 import com.harvey.common.utils.StringUtils;
+import com.harvey.system.storage.StorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -28,6 +37,7 @@ import java.util.List;
 public class FileManageService extends ServiceImpl<FileManageMapper, FileManage> {
     private final FileManageMapper mapper;
     private final FileManageConverter converter;
+    private final StorageService storageService;
 
     public Page<FileManage> queryPage(FileManageQuery query) {
         Page<FileManage> page = new Page<>(query.getPageNum(), query.getPageSize());
@@ -38,9 +48,29 @@ public class FileManageService extends ServiceImpl<FileManageMapper, FileManage>
     }
 
     @Transactional(rollbackFor = Throwable.class)
-    public void saveFileManage(FileManageDto dto) {
+    public FileManageDto saveFileManage(MultipartFile file, Long userId, String platform) throws IOException {
+        long fileSize = file.getSize();
+        String fileName = file.getOriginalFilename();
+        String suffix = FileUtil.getSuffix(fileName);
+        // InputStream会被读取流，不可和存储共用一个流
+        String md5 = SecureUtil.md5(file.getInputStream()).toUpperCase();
+        // 检查md5是否存在，存在则无需再上传
+
+        String url = storageService.store(file, md5, suffix);
+
+        // 文件信息入库管理
+        FileManageDto dto = new FileManageDto();
+        dto.setName(fileName);
+        dto.setSize(fileSize);
+        dto.setPlatform(platform);
+        dto.setMd5(md5);
+        dto.setUrl(url);
+        dto.setSuffix(suffix);
+        dto.setUserId(userId);
+
         FileManage entity = converter.toEntity(dto);
         save(entity);
+        return dto;
     }
 
     @Transactional(rollbackFor = Throwable.class)
