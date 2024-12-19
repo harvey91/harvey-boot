@@ -68,7 +68,7 @@ public class HarveyGenerator {
                             .enableLombok() // 开启Lombok
                             .enableChainModel() // 开启链式模型
                             .javaTemplate("/templates/entity.java") // 设置实体类模板
-                            .superClass("com.harvey.system.model.entity.BaseEntity") // 设置实体类父类，含过滤属性时开启继承，否则关闭
+                            .superClass("com.harvey.core.model.BaseEntity") // 设置实体类父类，含过滤属性时开启继承，否则关闭
                             .addSuperEntityColumns("id", "enabled", "remark", "sort", "create_time", "update_time", "deleted") // 过滤父类属性
 //							.enableFileOverride() // 开启文件覆盖
                             .serviceBuilder()

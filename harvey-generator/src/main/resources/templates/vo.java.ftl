@@ -3,9 +3,12 @@ package ${package.Parent}.model.vo;
 <#list table.importPackages as pkg>
 import ${pkg};
 </#list>
-import java.io.Serial;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
 * ${table.comment!} VO类
 *
@@ -13,7 +16,9 @@ import lombok.Data;
 * @since ${date}
 */
 @Data
-public class ${entity}VO {
+public class ${entity}VO implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private Long id;
 <#-- ----------  BEGIN 字段循环遍历  ---------->

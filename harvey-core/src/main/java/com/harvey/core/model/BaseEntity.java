@@ -1,4 +1,4 @@
-package com.harvey.system.model.entity;
+package com.harvey.core.model;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;

@@ -1,8 +1,8 @@
 package com.harvey.system.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.harvey.system.model.entity.BaseEntity;
-import java.io.Serializable;
+import com.harvey.core.model.BaseEntity;
+
 import java.io.Serial;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

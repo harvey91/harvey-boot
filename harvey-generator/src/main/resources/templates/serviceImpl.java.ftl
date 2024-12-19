@@ -40,13 +40,13 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
         LambdaQueryWrapper<${entity}> queryWrapper = new LambdaQueryWrapper<${entity}>()
 //                .like(StringUtils.isNotBlank(query.getKeywords()), ${entity}::getName, query.getKeywords())
                 .orderByAsc(${entity}::getSort);
-        return page(page, queryWrapper);
+        return this.page(page, queryWrapper);
     }
 
     @Transactional(rollbackFor = Throwable.class)
     public void save${entity}(${entity}Dto dto) {
         ${entity} entity = converter.toEntity(dto);
-        save(entity);
+        this.save(entity);
     }
 
     @Transactional(rollbackFor = Throwable.class)
@@ -55,7 +55,7 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
             throw new BadParameterException();
         }
         ${entity} entity = converter.toEntity(dto);
-        updateById(entity);
+        this.updateById(entity);
     }
 
     @Transactional(rollbackFor = Throwable.class)
@@ -63,6 +63,6 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
         if (ObjectUtils.isEmpty(ids)) {
             throw new BadParameterException();
         }
-        removeByIds(ids);
+        this.removeByIds(ids);
     }
 }

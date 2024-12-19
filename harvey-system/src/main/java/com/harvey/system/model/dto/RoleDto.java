@@ -1,14 +1,9 @@
 package com.harvey.system.model.dto;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.harvey.system.model.entity.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-
-import java.io.Serializable;
 
 /**
  * <p>
