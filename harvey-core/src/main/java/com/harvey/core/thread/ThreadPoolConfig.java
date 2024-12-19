@@ -1,6 +1,6 @@
-package com.harvey.system.config;
+package com.harvey.core.thread;
 
-import com.harvey.system.config.properties.ThreadProperties;
+import com.harvey.core.thread.ThreadProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,14 +11,14 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
- * 异步配置
+ * 线程池配置
  * @author Harvey
  * @date 2024-11-25 11:36
  **/
 @Configuration
 @EnableAsync
 @RequiredArgsConstructor
-public class AsyncConfig {
+public class ThreadPoolConfig {
     private final ThreadProperties threadProperties;
 
     @Bean(name = "asyncExecutor")

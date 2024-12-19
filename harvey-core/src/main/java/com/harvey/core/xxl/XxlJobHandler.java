@@ -1,4 +1,4 @@
-package com.harvey.system.handler;
+package com.harvey.core.xxl;
 
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;

@@ -1,4 +1,4 @@
-package com.harvey.system.config.properties;
+package com.harvey.core.thread;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
