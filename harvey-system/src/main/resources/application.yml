@@ -11,7 +11,7 @@ spring:
   jackson:
     default-property-inclusion: non_null
   profiles:
-    active: dev, redis-dev, db-dev
+    active: dev, db-dev, redis-dev
 
 #jwt
 jwt:
@@ -51,34 +51,6 @@ xxl:
       logpath: /data/applogs/xxl-job/jobhandler
       # 调度中心日志表数据保存天数 [必填]：过期日志自动清理；限制大于等于7时生效，否则, 如-1，关闭自动清理功能；
       logretentiondays: 30
-
-# 对象存储配置
-storage:
-  # 当前工作的对象存储模式，分别是local、aliyun、tencent、qiniu
-  active: local
-  # 本地对象存储配置信息
-  local:
-    storagePath: G:/storage
-    # fetch方法对应的地址
-    address: /storage/fetch
-  # 阿里云对象存储配置信息
-  aliyun:
-    endpoint: oss-cn-shenzhen.aliyuncs.com
-    accessKeyId: LTAI3RId6XqBVVgn
-    accessKeySecret: gbqTsES0eGJTIPefYaQPP9pPammQyy
-    bucketName: hnyystatic
-  # 腾讯对象存储配置信息，请参考 https://cloud.tencent.com/document/product/436/6249
-  tencent:
-    secretId: AKIDOccMr856uoU1Tsa2MQL5aqseBUWRrb5i
-    secretKey: XqtgEhIdrupTs4ygaWlkUUXv3w3FiwuD
-    region: ap-shanghai
-    bucketName: vytech-1300096589
-  # 七牛云对象存储配置信息
-  qiniu:
-    endpoint: http://pd5cb6ulu.bkt.clouddn.com
-    accessKey: 111111
-    secretKey: xxxxxx
-    bucketName: mall
 
 log:
   path: /opt/springboot/web
