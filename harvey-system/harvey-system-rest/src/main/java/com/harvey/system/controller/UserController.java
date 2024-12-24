@@ -2,6 +2,7 @@ package com.harvey.system.controller;
 
 import cn.hutool.core.util.PhoneUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.harvey.system.model.dto.*;
 import com.harvey.system.result.PageResult;
 import com.harvey.common.result.RespResult;
 import com.harvey.common.enums.ContactTypeEnum;
@@ -11,7 +12,6 @@ import com.harvey.common.enums.VerifyTypeEnum;
 import com.harvey.common.exception.BadParameterException;
 import com.harvey.common.exception.BusinessException;
 import com.harvey.system.mapstruct.UserConverter;
-import com.harvey.system.model.dto.*;
 import com.harvey.system.model.entity.User;
 import com.harvey.system.model.query.UserQuery;
 import com.harvey.system.model.vo.OptionVO;
@@ -19,6 +19,7 @@ import com.harvey.system.model.vo.UserInfoVO;
 import com.harvey.system.model.vo.UserVO;
 import com.harvey.system.security.LoginUserVO;
 import com.harvey.system.security.SecurityUtil;
+import com.harvey.system.security.service.OnlineUserCacheService;
 import com.harvey.system.service.UserService;
 import com.harvey.system.service.VerifyCodeService;
 import com.harvey.common.utils.AssertUtil;
@@ -47,6 +48,7 @@ public class UserController {
     private final UserService userService;
     private final UserConverter userConverter;
     private final VerifyCodeService verifyCodeService;
+    private final OnlineUserCacheService onlineUserCacheService;
 
     @Operation(summary = "id查询表单")
     @GetMapping("/form/{id}")
@@ -132,6 +134,7 @@ public class UserController {
     @Operation(summary = "获取个人信息")
     @PutMapping("/profile")
     public RespResult<UserVO> modifyProfile(@RequestBody ProfileDto profileDto) {
+        profileDto.setId(SecurityUtil.getUserId());
         userService.modifyProfile(profileDto);
         return RespResult.success();
     }
@@ -139,13 +142,17 @@ public class UserController {
     @Operation(summary = "修改个人密码")
     @PutMapping("/password")
     public RespResult<UserVO> password(@RequestBody @Validated ModifyPasswordDto modifyPasswordDto) {
+        modifyPasswordDto.setId(SecurityUtil.getUserId());
         userService.modifyPassword(modifyPasswordDto);
+        // 改完密码强制下线
+        onlineUserCacheService.delete(SecurityUtil.getUuid());
         return RespResult.success();
     }
 
     @Operation(summary = "绑定手机号")
     @PutMapping("/phone")
     public RespResult<UserVO> phone(@RequestBody @Validated PhoneDto phoneDto) {
+        phoneDto.setUserId(SecurityUtil.getUserId());
         userService.bindPhone(phoneDto);
         return RespResult.success();
     }
@@ -153,6 +160,7 @@ public class UserController {
     @Operation(summary = "绑定邮箱号")
     @PutMapping("/email")
     public RespResult<UserVO> email(@RequestBody @Validated EmailDto emailDto) {
+        emailDto.setUserId(SecurityUtil.getUserId());
         userService.bindEmail(emailDto);
         return RespResult.success();
     }

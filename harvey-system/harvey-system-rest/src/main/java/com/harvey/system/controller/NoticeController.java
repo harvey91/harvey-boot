@@ -9,6 +9,7 @@ import com.harvey.system.model.query.NoticeQuery;
 import com.harvey.system.model.query.NoticeUserQuery;
 import com.harvey.system.model.vo.NoticeUserVO;
 import com.harvey.system.model.vo.NoticeVO;
+import com.harvey.system.security.SecurityUtil;
 import com.harvey.system.service.NoticeService;
 import com.harvey.system.service.NoticeUserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -76,7 +77,7 @@ public class NoticeController {
     @PreAuthorize("@ex.hasPerm('sys:notice:publish')")
     @PatchMapping("/publish/{id}")
     public RespResult<String> publish(@PathVariable(value = "id") Long id) {
-        noticeService.publish(id);
+        noticeService.publish(id, SecurityUtil.getUserId());
         return RespResult.success();
     }
 
@@ -91,19 +92,20 @@ public class NoticeController {
     @Operation(summary = "查看详情", description = "包含通知内容text字段")
     @GetMapping("/detail/{id}")
     public RespResult<NoticeVO> detailById(@PathVariable(value = "id") Long id) {
-        return RespResult.success(noticeService.detail(id));
+        return RespResult.success(noticeService.detail(id, SecurityUtil.getUserId()));
     }
 
     @Operation(summary = "全部已读")
     @PutMapping("/read-all")
     public RespResult<String> readAll() {
-        noticeUserService.readAll();
+        noticeUserService.readAll(SecurityUtil.getUserId());
         return RespResult.success();
     }
 
     @Operation(summary = "我的通知分页列表")
     @GetMapping("/my-page")
     public RespResult<PageResult<NoticeUserVO>> myPage(NoticeUserQuery query) {
+        query.setUserId(SecurityUtil.getUserId());
         Page<NoticeUserVO> noticeUserVOPage = noticeUserService.myPage(query);
         return RespResult.success(PageResult.of(noticeUserVOPage));
     }

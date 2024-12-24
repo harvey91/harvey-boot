@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.common.enums.PublishStatusEnum;
 import com.harvey.common.exception.BadParameterException;
+import com.harvey.common.utils.AssertUtil;
+import com.harvey.common.utils.StringUtils;
 import com.harvey.system.mapper.NoticeMapper;
 import com.harvey.system.mapstruct.NoticeConverter;
 import com.harvey.system.model.dto.NoticeDto;
@@ -12,9 +14,6 @@ import com.harvey.system.model.entity.Notice;
 import com.harvey.system.model.entity.NoticeUser;
 import com.harvey.system.model.query.NoticeQuery;
 import com.harvey.system.model.vo.NoticeVO;
-import com.harvey.system.security.SecurityUtil;
-import com.harvey.common.utils.AssertUtil;
-import com.harvey.common.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -98,12 +97,12 @@ public class NoticeService extends ServiceImpl<NoticeMapper, Notice> {
      * @param id
      */
     @Transactional(rollbackFor = Throwable.class)
-    public void publish(Long id) {
+    public void publish(Long id, Long publisherId) {
         Notice notice = getNoticeById(id);
         AssertUtil.isTrue(PublishStatusEnum.PUBLISHED.getValue() == notice.getStatus(), "该通知已经发布，无需再发布");
 
         notice.setStatus(PublishStatusEnum.PUBLISHED.getValue());
-        notice.setPublisherId(SecurityUtil.getUserId());
+        notice.setPublisherId(publisherId);
         notice.setPublishTime(LocalDateTime.now());
         updateById(notice);
     }
@@ -141,9 +140,9 @@ public class NoticeService extends ServiceImpl<NoticeMapper, Notice> {
         return notice;
     }
 
-    public NoticeVO detail(Long id) {
+    public NoticeVO detail(Long id, Long userId) {
         // 已读
-        noticeUserService.read(id);
+        noticeUserService.read(id, userId);
         Notice notice = getById(id);
         NoticeVO noticeVO = converter.toVO(notice);
         String nickname = userService.findNickname(notice.getPublisherId());

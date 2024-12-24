@@ -8,10 +8,12 @@ import lombok.Data;
  * @date 2024-12-11 21:07
  **/
 @Data
-public class PhoneDto {
+public class EmailDto {
 
-    @NotBlank(message = "手机号不能为空")
-    private String phone;
+    private Long userId;
+
+    @NotBlank(message = "邮箱不能为空")
+    private String email;
 
     @NotBlank(message = "验证码不能为空")
     private String code;

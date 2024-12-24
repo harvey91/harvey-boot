@@ -10,6 +10,8 @@ import lombok.Data;
 @Data
 public class ModifyPasswordDto {
 
+    private Long id;
+
     @NotBlank(message = "原密码不能为空")
     private String oldPassword;
 

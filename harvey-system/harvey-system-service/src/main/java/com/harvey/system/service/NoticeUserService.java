@@ -3,17 +3,16 @@ package com.harvey.system.service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.common.enums.NoticeTargetTypeEnum;
 import com.harvey.common.exception.BadParameterException;
+import com.harvey.system.mapper.NoticeUserMapper;
+import com.harvey.system.model.entity.NoticeUser;
 import com.harvey.system.model.entity.User;
 import com.harvey.system.model.query.NoticeUserQuery;
-import com.harvey.system.model.entity.NoticeUser;
-import com.harvey.system.mapper.NoticeUserMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.system.model.vo.NoticeUserVO;
-import com.harvey.system.security.SecurityUtil;
-import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
@@ -43,7 +42,6 @@ public class NoticeUserService extends ServiceImpl<NoticeUserMapper, NoticeUser>
     }
 
     public Page<NoticeUserVO> myPage(NoticeUserQuery query) {
-        query.setUserId(SecurityUtil.getUserId());
         Page<NoticeUserVO> page = new Page<>(query.getPageNum(), query.getPageSize());
         return mapper.selectMyPage(page, query);
     }
@@ -74,8 +72,7 @@ public class NoticeUserService extends ServiceImpl<NoticeUserMapper, NoticeUser>
      * @param noticeId
      */
     @Transactional(rollbackFor = Throwable.class)
-    public void read(Long noticeId) {
-        Long userId = SecurityUtil.getUserId();
+    public void read(Long noticeId, Long userId) {
         LambdaUpdateWrapper<NoticeUser> queryWrapper = new LambdaUpdateWrapper<NoticeUser>()
                 .set(NoticeUser::getIsRead, 1)
                 .set(NoticeUser::getReadTime, LocalDateTime.now())
@@ -88,8 +85,7 @@ public class NoticeUserService extends ServiceImpl<NoticeUserMapper, NoticeUser>
      * 全部已读
      */
     @Transactional(rollbackFor = Throwable.class)
-    public void readAll() {
-        Long userId = SecurityUtil.getUserId();
+    public void readAll(Long userId) {
         LambdaUpdateWrapper<NoticeUser> queryWrapper = new LambdaUpdateWrapper<NoticeUser>()
                 .set(NoticeUser::getIsRead, 1)
                 .set(NoticeUser::getReadTime, LocalDateTime.now())

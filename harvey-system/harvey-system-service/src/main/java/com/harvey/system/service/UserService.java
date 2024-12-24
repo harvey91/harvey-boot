@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.common.constant.Constant;
 import com.harvey.common.enums.VerifyTypeEnum;
+import com.harvey.common.utils.AssertUtil;
 import com.harvey.system.mapper.UserMapper;
 import com.harvey.system.mapstruct.UserConverter;
 import com.harvey.system.model.dto.*;
@@ -13,9 +14,6 @@ import com.harvey.system.model.entity.UserRole;
 import com.harvey.system.model.query.UserQuery;
 import com.harvey.system.model.vo.OptionVO;
 import com.harvey.system.model.vo.UserVO;
-import com.harvey.system.security.SecurityUtil;
-import com.harvey.system.security.service.OnlineUserCacheService;
-import com.harvey.common.utils.AssertUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -39,7 +37,6 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     private final RoleService roleService;
     private final UserRoleService userRoleService;
     private final PasswordEncoder passwordEncoder;
-    private final OnlineUserCacheService onlineUserCacheService;
     private final VerifyCodeService verifyCodeService;
 
     public User findByUsername(String username) {
@@ -129,7 +126,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     @Transactional(rollbackFor = Exception.class)
     public void modifyProfile(ProfileDto profileDto) {
         User entity = new User();
-        entity.setId(SecurityUtil.getUserId());
+        entity.setId(profileDto.getId());
         entity.setNickname(profileDto.getNickname());
         entity.setGender(profileDto.getGender());
         entity.setAvatar(profileDto.getAvatar());
@@ -157,26 +154,22 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     public void modifyPassword(ModifyPasswordDto passwordDto) {
         AssertUtil.isTrue(!passwordDto.getNewPassword().equals(passwordDto.getConfirmPassword()), "两次密码不一致");
 
-        Long userId = SecurityUtil.getUserId();
-        User user = this.getById(userId);
+        User user = this.getById(passwordDto.getId());
         AssertUtil.isTrue(ObjectUtils.isEmpty(user), "用户不存在");
         AssertUtil.isTrue(!passwordEncoder.matches(passwordDto.getOldPassword(), user.getPassword()), "原密码不正确");
         AssertUtil.isTrue(passwordEncoder.matches(passwordDto.getNewPassword(), user.getPassword()), "新密码不能与原密码相同");
 
         User entity = new User();
-        entity.setId(userId);
+        entity.setId(passwordDto.getId());
         entity.setPassword(passwordEncoder.encode(passwordDto.getNewPassword()));
         this.updateById(entity);
-        // 改完密码强制下线
-        onlineUserCacheService.delete(SecurityUtil.getUuid());
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void bindPhone(PhoneDto phoneDto) {
         verifyCodeService.verify(phoneDto.getPhone(), phoneDto.getCode(), VerifyTypeEnum.BIND.getValue());
-        Long userId = SecurityUtil.getUserId();
         User entity = new User();
-        entity.setId(userId);
+        entity.setId(phoneDto.getUserId());
         entity.setPhone(phoneDto.getPhone());
         this.updateById(entity);
     }
@@ -184,9 +177,8 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     @Transactional(rollbackFor = Exception.class)
     public void bindEmail(EmailDto emailDto) {
         verifyCodeService.verify(emailDto.getEmail(), emailDto.getCode(), VerifyTypeEnum.BIND.getValue());
-        Long userId = SecurityUtil.getUserId();
         User entity = new User();
-        entity.setId(userId);
+        entity.setId(emailDto.getUserId());
         entity.setEmail(emailDto.getEmail());
         this.updateById(entity);
     }

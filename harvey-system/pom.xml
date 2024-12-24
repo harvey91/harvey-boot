@@ -8,75 +8,13 @@
         <version>1.0.0</version>
     </parent>
     <artifactId>harvey-system</artifactId>
-    <packaging>jar</packaging>
     <name>harvey-system</name>
     <description>harvey-system</description>
+    <packaging>pom</packaging>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.harvey</groupId>
-            <artifactId>harvey-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.harvey</groupId>
-            <artifactId>harvey-storage-service</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- jwt -->
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-impl</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-jackson</artifactId>
-        </dependency>
-
-        <!-- 解析客户端操作系统、浏览器等 -->
-        <dependency>
-            <groupId>eu.bitwalker</groupId>
-            <artifactId>UserAgentUtils</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.oshi</groupId>
-            <artifactId>oshi-core</artifactId>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <finalName>${project.artifactId}-${pName}-${version}</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>3.3.4</version>
-                <configuration>
-                    <includeSystemScope>true</includeSystemScope>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-        </plugins>
-    </build>
+    <modules>
+        <module>harvey-system-rest</module>
+        <module>harvey-system-service</module>
+    </modules>
 
 </project>

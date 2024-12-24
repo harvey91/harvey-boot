@@ -61,7 +61,7 @@
 
             <dependency>
                 <groupId>com.harvey</groupId>
-                <artifactId>harvey-system</artifactId>
+                <artifactId>harvey-common</artifactId>
                 <version>${harvey-version}</version>
             </dependency>
 
@@ -73,7 +73,19 @@
 
             <dependency>
                 <groupId>com.harvey</groupId>
-                <artifactId>harvey-common</artifactId>
+                <artifactId>harvey-system-rest</artifactId>
+                <version>${harvey-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.harvey</groupId>
+                <artifactId>harvey-system-service</artifactId>
+                <version>${harvey-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.harvey</groupId>
+                <artifactId>harvey-storage-service</artifactId>
                 <version>${harvey-version}</version>
             </dependency>
 

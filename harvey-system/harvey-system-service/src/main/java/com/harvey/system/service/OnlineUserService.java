@@ -5,14 +5,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.common.constant.Constant;
 import com.harvey.system.mapper.OnlineUserMapper;
+import com.harvey.system.mapstruct.OnlineUserConverter;
+import com.harvey.system.model.dto.OnlineUserDto;
 import com.harvey.system.model.entity.OnlineUser;
-import com.harvey.system.security.LoginUserVO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.List;
 
 /**
@@ -24,7 +24,9 @@ import java.util.List;
  * @since 2024-11-14
  */
 @Service
+@RequiredArgsConstructor
 public class OnlineUserService extends ServiceImpl<OnlineUserMapper, OnlineUser> {
+    private final OnlineUserConverter converter;
 
     public Page<OnlineUser> page(int pageNum, int pageSize) {
         Page<OnlineUser> page = new Page<>(pageNum, pageSize);
@@ -44,33 +46,19 @@ public class OnlineUserService extends ServiceImpl<OnlineUserMapper, OnlineUser>
         return onlineUserPage;
     }
 
-    public void saveByLoginUser(LoginUserVO loginUserVO) {
-        OnlineUser onlineUser = new OnlineUser();
-        onlineUser.setUuid(loginUserVO.getUuid());
-        onlineUser.setUserId(loginUserVO.getUserId());
-        onlineUser.setUsername(loginUserVO.getUsername());
-        onlineUser.setDeptName("");
-        onlineUser.setIp(loginUserVO.getIp());
-        onlineUser.setLocation(loginUserVO.getLocation());
-        onlineUser.setBrowser(loginUserVO.getBrowser());
-        onlineUser.setOs(loginUserVO.getOs());
-        LocalDateTime loginTime = Instant.ofEpochMilli(loginUserVO.getLoginTime()).atZone(ZoneOffset.ofHours(8)).toLocalDateTime();
-        LocalDateTime expireTime = Instant.ofEpochMilli(loginUserVO.getExpireTime()).atZone(ZoneOffset.ofHours(8)).toLocalDateTime();
-        onlineUser.setCreateTime(loginTime);
-        onlineUser.setExpireTime(expireTime);
-        onlineUser.setStatus(Constant.ONLINE_STATUS);
-        save(onlineUser);
+    public void saveByLoginUser(OnlineUserDto dto) {
+        OnlineUser entity = converter.toEntity(dto);
+        this.save(entity);
     }
 
-    public void updateExpireTime(LoginUserVO loginUserVO) {
-        OnlineUser onlineUser = getById(loginUserVO.getUuid());
+    public void updateExpireTime(OnlineUserDto dto) {
+        OnlineUser onlineUser = this.getById(dto.getUuid());
         if (ObjectUtils.isEmpty(onlineUser)) {
-            saveByLoginUser(loginUserVO);
+            saveByLoginUser(dto);
         } else {
-            LocalDateTime expireTime = Instant.ofEpochMilli(loginUserVO.getExpireTime()).atZone(ZoneOffset.ofHours(8)).toLocalDateTime();
-            onlineUser.setExpireTime(expireTime);
+            onlineUser.setExpireTime(dto.getExpireTime());
             onlineUser.setStatus(Constant.ONLINE_STATUS);
-            updateById(onlineUser);
+            this.updateById(onlineUser);
         }
     }
 
@@ -78,7 +66,7 @@ public class OnlineUserService extends ServiceImpl<OnlineUserMapper, OnlineUser>
         OnlineUser onlineUser = getById(uuid);
         if (!ObjectUtils.isEmpty(onlineUser)) {
             onlineUser.setStatus(Constant.OFFLINE_STATUS);
-            updateById(onlineUser);
+            this.updateById(onlineUser);
         }
     }
 }

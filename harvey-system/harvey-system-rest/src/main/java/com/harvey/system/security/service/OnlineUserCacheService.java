@@ -3,6 +3,8 @@ package com.harvey.system.security.service;
 import com.harvey.common.constant.CacheConstant;
 import com.harvey.common.constant.Constant;
 import com.harvey.core.redis.RedisCache;
+import com.harvey.system.model.dto.OnlineUserDto;
+import com.harvey.system.model.entity.OnlineUser;
 import com.harvey.system.security.LoginUserVO;
 import com.harvey.system.service.OnlineUserService;
 import com.harvey.common.utils.ServletUtils;
@@ -12,6 +14,9 @@ import eu.bitwalker.useragentutils.UserAgent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -31,11 +36,12 @@ public class OnlineUserCacheService {
         // 缓存
         String userKey = getLoginUserKey(loginUserVO.getUuid());
         redisCache.setEx(userKey, loginUserVO, expireTime, TimeUnit.MINUTES);
+        OnlineUserDto onlineUserDto = getOnlineUserDto(loginUserVO);
         // 入库
         if (refresh) {
-            onlineUserService.updateExpireTime(loginUserVO);
+            onlineUserService.updateExpireTime(onlineUserDto);
         } else {
-            onlineUserService.saveByLoginUser(loginUserVO);
+            onlineUserService.saveByLoginUser(onlineUserDto);
         }
     }
 
@@ -65,5 +71,23 @@ public class OnlineUserCacheService {
 
     public String getLoginUserKey(String uuid) {
         return CacheConstant.LOGIN_TOKEN_KEY + uuid;
+    }
+
+    public OnlineUserDto getOnlineUserDto(LoginUserVO loginUserVO) {
+        OnlineUserDto onlineUserDto = new OnlineUserDto();
+        onlineUserDto.setUuid(loginUserVO.getUuid());
+        onlineUserDto.setUserId(loginUserVO.getUserId());
+        onlineUserDto.setUsername(loginUserVO.getUsername());
+        onlineUserDto.setDeptName("");
+        onlineUserDto.setIp(loginUserVO.getIp());
+        onlineUserDto.setLocation(loginUserVO.getLocation());
+        onlineUserDto.setBrowser(loginUserVO.getBrowser());
+        onlineUserDto.setOs(loginUserVO.getOs());
+        LocalDateTime loginTime = Instant.ofEpochMilli(loginUserVO.getLoginTime()).atZone(ZoneOffset.ofHours(8)).toLocalDateTime();
+        LocalDateTime expireTime = Instant.ofEpochMilli(loginUserVO.getExpireTime()).atZone(ZoneOffset.ofHours(8)).toLocalDateTime();
+        onlineUserDto.setCreateTime(loginTime);
+        onlineUserDto.setExpireTime(expireTime);
+        onlineUserDto.setStatus(Constant.ONLINE_STATUS);
+        return onlineUserDto;
     }
 }
