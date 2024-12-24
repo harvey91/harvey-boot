@@ -82,6 +82,7 @@ public class HarveyGenerator {
                             .enableRestStyle() // 启用Rest风格
 //							.enableFileOverride() //  开启文件覆盖
                             .mapperBuilder()
+                            .mapperAnnotation(org.apache.ibatis.annotations.Mapper.class) // 开启 @Mapper 注解
                             .mapperTemplate("/templates/mapper.java") // 设置 Mapper 模板
                             .mapperXmlTemplate("/templates/mapper.xml") // 设置 Mapper XML模板
 //							.enableFileOverride() //  开启文件覆盖

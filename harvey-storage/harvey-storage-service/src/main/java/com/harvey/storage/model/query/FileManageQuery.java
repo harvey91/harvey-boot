@@ -1,5 +1,6 @@
-package com.harvey.system.model.query;
+package com.harvey.storage.model.query;
 
+import com.harvey.common.model.query.Query;
 import lombok.Data;
 
 /**

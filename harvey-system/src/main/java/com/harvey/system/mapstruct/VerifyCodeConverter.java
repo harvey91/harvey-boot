@@ -1,5 +1,6 @@
 package com.harvey.system.mapstruct;
 
+import com.harvey.core.mapstruct.IConverter;
 import com.harvey.system.model.dto.VerifyCodeDto;
 import com.harvey.system.model.entity.VerifyCode;
 import com.harvey.system.model.vo.VerifyCodeVO;

@@ -2,6 +2,7 @@ package com.harvey.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.harvey.system.model.entity.UserRole;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.harvey.system.model.entity.UserRole;
  * @author harvey
  * @since 2024-11-07
  */
+@Mapper
 public interface UserRoleMapper extends BaseMapper<UserRole> {
 
 }

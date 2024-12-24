@@ -1,5 +1,6 @@
 package com.harvey.system.mapstruct;
 
+import com.harvey.core.mapstruct.IConverter;
 import com.harvey.system.model.dto.RoleDto;
 import com.harvey.system.model.entity.Role;
 import com.harvey.system.model.vo.RoleVO;

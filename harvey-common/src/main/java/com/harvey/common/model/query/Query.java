@@ -1,4 +1,4 @@
-package com.harvey.system.model.query;
+package com.harvey.common.model.query;
 
 import lombok.Data;
 

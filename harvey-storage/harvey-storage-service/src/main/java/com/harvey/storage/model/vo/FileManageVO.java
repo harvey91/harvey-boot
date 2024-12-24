@@ -1,4 +1,4 @@
-package com.harvey.system.model.vo;
+package com.harvey.storage.model.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

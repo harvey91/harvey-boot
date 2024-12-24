@@ -16,6 +16,7 @@
         <module>harvey-common</module>
         <module>harvey-system</module>
         <module>harvey-generator</module>
+        <module>harvey-storage</module>
     </modules>
 
     <!-- 版本声明 -->

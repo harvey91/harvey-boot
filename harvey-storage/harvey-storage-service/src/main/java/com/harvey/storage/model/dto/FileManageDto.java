@@ -1,4 +1,4 @@
-package com.harvey.system.model.dto;
+package com.harvey.storage.model.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

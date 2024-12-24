@@ -1,4 +1,4 @@
-package com.harvey.system.service;
+package com.harvey.storage.service;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.crypto.SecureUtil;
@@ -6,11 +6,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.common.exception.BadParameterException;
-import com.harvey.system.mapper.FileManageMapper;
-import com.harvey.system.mapstruct.FileManageConverter;
-import com.harvey.system.model.dto.FileManageDto;
-import com.harvey.system.model.entity.FileManage;
-import com.harvey.system.model.query.FileManageQuery;
+import com.harvey.storage.mapper.FileManageMapper;
+import com.harvey.storage.mapstruct.FileManageConverter;
+import com.harvey.storage.model.dto.FileManageDto;
+import com.harvey.storage.model.entity.FileManage;
+import com.harvey.storage.model.query.FileManageQuery;
 import com.harvey.common.utils.StringUtils;
 import com.harvey.core.storage.StorageService;
 import lombok.RequiredArgsConstructor;

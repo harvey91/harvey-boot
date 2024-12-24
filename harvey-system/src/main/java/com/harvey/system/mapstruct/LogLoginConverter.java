@@ -1,5 +1,6 @@
 package com.harvey.system.mapstruct;
 
+import com.harvey.core.mapstruct.IConverter;
 import com.harvey.system.model.dto.LogLoginDto;
 import com.harvey.system.model.entity.LogLogin;
 import com.harvey.system.model.vo.LogLoginVO;

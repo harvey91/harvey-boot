@@ -5,6 +5,7 @@ import com.harvey.system.model.entity.NoticeUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.harvey.system.model.query.NoticeUserQuery;
 import com.harvey.system.model.vo.NoticeUserVO;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -15,6 +16,7 @@ import org.apache.ibatis.annotations.Param;
  * @author harvey
  * @since 2024-11-20
  */
+@Mapper
 public interface NoticeUserMapper extends BaseMapper<NoticeUser> {
 
     Page<NoticeUserVO> selectMyPage(Page<NoticeUserVO> page, @Param("query") NoticeUserQuery query);

@@ -2,6 +2,7 @@ package com.harvey.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.harvey.system.model.entity.DictData;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.harvey.system.model.entity.DictData;
  * @author harvey
  * @since 2024-10-31
  */
+@Mapper
 public interface DictDataMapper extends BaseMapper<DictData> {
 
 }

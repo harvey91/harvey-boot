@@ -1,4 +1,4 @@
-package com.harvey.system.mapstruct;
+package com.harvey.core.mapstruct;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.mapstruct.MapperConfig;

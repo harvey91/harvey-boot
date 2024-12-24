@@ -2,6 +2,7 @@ package com.harvey.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.harvey.system.model.entity.User;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -9,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
  * @author Harvey
  * @date 2024-10-24 21:26
  **/
+@Mapper
 public interface UserMapper extends BaseMapper<User> {
 
     @Select("SELECT count(`username`) FROM sys_user WHERE `username` = #{username}")

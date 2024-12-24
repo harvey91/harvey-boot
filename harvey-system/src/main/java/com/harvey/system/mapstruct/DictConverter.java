@@ -1,5 +1,6 @@
 package com.harvey.system.mapstruct;
 
+import com.harvey.core.mapstruct.IConverter;
 import com.harvey.system.model.dto.DictDto;
 import com.harvey.system.model.entity.Dict;
 import com.harvey.system.model.vo.DictVO;

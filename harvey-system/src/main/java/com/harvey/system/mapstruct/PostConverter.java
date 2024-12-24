@@ -1,5 +1,6 @@
 package com.harvey.system.mapstruct;
 
+import com.harvey.core.mapstruct.IConverter;
 import com.harvey.system.model.dto.PostDto;
 import com.harvey.system.model.entity.Post;
 import com.harvey.system.model.vo.PostVO;

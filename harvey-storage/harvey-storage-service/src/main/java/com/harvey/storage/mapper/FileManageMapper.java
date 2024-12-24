@@ -1,7 +1,8 @@
-package com.harvey.system.mapper;
+package com.harvey.storage.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.harvey.system.model.entity.FileManage;
+import com.harvey.storage.model.entity.FileManage;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.harvey.system.model.entity.FileManage;
  * @author harvey
  * @since 2024-12-05
  */
+@Mapper
 public interface FileManageMapper extends BaseMapper<FileManage> {
 
 }

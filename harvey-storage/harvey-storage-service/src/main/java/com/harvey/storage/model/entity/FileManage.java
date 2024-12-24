@@ -1,4 +1,4 @@
-package com.harvey.system.model.entity;
+package com.harvey.storage.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.harvey.core.model.BaseEntity;

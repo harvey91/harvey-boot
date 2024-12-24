@@ -1,5 +1,6 @@
 package com.harvey.system.mapstruct;
 
+import com.harvey.core.mapstruct.IConverter;
 import com.harvey.system.model.dto.DeptDto;
 import com.harvey.system.model.entity.Dept;
 import com.harvey.system.model.vo.DeptVO;

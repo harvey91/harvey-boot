@@ -1,8 +1,9 @@
-package com.harvey.system.mapstruct;
+package com.harvey.storage.mapstruct;
 
-import com.harvey.system.model.dto.FileManageDto;
-import com.harvey.system.model.entity.FileManage;
-import com.harvey.system.model.vo.FileManageVO;
+import com.harvey.core.mapstruct.IConverter;
+import com.harvey.storage.model.dto.FileManageDto;
+import com.harvey.storage.model.entity.FileManage;
+import com.harvey.storage.model.vo.FileManageVO;
 import org.mapstruct.Mapper;
 
 /**
