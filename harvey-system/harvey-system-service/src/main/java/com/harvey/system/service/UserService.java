@@ -3,19 +3,20 @@ package com.harvey.system.service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.harvey.common.constant.Constant;
 import com.harvey.common.enums.VerifyTypeEnum;
 import com.harvey.common.utils.AssertUtil;
 import com.harvey.system.mapper.UserMapper;
 import com.harvey.system.mapstruct.UserConverter;
-import com.harvey.system.model.dto.*;
+import com.harvey.system.model.dto.EmailDto;
+import com.harvey.system.model.dto.PhoneDto;
+import com.harvey.system.model.dto.ProfileDto;
+import com.harvey.system.model.dto.UserDto;
 import com.harvey.system.model.entity.User;
 import com.harvey.system.model.entity.UserRole;
 import com.harvey.system.model.query.UserQuery;
 import com.harvey.system.model.vo.OptionVO;
 import com.harvey.system.model.vo.UserVO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -36,7 +37,6 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     private final UserConverter converter;
     private final RoleService roleService;
     private final UserRoleService userRoleService;
-    private final PasswordEncoder passwordEncoder;
     private final VerifyCodeService verifyCodeService;
 
     public User findByUsername(String username) {
@@ -74,8 +74,6 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         AssertUtil.isTrue(count > 0, "用户名已存在");
 
         User entity = converter.toEntity(userDto);
-        // 设置默认密码
-        entity.setPassword(passwordEncoder.encode(Constant.DEFAULT_PASSWORD));
         mapper.insert(entity);
 
         // 保存用户角色
@@ -130,38 +128,6 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         entity.setNickname(profileDto.getNickname());
         entity.setGender(profileDto.getGender());
         entity.setAvatar(profileDto.getAvatar());
-        this.updateById(entity);
-    }
-
-    /**
-     * 重置密码
-     *
-     * @param passwordDto 修改密码参数
-     */
-    @Transactional(rollbackFor = Exception.class)
-    public void resetPassword(PasswordDto passwordDto) {
-        User user = new User();
-        user.setId(passwordDto.getId());
-        user.setPassword(passwordEncoder.encode(passwordDto.getPassword()));
-        this.updateById(user);
-    }
-
-    /**
-     * 修改密码
-     * @param passwordDto
-     */
-    @Transactional(rollbackFor = Exception.class)
-    public void modifyPassword(ModifyPasswordDto passwordDto) {
-        AssertUtil.isTrue(!passwordDto.getNewPassword().equals(passwordDto.getConfirmPassword()), "两次密码不一致");
-
-        User user = this.getById(passwordDto.getId());
-        AssertUtil.isTrue(ObjectUtils.isEmpty(user), "用户不存在");
-        AssertUtil.isTrue(!passwordEncoder.matches(passwordDto.getOldPassword(), user.getPassword()), "原密码不正确");
-        AssertUtil.isTrue(passwordEncoder.matches(passwordDto.getNewPassword(), user.getPassword()), "新密码不能与原密码相同");
-
-        User entity = new User();
-        entity.setId(passwordDto.getId());
-        entity.setPassword(passwordEncoder.encode(passwordDto.getNewPassword()));
         this.updateById(entity);
     }
 

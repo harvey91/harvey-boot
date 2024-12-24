@@ -21,39 +21,42 @@ public class UserDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Schema(title = "id", description = "用户id")
-    public Long id;
+    private Long id;
 
     @Schema(title = "username", description = "用户名")
     @NotBlank(message = "用户名不能为空")
     @Size(min = 4, max = 18, message = "用户名长度必须是4-18个字符")
-    public String username;
+    private String username;
+
+    @Schema(title = "password", description = "密码")
+    private String password;
 
     @NotBlank(message = "昵称不能为空")
     @Schema(title = "nickname", description = "昵称")
-    public String nickname;
+    private String nickname;
 
     @Schema(title = "avatar", description = "头像")
-    public String avatar;
+    private String avatar;
 
     @Schema(title = "gender", description = "性别")
-    public Integer gender;
+    private Integer gender;
 
     @Schema(title = "phone", description = "手机号")
-    public String phone;
+    private String phone;
 
     @Schema(title = "email", description = "邮箱")
     @Email(message = "邮箱格式不正确")
-    public String email;
+    private String email;
 
     @Schema(title = "deptId", description = "部门id")
-    public Long deptId;
+    private Long deptId;
 
     @Schema(title = "enabled", description = "是否启用：0禁用，1启用")
-    public Integer enabled;
+    private Integer enabled;
 
     @Schema(title = "roleIds", description = "角色id集合")
-    public Set<Long> roleIds;
+    private Set<Long> roleIds;
 
     @Schema(title = "postIds", description = "职位id集合")
-    public Set<Long> postIds;
+    private Set<Long> postIds;
 }

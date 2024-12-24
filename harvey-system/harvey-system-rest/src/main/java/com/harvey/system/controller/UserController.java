@@ -2,6 +2,7 @@ package com.harvey.system.controller;
 
 import cn.hutool.core.util.PhoneUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.harvey.common.constant.Constant;
 import com.harvey.system.model.dto.*;
 import com.harvey.system.result.PageResult;
 import com.harvey.common.result.RespResult;
@@ -28,6 +29,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -49,6 +51,7 @@ public class UserController {
     private final UserConverter userConverter;
     private final VerifyCodeService verifyCodeService;
     private final OnlineUserCacheService onlineUserCacheService;
+    private final PasswordEncoder passwordEncoder;
 
     @Operation(summary = "id查询表单")
     @GetMapping("/form/{id}")
@@ -88,6 +91,11 @@ public class UserController {
     @PostMapping("/create")
     public RespResult<String> create(@RequestBody @Validated UserDto userDto) {
         if (ObjectUtils.isEmpty(userDto.getId())) {
+            if (ObjectUtils.isEmpty(userDto.getPassword())) {
+                // 设置默认密码
+                userDto.setPassword(Constant.DEFAULT_PASSWORD);
+            }
+            userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
             userService.createUser(userDto);
         } else {
             userService.modifyUser(userDto);
@@ -107,7 +115,10 @@ public class UserController {
     @PreAuthorize("@ex.hasPerm('sys:user:password:rest')")
     @PutMapping("/password/reset")
     public RespResult<String> resetPassword(@RequestBody @Validated PasswordDto passwordDto) {
-        userService.resetPassword(passwordDto);
+        User user = new User();
+        user.setId(passwordDto.getId());
+        user.setPassword(passwordEncoder.encode(passwordDto.getPassword()));
+        userService.updateById(user);
         return RespResult.success();
     }
 
@@ -141,9 +152,19 @@ public class UserController {
 
     @Operation(summary = "修改个人密码")
     @PutMapping("/password")
-    public RespResult<UserVO> password(@RequestBody @Validated ModifyPasswordDto modifyPasswordDto) {
-        modifyPasswordDto.setId(SecurityUtil.getUserId());
-        userService.modifyPassword(modifyPasswordDto);
+    public RespResult<UserVO> password(@RequestBody @Validated ModifyPasswordDto dto) {
+        Long userId = SecurityUtil.getUserId();
+        AssertUtil.isTrue(!dto.getNewPassword().equals(dto.getConfirmPassword()), "两次密码不一致");
+
+        User user = userService.getById(userId);
+        AssertUtil.isTrue(ObjectUtils.isEmpty(user), "用户不存在");
+        AssertUtil.isTrue(!passwordEncoder.matches(dto.getOldPassword(), user.getPassword()), "原密码不正确");
+        AssertUtil.isTrue(passwordEncoder.matches(dto.getNewPassword(), user.getPassword()), "新密码不能与原密码相同");
+
+        User entity = new User();
+        entity.setId(userId);
+        entity.setPassword(passwordEncoder.encode(dto.getNewPassword()));
+        userService.updateById(entity);
         // 改完密码强制下线
         onlineUserCacheService.delete(SecurityUtil.getUuid());
         return RespResult.success();
