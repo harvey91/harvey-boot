@@ -7,8 +7,8 @@
     <artifactId>harvey-base</artifactId>
     <version>1.0.0</version>
 
-    <name>Harvey-Base</name>
-    <description>Harvey企业级项目</description>
+    <name>Harvey-base</name>
+    <description>Harvey-base</description>
     <packaging>pom</packaging>
 
     <modules>
