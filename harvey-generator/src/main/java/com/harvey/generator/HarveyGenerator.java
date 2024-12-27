@@ -11,7 +11,7 @@ import java.util.Collections;
 
 public class HarveyGenerator {
 
-    private final static String OUTPUT_DIR = "G://Development//Workspace//Harvey-Base//harvey-system//src//main//";
+    private final static String OUTPUT_DIR = "G://Development//Workspace//harvey-boot//harvey-system//src//main//";
 
     public static void main(String[] args) {
         FastAutoGenerator.create("jdbc:mysql://127.0.0.1:3306/harvey", "root", "123456")

@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.harvey</groupId>
-        <artifactId>harvey-base</artifactId>
+        <artifactId>harvey-boot</artifactId>
         <version>1.0.0</version>
     </parent>
     <artifactId>harvey-common</artifactId>

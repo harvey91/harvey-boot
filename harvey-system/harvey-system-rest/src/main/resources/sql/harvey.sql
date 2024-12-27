@@ -223,7 +223,7 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 'admin', '$2a$10$3eQN7NGT1e0wLr.RQGxsVuak2JyWz/0Ky.WVOVUsAd7/t5muiviEu', '管理员', 'https://gitee.com/harvey-enterprise-level/harvey-base/raw/master/harvey-system/src/main/resources/static/avatar.png', 1, '11@qq.com', '18508945529', 5, '', '2024-10-30 22:14:33', 1, '2024-10-30 22:14:37', '2024-11-04 23:29:11', 1);
+INSERT INTO `sys_user` VALUES (1, 'admin', '$2a$10$3eQN7NGT1e0wLr.RQGxsVuak2JyWz/0Ky.WVOVUsAd7/t5muiviEu', '管理员', 'https://gitee.com/harvey-enterprise-level/harvey-boot/raw/master/harvey-system/src/main/resources/static/avatar.png', 1, '11@qq.com', '18508945529', 5, '', '2024-10-30 22:14:33', 1, '2024-10-30 22:14:37', '2024-11-04 23:29:11', 1);
 
 -- ----------------------------
 -- Table structure for sys_user_role

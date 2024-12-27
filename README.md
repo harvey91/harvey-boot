@@ -20,7 +20,7 @@
 
 ### 项目目录
 ```
-Harvey-Base
+harvey-boot
 ├── harvey-common
 │  ├── constant
 │  ├── enums

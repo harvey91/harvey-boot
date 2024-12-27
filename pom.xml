@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.harvey</groupId>
-    <artifactId>harvey-base</artifactId>
+    <artifactId>harvey-boot</artifactId>
     <version>1.0.0</version>
 
-    <name>Harvey-base</name>
-    <description>Harvey-base</description>
+    <name>harvey-boot</name>
+    <description>harvey-boot</description>
     <packaging>pom</packaging>
 
     <modules>
