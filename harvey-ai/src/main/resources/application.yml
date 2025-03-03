@@ -1,0 +1,10 @@
+spring:
+  ai:
+    openai:
+      # 小杨智能机器人
+      api-key: sk-e4ad593f35794b29bbfaa6594e4a2d21
+      base-url: https://api.deepseek.com
+      chat:
+        options:
+          # 先择模型
+          model: deepseek-chat
