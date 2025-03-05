@@ -44,20 +44,20 @@ public class ChatBotController {
 
     /**
      * 流式对话
-     * @param message
+     * @param dto
      * @return
      */
     @PostMapping(value = "/chat/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<ServerSentEvent<String>> streamChat(@RequestBody String message) {
-        log.info("流式对话内容：{}", message);
+    public Flux<String> streamChat(@RequestBody @Validated MessageDto dto) {
+        log.info("流式对话内容：{}", dto.getMessage());
         return chatClient.prompt()
-                .user(message)
-                .stream().content()
+                .user(dto.getMessage())
+                .stream().content();
                 // 添加事件区分正常回答消息(message)和错误消息(error)
-                .map(content -> ServerSentEvent.builder(content).event("message").build())
+//                .map(content -> ServerSentEvent.builder(content).event("message").build())
                 // 添加问题回答结束标识([DONE])
-                .concatWithValues(ServerSentEvent.builder("[DONE]").build())
-                .onErrorResume(e -> Flux.just(ServerSentEvent.builder("Error: " + e.getMessage()).event("error").build()));
+//                .concatWithValues(ServerSentEvent.builder("[DONE]").build())
+//                .onErrorResume(e -> Flux.just(ServerSentEvent.builder("Error: " + e.getMessage()).event("error").build()));
     }
 
     /**
