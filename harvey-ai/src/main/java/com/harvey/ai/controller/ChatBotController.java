@@ -24,7 +24,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ChatBotController {
     private final ChatClient chatClient;
-    private final OpenAiImageModel imageModel;
+//    private final OpenAiImageModel imageModel;
 
 
     /**

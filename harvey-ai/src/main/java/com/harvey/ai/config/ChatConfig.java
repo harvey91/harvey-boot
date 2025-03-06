@@ -14,7 +14,7 @@ public class ChatConfig {
 
     @Bean
     public ChatClient chatClient(ChatClient.Builder builder) {
-        return builder.defaultSystem("你是一个智能机器人，你的名字叫小杨。").build();
+        return builder.defaultSystem("你是一个智能聊天机器人，你的名字叫小Y。").build();
     }
 
     /**
