@@ -91,16 +91,16 @@ harvey-boot
 
 ### 项目演示
 首页
-![](https://harvey-common.oss-cn-shenzhen.aliyuncs.com/harvey-vue3-admin/%E9%A6%96%E9%A1%B5.png)
+![首页](./preview/home.png)
 
 用户管理
-![](https://harvey-common.oss-cn-shenzhen.aliyuncs.com/harvey-vue3-admin/%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86.png)
+![用户管理](./preview/userManage.png)
 
 菜单管理
-![](https://harvey-common.oss-cn-shenzhen.aliyuncs.com/harvey-vue3-admin/%E8%8F%9C%E5%8D%95%E7%AE%A1%E7%90%86.png)
+![菜单管理](./preview/menuManage.png)
 
 字典管理
-![](https://harvey-common.oss-cn-shenzhen.aliyuncs.com/harvey-vue3-admin/%E5%AD%97%E5%85%B8%E7%AE%A1%E7%90%86.png)
+![字典管理](./preview/dictManage.png)
 
 
 
