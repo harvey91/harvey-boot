@@ -17,7 +17,6 @@
         <module>harvey-system</module>
         <module>harvey-generator</module>
         <module>harvey-storage</module>
-        <module>harvey-ai</module>
     </modules>
 
     <!-- 版本声明 -->
@@ -57,14 +56,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.ai</groupId>
-                <artifactId>spring-ai-bom</artifactId>
-                <version>${spring-ai.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
