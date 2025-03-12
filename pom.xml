@@ -17,6 +17,7 @@
         <module>harvey-system</module>
         <module>harvey-generator</module>
         <module>harvey-storage</module>
+        <module>harvey-mq</module>
     </modules>
 
     <!-- 版本声明 -->
