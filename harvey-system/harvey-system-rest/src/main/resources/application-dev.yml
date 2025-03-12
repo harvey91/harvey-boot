@@ -68,59 +68,6 @@ executor:
   keepalive-seconds: 10
   thread-name-prefix: harvey-
 
-# 对象存储配置
-storage:
-  # 当前工作的对象存储模式，分别是local、aliyun、tencent、qiniu
-  active: local
-  # 本地对象存储配置信息
-  local:
-    storagePath: G:/storage
-    # fetch方法对应的地址
-    address: /storage/fetch
-  # 阿里云对象存储配置信息
-  aliyun:
-    endpoint: oss-cn-shenzhen.aliyuncs.com
-    accessKeyId: 111111
-    accessKeySecret: xxxx
-    bucketName: myBucketName
-  # 腾讯对象存储配置信息，请参考 https://cloud.tencent.com/document/product/436/6249
-  tencent:
-    secretId: 111111
-    secretKey: xxxxx
-    region: ap-shanghai
-    bucketName: myBucketName
-  # 七牛云对象存储配置信息
-  qiniu:
-    endpoint: http://pd5cb6ulu.bkt.clouddn.com
-    accessKey: 111111
-    secretKey: xxxxxx
-    bucketName: mall
-
-# 任务执行器配置
-xxl:
-  job:
-    # 定时任务开关
-    enabled: false
-    admin:
-      # 调度中心部署根地址 [选填]：如调度中心集群部署存在多个地址则用逗号分隔。执行器将会使用该地址进行"执行器心跳注册"和"任务结果回调"；为空则关闭自动注册；
-      addresses:
-    #      addresses: http://127.0.0.1:8080/xxl-job-admin
-    # 调度中心通讯TOKEN [选填]：非空时启用；
-    accessToken: default_token
-    executor:
-      # 执行器AppName [选填]：执行器心跳注册分组依据；为空则关闭自动注册
-      appname: xxl-job-executor-harvey
-      # 执行器注册 [选填]：优先使用该配置作为注册地址，为空时使用内嵌服务 ”IP:PORT“ 作为注册地址。从而更灵活的支持容器类型执行器动态IP和动态映射端口问题。
-      address:
-      # 执行器IP [选填]：默认为空表示自动获取IP，多网卡时可手动设置指定IP，该IP不会绑定Host仅作为通讯实用；地址信息用于 "执行器注册" 和 "调度中心请求并触发任务"；
-      ip:
-      # 执行器端口号 [选填]：小于等于0则自动获取；默认端口为9999，单机部署多个执行器时，注意要配置不同执行器端口；
-      port: 9999
-      # 执行器运行日志文件存储磁盘路径 [选填] ：需要对该路径拥有读写权限；为空则使用默认路径；
-      logpath: /data/applogs/xxl-job/jobhandler
-      # 调度中心日志表数据保存天数 [必填]：过期日志自动清理；限制大于等于7时生效，否则, 如-1，关闭自动清理功能；
-      logretentiondays: 30
-
 log:
   path: /opt/springboot/admin
 
