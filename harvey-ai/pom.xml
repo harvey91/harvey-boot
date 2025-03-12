@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>com.harvey</groupId>
-            <artifactId>harvey-common</artifactId>
+            <artifactId>harvey-core</artifactId>
             <version>${harvey-version}</version>
         </dependency>
 

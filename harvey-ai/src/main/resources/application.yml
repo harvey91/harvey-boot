@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: core
   ai:
     openai:
       # 小杨智能机器人

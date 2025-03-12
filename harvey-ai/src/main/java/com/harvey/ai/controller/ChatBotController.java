@@ -4,6 +4,7 @@ import com.harvey.ai.domain.MessageDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.openai.OpenAiImageModel;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.ServerSentEvent;
@@ -24,6 +25,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ChatBotController {
     private final ChatClient chatClient;
+    private final OpenAiChatModel openAiChatModel;
 //    private final OpenAiImageModel imageModel;
 
 
