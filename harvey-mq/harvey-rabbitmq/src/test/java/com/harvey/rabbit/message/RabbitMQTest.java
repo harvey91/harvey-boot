@@ -16,8 +16,24 @@ public class RabbitMQTest {
     @Autowired
     private MessageProducer messageProducer;
 
+    /**
+     * 发送普通消息
+     */
     @Test
     public void testSendMessage() {
         messageProducer.sendMessage("Hello, RabbitMQ!");
+    }
+
+    @Test
+    public void testSendMessageDirect() {
+        messageProducer.sendMessageByDirect("Hello, DirectExchange!");
+    }
+
+    /**
+     * 发送延迟消息
+     */
+    @Test
+    public void testSendDelayMessage() {
+        messageProducer.sendDelayMessage("Hello, Delayed Message!");
     }
 }
