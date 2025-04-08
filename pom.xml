@@ -17,6 +17,7 @@
         <module>harvey-system</module>
         <module>harvey-generator</module>
         <module>harvey-storage</module>
+        <module>harvey-quartz</module>
         <module>harvey-mq</module>
         <module>harvey-ai</module>
     </modules>
@@ -305,28 +306,45 @@
         </plugins>
     </build>
 
-    <!--<repositories>
-        <repository>
+    <repositories>
+        <!--<repository>
             <id>public</id>
             <name>aliyun nexus</name>
             <url>https://maven.aliyun.com/repository/public</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
+        </repository>-->
+         <!--<repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>-->
+
+        <!-- Spring Milestone Repository for milestones -->
+        <!--<repository>
+            <id>spring-milestones</id>
+            <url>https://repo.spring.io/milestone</url>
+        </repository>-->
+        <!-- Spring Snapshot Repository for snapshots -->
+        <repository>
+            <id>spring-snapshots</id>
+            <url>https://repo.spring.io/snapshot</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <name>Central Portal Snapshots</name>
+            <id>central-portal-snapshots</id>
+            <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
     </repositories>
 
-    <pluginRepositories>
-        <pluginRepository>
-            <id>public</id>
-            <name>aliyun nexus</name>
-            <url>https://maven.aliyun.com/repository/public</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>-->
+
 </project>

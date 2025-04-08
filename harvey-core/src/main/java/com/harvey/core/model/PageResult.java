@@ -1,4 +1,4 @@
-package com.harvey.system.result;
+package com.harvey.core.model;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.annotation.JsonInclude;

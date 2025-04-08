@@ -1,5 +1,6 @@
 package ${package.Parent}.model.query;
 
+import com.harvey.common.model.query.Query;
 import lombok.Data;
 
 /**

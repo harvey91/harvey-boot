@@ -11,8 +11,8 @@ import ${package.Mapper}.${table.mapperName};
 import ${package.Service}.${table.serviceName};
 </#if>
 import ${superServiceImplClassPackage};
-import com.harvey.system.utils.StringUtils;
-import com.harvey.system.exception.BadParameterException;
+import com.harvey.common.utils.StringUtils;
+import com.harvey.common.exception.BadParameterException;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;

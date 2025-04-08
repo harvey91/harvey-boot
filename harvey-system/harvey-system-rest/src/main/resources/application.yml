@@ -13,6 +13,13 @@ spring:
   profiles:
     active: @activeProfile@, core
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'health,info'
+      base-path: /actuator
+
 # jwt
 jwt:
   # 令牌前缀

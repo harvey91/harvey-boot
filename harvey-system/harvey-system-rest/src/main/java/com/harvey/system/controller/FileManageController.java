@@ -3,7 +3,7 @@ package com.harvey.system.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.harvey.common.result.RespResult;
 import com.harvey.common.enums.PlatformEnum;
-import com.harvey.system.result.PageResult;
+import com.harvey.core.model.PageResult;
 import com.harvey.storage.model.dto.FileManageDto;
 import com.harvey.storage.model.entity.FileManage;
 import com.harvey.storage.model.query.FileManageQuery;

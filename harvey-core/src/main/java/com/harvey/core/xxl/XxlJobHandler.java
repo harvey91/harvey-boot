@@ -1,19 +1,7 @@
 package com.harvey.core.xxl;
 
-import com.xxl.job.core.context.XxlJobHelper;
-import com.xxl.job.core.handler.annotation.XxlJob;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 开发步骤：
@@ -26,12 +14,12 @@ import java.util.concurrent.TimeUnit;
  * @date 2024-11-25 14:50
  **/
 @Slf4j
-@Component
+//@Component
 public class XxlJobHandler {
     /**
      * 1、简单任务示例（Bean模式）
      */
-    @XxlJob("demoJobHandler")
+    /*@XxlJob("demoJobHandler")
     public void demoJobHandler() throws Exception {
         XxlJobHelper.log("XXL-JOB, Hello World.");
 
@@ -40,13 +28,13 @@ public class XxlJobHandler {
             TimeUnit.SECONDS.sleep(2);
         }
         // default success
-    }
+    }*/
 
 
     /**
      * 2、分片广播任务
      */
-    @XxlJob("shardingJobHandler")
+    /*@XxlJob("shardingJobHandler")
     public void shardingJobHandler() throws Exception {
 
         // 分片参数
@@ -64,13 +52,13 @@ public class XxlJobHandler {
             }
         }
 
-    }
+    }*/
 
 
     /**
      * 3、命令行任务
      */
-    @XxlJob("commandJobHandler")
+    /*@XxlJob("commandJobHandler")
     public void commandJobHandler() throws Exception {
         String command = XxlJobHelper.getJobParam();
         int exitValue = -1;
@@ -111,7 +99,7 @@ public class XxlJobHandler {
             XxlJobHelper.handleFail("command exit value("+exitValue+") is failed");
         }
 
-    }
+    }*/
 
 
     /**
@@ -121,7 +109,7 @@ public class XxlJobHandler {
      *      "method: get\n" +
      *      "data: content\n";
      */
-    @XxlJob("httpJobHandler")
+    /*@XxlJob("httpJobHandler")
     public void httpJobHandler() throws Exception {
 
         // param parse
@@ -230,12 +218,12 @@ public class XxlJobHandler {
             }
         }
 
-    }
+    }*/
 
     /**
      * 5、生命周期任务示例：任务初始化与销毁时，支持自定义相关逻辑；
      */
-    @XxlJob(value = "demoJobHandler2", init = "init", destroy = "destroy")
+    /*@XxlJob(value = "demoJobHandler2", init = "init", destroy = "destroy")
     public void demoJobHandler2() throws Exception {
         XxlJobHelper.log("XXL-JOB, Hello World.");
     }
@@ -244,5 +232,5 @@ public class XxlJobHandler {
     }
     public void destroy(){
         log.info("destroy");
-    }
+    }*/
 }

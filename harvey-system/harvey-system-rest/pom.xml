@@ -21,7 +21,11 @@
         <dependency>
             <groupId>com.harvey</groupId>
             <artifactId>harvey-storage-service</artifactId>
-            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.harvey</groupId>
+            <artifactId>harvey-quartz</artifactId>
         </dependency>
 
         <dependency>

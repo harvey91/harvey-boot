@@ -311,7 +311,7 @@ CREATE TABLE `sys_file_manage`
 CREATE TABLE `sys_verify_code`
 (
     `id`           bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键id',
-    `user_id`      bigint(20)  COMMENT '用户id',
+    `user_id`      bigint(20) COMMENT '用户id',
     `contact`      varchar(32) NOT NULL COMMENT '联系方式',
     `contact_type` tinyint(2)  NOT NULL COMMENT '联系类型',
     `verify_code`  varchar(16) NOT NULL COMMENT '验证码',

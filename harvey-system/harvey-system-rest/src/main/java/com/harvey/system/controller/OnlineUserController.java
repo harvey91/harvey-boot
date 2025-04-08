@@ -1,7 +1,7 @@
 package com.harvey.system.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.harvey.system.result.PageResult;
+import com.harvey.core.model.PageResult;
 import com.harvey.common.result.RespResult;
 import com.harvey.system.model.entity.OnlineUser;
 import com.harvey.system.security.service.OnlineUserCacheService;

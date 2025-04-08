@@ -1,5 +1,6 @@
 package ${package.Parent}.mapstruct;
 
+import com.harvey.core.mapstruct.IConverter;
 import ${package.Parent}.model.dto.${entity}Dto;
 import ${package.Parent}.model.entity.${entity};
 import ${package.Parent}.model.vo.${entity}VO;
