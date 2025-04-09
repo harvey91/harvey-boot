@@ -84,9 +84,9 @@ public class OpLogAspect {
         }
         if (duration > 1000) {
             // 标记慢请求
-            log.info("afterControllerSlow method: " + fullMethod + ", run time = " + duration + " ms");
-//        } else {
-//            log.info("afterController method: " + fullMethod + ", run time = " + duration + " ms");
+            log.info("afterControllerSlow method: {}, run time = {} ms", fullMethod, duration);
+        } else {
+            log.info("afterController method: {}, run time = {} ms", fullMethod, duration);
         }
     }
 }

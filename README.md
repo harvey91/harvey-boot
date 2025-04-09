@@ -5,9 +5,10 @@
 </p>
 
 ### 项目特点
-- 使用 Spring Boot 3 和 Vue 3，以及 Element-Plus 等主流技术栈，实时更新。
+- 使用 JDK17、Spring Boot3 和 Vue3，以及 Element-Plus 等主流技术栈，实时更新。
 - 结合 Spring Security 和 JWT 提供安全、无状态、分布式友好的身份验证和授权机制。
 - 基于 RBAC 模型，实现细粒度的权限控制，涵盖接口方法和按钮级别。
+- 使用 dynamic-datasource 对多数据源配置、管理、切换，轻松实现读写分离。
 - 包括用户管理、角色管理、菜单管理、部门管理、字典管理等多个功能。
 - 使用 Swagger 和 Knife4j 自动生成接口文档，支持在线调试，提高开发效率。
 
@@ -21,22 +22,27 @@
 ### 项目目录
 ```
 harvey-boot
+├── harvey-ai
 ├── harvey-common
-│  ├── constant
-│  ├── enums
-│  ├── exception
+│  ├── constant    # 公共常量类
+│  ├── enums       # 公共枚举类
+│  ├── exception   # 异常类
 │  ├── mapstruct
 │  ├── model
 │  ├── result
 │  └── utils
 ├── harvey-core 
-│  ├── config
+│  ├── config      
 │  ├── mybatis
 │  ├── redis
 │  ├── storage
 │  ├── thread
 │  └── xxl
 ├── harvey-generator
+├── harvey-mq
+│  ├── harvey-rabbitmq
+│  └── harvey-rocketmq
+├── harvey-quartz
 ├── harvey-storage
 │  └── harvey-storage-service
 │  │  ├── mapper

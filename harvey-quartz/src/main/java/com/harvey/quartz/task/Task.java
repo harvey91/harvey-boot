@@ -1,4 +1,4 @@
-package com.harvey.system.task;
+package com.harvey.quartz.task;
 
 import org.springframework.stereotype.Component;
 
