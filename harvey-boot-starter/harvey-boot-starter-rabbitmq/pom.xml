@@ -9,23 +9,21 @@
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>harvey-boot-starter-redis</artifactId>
+    <artifactId>harvey-boot-starter-rabbitmq</artifactId>
     <name>${project.artifactId}</name>
     <version>1.0.0</version>
     <packaging>jar</packaging>
-    <description>harvey-boot-starter-redis是Harvey平台公共的 Redis 配置</description>
+    <description>harvey-boot-starter-rabbitmq 是Harvey平台公共的 Rabbitmq 配置</description>
 
     <dependencies>
-
-        <!-- Spring Redis -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <artifactId>spring-boot</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.alibaba.fastjson2</groupId>
-            <artifactId>fastjson2</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
     </dependencies>
 </project>

@@ -11,6 +11,6 @@ spring:
           max-wait: 100ms
   cache:
     type: redis
-    cache-names: dc3-cache
+    cache-names: harvey-cache
     redis:
       time-to-live: 2H

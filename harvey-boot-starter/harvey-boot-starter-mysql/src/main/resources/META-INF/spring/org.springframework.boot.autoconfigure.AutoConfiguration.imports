@@ -1,0 +1,3 @@
+com.harvey.starter.mysql.config.ActiveMysqlProfileConfig
+com.harvey.starter.mysql.config.MybatisPlusConfig
+com.harvey.starter.mysql.config.MyMetaObjectHandler

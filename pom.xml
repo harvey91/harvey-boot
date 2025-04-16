@@ -33,6 +33,8 @@
         <harvey.quarzt.version>1.0.0</harvey.quarzt.version>
         <harvey.boot.starter.version>1.0.0</harvey.boot.starter.version>
         <harvey.boot.starter.redis.version>1.0.0</harvey.boot.starter.redis.version>
+        <harvey.boot.starter.mysql.version>1.0.0</harvey.boot.starter.mysql.version>
+        <harvey.boot.starter.thread.version>1.0.0</harvey.boot.starter.thread.version>
         <harvey.system.rest.version>1.0.0</harvey.system.rest.version>
         <harvey.system.service.version>1.0.0</harvey.system.service.version>
         <harvey.storage.service.version>1.0.0</harvey.storage.service.version>
@@ -70,6 +72,17 @@
                 <version>${harvey.boot.starter.redis.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.harvey</groupId>
+                <artifactId>harvey-boot-starter-mysql</artifactId>
+                <version>${harvey.boot.starter.mysql.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.harvey</groupId>
+                <artifactId>harvey-boot-starter-thread</artifactId>
+                <version>${harvey.boot.starter.thread.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.harvey</groupId>
