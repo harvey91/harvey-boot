@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.harvey</groupId>
+        <artifactId>harvey-boot-starter</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>harvey-boot-starter-redis</artifactId>
+    <name>${project.artifactId}</name>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+    <description>harvey-boot-starter-redis是Harvey平台公共的 Redis 配置</description>
+
+    <dependencies>
+
+    <!-- Spring Redis -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-redis</artifactId>
+    </dependency>
+
+    </dependencies>
+</project>

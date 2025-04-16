@@ -51,14 +51,6 @@ spring:
       host: 127.0.0.1
       password:
       port: 6379
-      timeout: 5000ms
-      database: 0
-      lettuce:
-        pool:
-          max-active: 8
-          max-idle: 8
-          min-idle: 0
-          max-wait: 100ms
 
 # 线程池配置
 executor:

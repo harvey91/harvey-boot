@@ -2,14 +2,13 @@ package com.harvey.system.security.service;
 
 import com.harvey.common.constant.CacheConstant;
 import com.harvey.common.constant.Constant;
-import com.harvey.core.redis.RedisCache;
-import com.harvey.system.model.dto.OnlineUserDto;
-import com.harvey.system.model.entity.OnlineUser;
-import com.harvey.system.security.LoginUserVO;
-import com.harvey.system.service.OnlineUserService;
 import com.harvey.common.utils.ServletUtils;
 import com.harvey.common.utils.ip.AddressUtils;
 import com.harvey.common.utils.ip.IpUtils;
+import com.harvey.starter.redis.service.RedisService;
+import com.harvey.system.model.dto.OnlineUserDto;
+import com.harvey.system.security.LoginUserVO;
+import com.harvey.system.service.OnlineUserService;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class OnlineUserCacheService {
     private final OnlineUserService onlineUserService;
-    private final RedisCache redisCache;
+    private final RedisService redisService;
 
     public void save(LoginUserVO loginUserVO, Integer expireTime, boolean refresh) {
         loginUserVO.setLoginTime(System.currentTimeMillis());
@@ -35,7 +34,7 @@ public class OnlineUserCacheService {
         setUserAgent(loginUserVO);
         // 缓存
         String userKey = getLoginUserKey(loginUserVO.getUuid());
-        redisCache.setEx(userKey, loginUserVO, expireTime, TimeUnit.MINUTES);
+        redisService.setEx(userKey, loginUserVO, expireTime, TimeUnit.MINUTES);
         OnlineUserDto onlineUserDto = getOnlineUserDto(loginUserVO);
         // 入库
         if (refresh) {
@@ -48,11 +47,11 @@ public class OnlineUserCacheService {
 
     public void delete(String uuid) {
         onlineUserService.offline(uuid);
-        redisCache.delete(getLoginUserKey(uuid));
+        redisService.delete(getLoginUserKey(uuid));
     }
 
     public LoginUserVO getLoginUser(String uuid) {
-        return redisCache.get(getLoginUserKey(uuid));
+        return redisService.get(getLoginUserKey(uuid));
     }
 
     /**

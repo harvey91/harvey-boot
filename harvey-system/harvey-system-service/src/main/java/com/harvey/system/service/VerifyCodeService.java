@@ -4,20 +4,19 @@ import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.common.constant.CacheConstant;
 import com.harvey.common.enums.EnabledEnum;
-import com.harvey.system.model.query.VerifyCodeQuery;
+import com.harvey.common.exception.BadParameterException;
+import com.harvey.common.utils.AssertUtil;
+import com.harvey.common.utils.StringUtils;
+import com.harvey.system.mapper.VerifyCodeMapper;
 import com.harvey.system.mapstruct.VerifyCodeConverter;
 import com.harvey.system.model.dto.VerifyCodeDto;
 import com.harvey.system.model.entity.VerifyCode;
-import com.harvey.system.mapper.VerifyCodeMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.harvey.core.redis.RedisCache;
-import com.harvey.common.utils.AssertUtil;
-import com.harvey.common.utils.StringUtils;
-import com.harvey.common.exception.BadParameterException;
-import org.springframework.stereotype.Service;
+import com.harvey.system.model.query.VerifyCodeQuery;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
@@ -36,7 +35,6 @@ import java.util.List;
 public class VerifyCodeService extends ServiceImpl<VerifyCodeMapper, VerifyCode> {
     private final VerifyCodeMapper mapper;
     private final VerifyCodeConverter converter;
-    private final RedisCache redisCache;
 
     public Page<VerifyCode> queryPage(VerifyCodeQuery query) {
         Page<VerifyCode> page = new Page<>(query.getPageNum(), query.getPageSize());

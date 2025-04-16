@@ -4,12 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.common.constant.CacheConstant;
+import com.harvey.starter.redis.service.RedisService;
 import com.harvey.system.mapper.ConfigMapper;
 import com.harvey.system.mapstruct.ConfigConverter;
 import com.harvey.system.model.dto.ConfigDto;
 import com.harvey.system.model.entity.Config;
 import com.harvey.system.model.query.ConfigQuery;
-import com.harvey.core.redis.RedisCache;
 import com.harvey.common.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 public class ConfigService extends ServiceImpl<ConfigMapper, Config> {
     private final ConfigMapper mapper;
     private final ConfigConverter converter;
-    private final RedisCache redisCache;
+    private final RedisService redisService;
 
     public Page<Config> queryPage(ConfigQuery query) {
         Page<Config> page = new Page<>(query.getPageNum(), query.getPageSize());
@@ -70,11 +70,11 @@ public class ConfigService extends ServiceImpl<ConfigMapper, Config> {
      */
     public void refresh() {
         String key = CacheConstant.SYS_CONFIG_KEY;
-        redisCache.delete(key);
+        redisService.delete(key);
         List<Config> list = this.list();
         if (!ObjectUtils.isEmpty(list)) {
             Map<String, String> map = list.stream().collect(Collectors.toMap(Config::getConfigKey, Config::getConfigValue));
-            redisCache.hPutAll(key, map);
+            redisService.hPutAll(key, map);
         }
     }
 
@@ -85,7 +85,7 @@ public class ConfigService extends ServiceImpl<ConfigMapper, Config> {
      */
     public Object getConfigValue(String key) {
         if (StringUtils.isNotBlank(key)) {
-            return redisCache.hGet(CacheConstant.SYS_CONFIG_KEY, key);
+            return redisService.hGet(CacheConstant.SYS_CONFIG_KEY, key);
         }
         return null;
     }

@@ -1,0 +1,16 @@
+spring:
+  data:
+    redis:
+      timeout: 5000ms
+      database: 0
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: 100ms
+  cache:
+    type: redis
+    cache-names: dc3-cache
+    redis:
+      time-to-live: 2H

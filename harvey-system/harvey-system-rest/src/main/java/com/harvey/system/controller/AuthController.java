@@ -4,9 +4,9 @@ import cn.hutool.core.util.IdUtil;
 import com.harvey.common.result.RespResult;
 import com.harvey.common.constant.CacheConstant;
 import com.harvey.common.enums.LoginResultEnum;
+import com.harvey.starter.redis.service.RedisService;
 import com.harvey.system.model.dto.LoginDto;
 import com.harvey.system.model.vo.CaptchaVO;
-import com.harvey.core.redis.RedisCache;
 import com.harvey.system.security.LoginUserVO;
 import com.harvey.system.security.SecurityUtil;
 import com.harvey.system.security.service.JwtTokenService;
@@ -41,18 +41,18 @@ public class AuthController {
     private final JwtTokenService jwtTokenService;
     private final OnlineUserCacheService onlineUserCacheService;
     private final LogService logService;
-    private final RedisCache redisCache;
+    private final RedisService redisService;
 
 //    @Operation(summary = "登录")
     @PostMapping("/login")
     public RespResult<Object> login(LoginDto loginDto) {
-        String cacheCode = redisCache.get(CacheConstant.LOGIN_CAPTCHA_KEY + loginDto.getCaptchaKey());
+        String cacheCode = redisService.get(CacheConstant.LOGIN_CAPTCHA_KEY + loginDto.getCaptchaKey());
         if (StringUtils.isBlank(cacheCode)) {
             logService.saveLoginLog(0L, loginDto.getUsername(), LoginResultEnum.LOGIN_FAILED.getValue(), "验证码已失效");
             return RespResult.fail("验证码已失效");
         }
         // 不管正不正确，使用过的验证码都先删除，防止撞库
-        redisCache.delete(CacheConstant.LOGIN_CAPTCHA_KEY + loginDto.getCaptchaKey());
+        redisService.delete(CacheConstant.LOGIN_CAPTCHA_KEY + loginDto.getCaptchaKey());
         if (!cacheCode.equals(loginDto.getCaptchaCode().toLowerCase())) {
             logService.saveLoginLog(0L, loginDto.getUsername(), LoginResultEnum.LOGIN_FAILED.getValue(), "验证码不正确");
             return RespResult.fail("验证码不正确");
@@ -96,7 +96,7 @@ public class AuthController {
         // redis缓存key
         String uuid = IdUtil.fastSimpleUUID();
         // 5分钟内有效
-        redisCache.setEx(CacheConstant.LOGIN_CAPTCHA_KEY + uuid, code, 5, TimeUnit.MINUTES);
+        redisService.setEx(CacheConstant.LOGIN_CAPTCHA_KEY + uuid, code, 5, TimeUnit.MINUTES);
         return RespResult.success(CaptchaVO.builder().captchaKey(uuid).captchaBase64(base64).build());
     }
 }
