@@ -19,12 +19,12 @@ public class MinioProperties {
     /**
      * 外网地址
      */
-    private String publicEndpoint;
+    private String endpoint;
 
     /**
      * 内网地址，可提升上传/下载速度
      */
-    private String privateEndpoint;
+    private String innerEndpoint;
 
     /**
      * 默认存储桶名称
@@ -47,10 +47,10 @@ public class MinioProperties {
      *
      * @return {@link String}
      */
-    public String getPrivateEndpoint() {
-        if (!StringUtils.hasText(privateEndpoint)) {
+    public String getInnerEndpoint() {
+        if (!StringUtils.hasText(innerEndpoint)) {
             log.warn("未设置内网地址，默认使用公共地址。");
-            return publicEndpoint;
+            return endpoint;
         }
-        return privateEndpoint;
+        return innerEndpoint;
     }}

@@ -20,17 +20,17 @@ public class MinioAutoConfig {
     @Bean
     public MinioClient minioClient(MinioProperties minioProperties) {
         MinioClient.Builder builder = MinioClient.builder();
-        builder.endpoint(minioProperties.getPublicEndpoint());
+        builder.endpoint(minioProperties.getEndpoint());
         if (StringUtils.hasLength(minioProperties.getAccessKey()) && StringUtils.hasLength(minioProperties.getSecretKey())) {
             builder.credentials(minioProperties.getAccessKey(), minioProperties.getSecretKey());
         }
         return builder.build();
     }
 
-    @Bean(name = "privateMinioClient")
-    public MinioClient privateMinioClient(MinioProperties minioProperties) {
+    @Bean(name = "innerMinioClient")
+    public MinioClient innerMinioClient(MinioProperties minioProperties) {
         MinioClient.Builder builder = MinioClient.builder();
-        builder.endpoint(minioProperties.getPrivateEndpoint());
+        builder.endpoint(minioProperties.getInnerEndpoint());
         if (StringUtils.hasLength(minioProperties.getAccessKey()) && StringUtils.hasLength(minioProperties.getSecretKey())) {
             builder.credentials(minioProperties.getAccessKey(), minioProperties.getSecretKey());
         }

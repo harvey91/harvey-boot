@@ -25,7 +25,7 @@ public class MinioServiceImpl implements MinioService {
     @Autowired
     private MinioClient minioClient;
     @Autowired
-    private MinioClient privateMinioClient;
+    private MinioClient innerMinioClient;
 
     @Override
     public MinioClient getClient() {
@@ -35,7 +35,7 @@ public class MinioServiceImpl implements MinioService {
     @Override
     public Boolean bucketExists(String bucketName) {
         try {
-            return privateMinioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
+            return innerMinioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -49,7 +49,7 @@ public class MinioServiceImpl implements MinioService {
                 log.debug("存储桶：{}已存在,无需重新创建！", bucketName);
                 return;
             }
-            privateMinioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
+            innerMinioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
         } catch (Exception e) {
             log.error("令牌桶创建异常！{}", e.getMessage(), e);
             throw new RuntimeException("令牌桶创建失败！原因：" + e.getMessage());
@@ -66,7 +66,7 @@ public class MinioServiceImpl implements MinioService {
                     .object(objectName)
                     .stream(stream, available, -1)
                     .build();
-            ObjectWriteResponse objectWriteResponse = privateMinioClient.putObject(putObjectArgs);
+            ObjectWriteResponse objectWriteResponse = innerMinioClient.putObject(putObjectArgs);
 
             BigDecimal decimal = BigDecimal.valueOf((double) available / 1048576);
             return MinioResp.builder()
@@ -91,7 +91,7 @@ public class MinioServiceImpl implements MinioService {
     @Override
     public InputStream getObject(String bucketName, String objectName) {
         try {
-            return privateMinioClient.getObject(GetObjectArgs.builder()
+            return innerMinioClient.getObject(GetObjectArgs.builder()
                     .bucket(bucketName).object(objectName)
                     .build());
         } catch (Exception e) {
