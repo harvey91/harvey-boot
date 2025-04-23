@@ -38,6 +38,7 @@
         <harvey.system.rest.version>1.0.0</harvey.system.rest.version>
         <harvey.system.service.version>1.0.0</harvey.system.service.version>
         <harvey.storage.service.version>1.0.0</harvey.storage.service.version>
+        <harvey.boot.starter.minio.version>1.0.0</harvey.boot.starter.minio.version>
     </properties>
 
     <dependencyManagement>
@@ -82,6 +83,12 @@
                 <groupId>com.harvey</groupId>
                 <artifactId>harvey-boot-starter-thread</artifactId>
                 <version>${harvey.boot.starter.thread.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.harvey</groupId>
+                <artifactId>harvey-boot-starter-minio</artifactId>
+                <version>${harvey.boot.starter.minio.version}</version>
             </dependency>
 
             <dependency>

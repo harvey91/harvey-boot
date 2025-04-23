@@ -9,17 +9,22 @@
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>harvey-boot-starter-thread</artifactId>
+    <artifactId>harvey-boot-starter-minio</artifactId>
     <name>${project.artifactId}</name>
     <version>1.0.0</version>
     <packaging>jar</packaging>
-    <description>harvey-boot-starter-thread 是Harvey平台公共的 《hread 配置</description>
+    <description>harvey-boot-starter-minio 是Harvey平台公共的 Minio 配置</description>
 
     <dependencies>
         <!-- Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
         </dependency>
     </dependencies>
 </project>

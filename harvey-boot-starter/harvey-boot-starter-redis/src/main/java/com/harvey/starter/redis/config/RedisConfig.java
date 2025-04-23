@@ -1,13 +1,17 @@
 package com.harvey.starter.redis.config;
 
 import com.harvey.starter.redis.serializer.FastJson2JsonRedisSerializer;
+import com.harvey.starter.redis.service.RedisService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -23,8 +27,11 @@ import java.time.Duration;
  * @date 2024-11-06 12:55
  **/
 @Slf4j
-@AutoConfiguration(before = RedisAutoConfiguration.class, after = ActiveRedisProfileConfig.class)
+@Configuration
+@AutoConfigureBefore(RedisAutoConfiguration.class)
+//@AutoConfiguration(before = RedisAutoConfiguration.class, after = ActiveRedisProfileConfig.class)
 @EnableCaching
+@ConditionalOnClass(RedisService.class)
 @ConfigurationProperties(prefix = "spring.cache.redis")
 public class RedisConfig {
 

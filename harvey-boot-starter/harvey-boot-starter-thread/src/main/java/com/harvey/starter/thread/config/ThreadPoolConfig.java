@@ -1,7 +1,7 @@
 package com.harvey.starter.thread.config;
 
 import com.harvey.starter.thread.property.ThreadProperties;
-import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -17,12 +17,11 @@ import java.util.concurrent.ThreadPoolExecutor;
  **/
 @Configuration
 @EnableAsync
-@RequiredArgsConstructor
+@EnableConfigurationProperties(ThreadProperties.class)
 public class ThreadPoolConfig {
-    private final ThreadProperties threadProperties;
 
     @Bean(name = "asyncExecutor")
-    public Executor asyncExecutor() {
+    public Executor asyncExecutor(ThreadProperties threadProperties) {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         // 配置核心线程数
         executor.setCorePoolSize(threadProperties.getCorePoolSize());

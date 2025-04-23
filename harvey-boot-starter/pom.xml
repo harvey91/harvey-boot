@@ -17,13 +17,14 @@
     <description>harvey-boot-starter</description>
 
     <modules>
-        <module>harvey-boot-starter-redis</module>
-        <module>harvey-boot-starter-mysql</module>
         <module>harvey-boot-starter-job</module>
+        <module>harvey-boot-starter-mysql</module>
         <module>harvey-boot-starter-quartz</module>
         <module>harvey-boot-starter-rabbitmq</module>
+        <module>harvey-boot-starter-redis</module>
         <module>harvey-boot-starter-rocketmq</module>
         <module>harvey-boot-starter-thread</module>
+        <module>harvey-boot-starter-minio</module>
     </modules>
 
     <properties>
@@ -34,6 +35,7 @@
         <harvey.boot.starter.rabbitmq.version>1.0.0</harvey.boot.starter.rabbitmq.version>
         <harvey.boot.starter.rocketmq.version>1.0.0</harvey.boot.starter.rocketmq.version>
         <harvey.boot.starter.thread.version>1.0.0</harvey.boot.starter.thread.version>
+        <harvey.boot.starter.minio.version>1.0.0</harvey.boot.starter.minio.version>
     </properties>
 
 </project>
