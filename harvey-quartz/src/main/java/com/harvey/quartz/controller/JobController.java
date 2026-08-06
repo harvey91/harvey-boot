@@ -79,7 +79,7 @@ public class JobController {
     @SaCheckPermission("sys:job:run")
     @PutMapping("/run")
     public RespResult<String> run(@RequestBody @Validated JobDto dto) {
-
+        jobService.runJob(dto);
         return RespResult.success();
     }
 }

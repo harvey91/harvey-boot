@@ -34,4 +34,10 @@ public class JobDto {
 
     @Schema(title = "enabled", description = "是否启用：0禁用，1启用")
     private Integer enabled;
+
+    @Schema(title = "sort", description = "排序")
+    private Integer sort;
+
+    @Schema(title = "remark", description = "备注")
+    private String remark;
 }

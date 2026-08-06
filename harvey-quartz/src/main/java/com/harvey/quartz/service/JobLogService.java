@@ -9,6 +9,7 @@ import com.harvey.quartz.model.entity.JobLog;
 import com.harvey.quartz.mapper.JobLogMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.common.exception.BadParameterException;
+import com.harvey.common.utils.StringUtils;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,9 +31,16 @@ public class JobLogService extends ServiceImpl<JobLogMapper, JobLog> {
     public Page<JobLog> queryPage(JobLogQuery query) {
         Page<JobLog> page = new Page<>(query.getPageNum(), query.getPageSize());
         LambdaQueryWrapper<JobLog> queryWrapper = new LambdaQueryWrapper<JobLog>()
-//                .like(StringUtils.isNotBlank(query.getKeywords()), JobLog::getName, query.getKeywords())
-                .orderByAsc(JobLog::getSort);
+                .like(StringUtils.isNotBlank(query.getKeywords()), JobLog::getJobName, query.getKeywords())
+                .orderByDesc(JobLog::getCreateTime);
         return this.page(page, queryWrapper);
+    }
+
+    /**
+     * 记录任务执行日志
+     */
+    public void createJobLog(JobLog jobLog) {
+        this.save(jobLog);
     }
 
     @Transactional(rollbackFor = Throwable.class)

@@ -8,6 +8,7 @@ CREATE TABLE `sys_job`
     `misfire_policy`  tinyint(2)   DEFAULT '3' COMMENT '计划执行错误策略（1立即执行 2执行一次 3放弃执行）',
     `concurrent`      tinyint(2)   DEFAULT '1' COMMENT '是否并发执行（0允许 1禁止）',
     `remark`          varchar(500) DEFAULT '' COMMENT '备注',
+    `sort`            int          DEFAULT '0' COMMENT '排序',
     `enabled`         tinyint(2)   DEFAULT '1' COMMENT '是否启用',
     `create_time`     datetime(0)  NOT NULL COMMENT '创建时间',
     `update_time`     datetime(0)  NOT NULL COMMENT '修改时间',
@@ -25,8 +26,11 @@ CREATE TABLE `sys_job_log`
     `invoke_target`  varchar(500) NOT NULL COMMENT '调用目标字符串',
     `job_message`    varchar(500)  DEFAULT '' COMMENT '日志信息',
     `exception_info` varchar(2000) DEFAULT '' COMMENT '异常信息',
+    `remark`         varchar(500) DEFAULT '' COMMENT '备注',
+    `sort`           int          DEFAULT '0' COMMENT '排序',
     `enabled`        tinyint(2)    DEFAULT '1' COMMENT '是否启用',
     `create_time`    datetime(0)  NOT NULL COMMENT '创建时间',
+    `update_time`    datetime(0)  DEFAULT NULL COMMENT '修改时间',
     `deleted`        tinyint(2)    DEFAULT '1' COMMENT '逻辑删除',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
