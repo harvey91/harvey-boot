@@ -166,7 +166,7 @@ VALUES (6, 1, '字典管理', '', 'MENU', 'Dict', 'dict', 'system/dict/index', '
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
 VALUES (7, 1, '字典数据', '', 'MENU', 'DictData', 'dict-data', 'system/dict/data', '', 'dict', '', 0, 1, '', 6, 0, '2024-10-31 19:57:53', '2024-10-31 19:57:53', 1);
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
-VALUES (8, 2, '新增用户', '', 'BUTTON', '', '', '', 'sys:user:add', '', '', 0, 1, '', 1, 1, '2024-11-06 21:02:41', '2024-11-06 21:02:41', 1);
+VALUES (8, 2, '新增用户', '', 'BUTTON', '', '', '', 'sys:user:create', '', '', 0, 1, '', 1, 1, '2024-11-06 21:02:41', '2024-11-06 21:02:41', 1);
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
 VALUES (10, 0, '服务监控', '', 'DIRECTORY', '', '/monitor', 'Layout', '', 'client', '/monitor/server', 0, 1, '', 9, 1, '2024-11-06 21:33:55', '2024-11-06 21:33:55', 1);
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
@@ -189,6 +189,120 @@ INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, 
 VALUES (19, 0, '工具', '', 'DIRECTORY', '', '/tool', 'Layout', '', 'code', '/tool/file', 0, 1, '', 8, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
 VALUES (20, 19, '文件管理', '', 'MENU', 'File', 'file', 'tool/file/index', '', 'file', '', 0, 1, '', 1, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (21, 20, '查询', '', 'BUTTON', '', '', '', 'sys:file:manage:list', '', '', 0, 1, '', 1, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (22, 20, '上传', '', 'BUTTON', '', '', '', 'sys:file:manage:create', '', '', 0, 1, '', 2, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (23, 20, '下载', '', 'BUTTON', '', '', '', 'sys:file:manage:download', '', '', 0, 1, '', 3, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (24, 20, '修改', '', 'BUTTON', '', '', '', 'sys:file:manage:modify', '', '', 0, 1, '', 4, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (25, 20, '删除', '', 'BUTTON', '', '', '', 'sys:file:manage:delete', '', '', 0, 1, '', 5, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (26, 2, '查询', '', 'BUTTON', '', '', '', 'sys:user:list', '', '', 0, 1, '', 1, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (27, 2, '修改', '', 'BUTTON', '', '', '', 'sys:user:modify', '', '', 0, 1, '', 2, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (28, 2, '删除', '', 'BUTTON', '', '', '', 'sys:user:delete', '', '', 0, 1, '', 3, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (29, 2, '重置密码', '', 'BUTTON', '', '', '', 'sys:user:password:reset', '', '', 0, 1, '', 4, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (30, 3, '查询', '', 'BUTTON', '', '', '', 'sys:dept:list', '', '', 0, 1, '', 1, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (31, 3, '新增', '', 'BUTTON', '', '', '', 'sys:dept:create', '', '', 0, 1, '', 2, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (32, 3, '修改', '', 'BUTTON', '', '', '', 'sys:dept:modify', '', '', 0, 1, '', 3, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (33, 3, '删除', '', 'BUTTON', '', '', '', 'sys:dept:delete', '', '', 0, 1, '', 4, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (34, 4, '查询', '', 'BUTTON', '', '', '', 'sys:role:list', '', '', 0, 1, '', 1, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (35, 4, '新增', '', 'BUTTON', '', '', '', 'sys:role:create', '', '', 0, 1, '', 2, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (36, 4, '修改', '', 'BUTTON', '', '', '', 'sys:role:modify', '', '', 0, 1, '', 3, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (37, 4, '删除', '', 'BUTTON', '', '', '', 'sys:role:delete', '', '', 0, 1, '', 4, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (38, 4, '分配权限', '', 'BUTTON', '', '', '', 'sys:role:perm', '', '', 0, 1, '', 5, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (39, 5, '查询', '', 'BUTTON', '', '', '', 'sys:menu:list', '', '', 0, 1, '', 1, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (40, 5, '新增', '', 'BUTTON', '', '', '', 'sys:menu:create', '', '', 0, 1, '', 2, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (41, 5, '修改', '', 'BUTTON', '', '', '', 'sys:menu:modify', '', '', 0, 1, '', 3, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (42, 5, '删除', '', 'BUTTON', '', '', '', 'sys:menu:delete', '', '', 0, 1, '', 4, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (43, 6, '查询', '', 'BUTTON', '', '', '', 'sys:dict:list', '', '', 0, 1, '', 1, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (44, 6, '新增', '', 'BUTTON', '', '', '', 'sys:dict:create', '', '', 0, 1, '', 2, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (45, 6, '修改', '', 'BUTTON', '', '', '', 'sys:dict:modify', '', '', 0, 1, '', 3, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (46, 6, '删除', '', 'BUTTON', '', '', '', 'sys:dict:delete', '', '', 0, 1, '', 4, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (47, 7, '查询', '', 'BUTTON', '', '', '', 'sys:dict:data:list', '', '', 0, 1, '', 1, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (48, 7, '新增', '', 'BUTTON', '', '', '', 'sys:dict:data:create', '', '', 0, 1, '', 2, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (49, 7, '修改', '', 'BUTTON', '', '', '', 'sys:dict:data:modify', '', '', 0, 1, '', 3, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (50, 7, '删除', '', 'BUTTON', '', '', '', 'sys:dict:data:delete', '', '', 0, 1, '', 4, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (51, 11, '查询', '', 'BUTTON', '', '', '', 'sys:post:list', '', '', 0, 1, '', 1, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (52, 11, '新增', '', 'BUTTON', '', '', '', 'sys:post:create', '', '', 0, 1, '', 2, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (53, 11, '修改', '', 'BUTTON', '', '', '', 'sys:post:modify', '', '', 0, 1, '', 3, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (54, 11, '删除', '', 'BUTTON', '', '', '', 'sys:post:delete', '', '', 0, 1, '', 4, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (55, 12, '新增', '', 'BUTTON', '', '', '', 'sys:config:create', '', '', 0, 1, '', 1, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (56, 12, '刷新', '', 'BUTTON', '', '', '', 'sys:config:refresh', '', '', 0, 1, '', 2, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (57, 12, '修改', '', 'BUTTON', '', '', '', 'sys:config:modify', '', '', 0, 1, '', 3, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (58, 12, '删除', '', 'BUTTON', '', '', '', 'sys:config:delete', '', '', 0, 1, '', 4, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (59, 13, '查询', '', 'BUTTON', '', '', '', 'sys:notice:list', '', '', 0, 1, '', 1, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (60, 13, '新增', '', 'BUTTON', '', '', '', 'sys:notice:create', '', '', 0, 1, '', 2, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (61, 13, '修改', '', 'BUTTON', '', '', '', 'sys:notice:modify', '', '', 0, 1, '', 3, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (62, 13, '删除', '', 'BUTTON', '', '', '', 'sys:notice:delete', '', '', 0, 1, '', 4, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (63, 13, '发布', '', 'BUTTON', '', '', '', 'sys:notice:publish', '', '', 0, 1, '', 5, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (64, 13, '撤回', '', 'BUTTON', '', '', '', 'sys:notice:revoke', '', '', 0, 1, '', 6, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (65, 14, '查询', '', 'BUTTON', '', '', '', 'sys:online:user:list', '', '', 0, 1, '', 1, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (66, 14, '强制下线', '', 'BUTTON', '', '', '', 'sys:online:user:offline', '', '', 0, 1, '', 2, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (67, 15, '查询', '', 'BUTTON', '', '', '', 'sys:log:op:list', '', '', 0, 1, '', 1, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (68, 15, '删除', '', 'BUTTON', '', '', '', 'sys:log:op:delete', '', '', 0, 1, '', 2, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (69, 16, '查询', '', 'BUTTON', '', '', '', 'sys:log:login:list', '', '', 0, 1, '', 1, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (70, 16, '删除', '', 'BUTTON', '', '', '', 'sys:log:login:delete', '', '', 0, 1, '', 2, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (71, 19, '验证码', '', 'MENU', 'Code', 'code', 'tool/code/index', '', 'code', '', 0, 1, '', 2, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (72, 71, '查询', '', 'BUTTON', '', '', '', 'sys:verify:code:list', '', '', 0, 1, '', 1, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (73, 71, '新增', '', 'BUTTON', '', '', '', 'sys:verify:code:create', '', '', 0, 1, '', 2, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (74, 71, '修改', '', 'BUTTON', '', '', '', 'sys:verify:code:modify', '', '', 0, 1, '', 3, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (75, 71, '删除', '', 'BUTTON', '', '', '', 'sys:verify:code:delete', '', '', 0, 1, '', 4, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (76, 15, '异常查询', '', 'BUTTON', '', '', '', 'sys:log:ex:list', '', '', 0, 1, '', 3, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (77, 15, '异常删除', '', 'BUTTON', '', '', '', 'sys:log:ex:delete', '', '', 0, 1, '', 4, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -284,6 +398,69 @@ INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
 VALUES (31, 1, 19, '2026-08-06 14:40:00');
 INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
 VALUES (32, 1, 20, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
+VALUES (33, 1, 21, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
+VALUES (34, 1, 22, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
+VALUES (35, 1, 23, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
+VALUES (36, 1, 24, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
+VALUES (37, 1, 25, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (38, 1, 26, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (39, 1, 27, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (40, 1, 28, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (41, 1, 29, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (42, 1, 30, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (43, 1, 31, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (44, 1, 32, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (45, 1, 33, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (46, 1, 34, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (47, 1, 35, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (48, 1, 36, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (49, 1, 37, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (50, 1, 38, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (51, 1, 39, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (52, 1, 40, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (53, 1, 41, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (54, 1, 42, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (55, 1, 43, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (56, 1, 44, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (57, 1, 45, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (58, 1, 46, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (59, 1, 47, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (60, 1, 48, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (61, 1, 49, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (62, 1, 50, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (63, 1, 51, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (64, 1, 52, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (65, 1, 53, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (66, 1, 54, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (67, 1, 55, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (68, 1, 56, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (69, 1, 57, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (70, 1, 58, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (71, 1, 59, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (72, 1, 60, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (73, 1, 61, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (74, 1, 62, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (75, 1, 63, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (76, 1, 64, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (77, 1, 65, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (78, 1, 66, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (79, 1, 67, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (80, 1, 68, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (81, 1, 69, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (82, 1, 70, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (83, 1, 8, '2024-11-06 20:25:52');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (84, 1, 71, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (85, 1, 72, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (86, 1, 73, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (87, 1, 74, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (88, 1, 75, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (89, 1, 76, '2026-08-06 14:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (90, 1, 77, '2026-08-06 14:40:00');
 
 -- ----------------------------
 -- Table structure for sys_dict

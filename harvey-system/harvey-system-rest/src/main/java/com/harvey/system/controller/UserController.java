@@ -111,7 +111,7 @@ public class UserController {
     }
 
     @Operation(summary = "重置密码")
-    @SaCheckPermission("sys:user:password:rest")
+    @SaCheckPermission("sys:user:password:reset")
     @PutMapping("/password/reset")
     public RespResult<String> resetPassword(@RequestBody @Validated PasswordDto passwordDto) {
         User user = new User();

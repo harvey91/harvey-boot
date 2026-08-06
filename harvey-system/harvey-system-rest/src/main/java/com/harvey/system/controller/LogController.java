@@ -42,7 +42,7 @@ public class LogController {
     }
 
     @Operation(summary = "异常日志分页列表")
-    @SaCheckPermission("sys:log:ep:list")
+    @SaCheckPermission("sys:log:ex:list")
     @GetMapping("/exPage")
     public RespResult<PageResult<LogOp>> exPage(LogOpQuery query) {
         query.setResult(2);

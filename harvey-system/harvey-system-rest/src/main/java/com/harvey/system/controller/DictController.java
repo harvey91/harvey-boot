@@ -41,7 +41,7 @@ public class DictController {
     }
 
     @Operation(summary = "字典分页列表")
-    @SaCheckPermission("sys:dept:list")
+    @SaCheckPermission("sys:dict:list")
     @GetMapping("/page")
     public RespResult<PageResult<Dict>> page(DictQuery query) {
         Page<Dict> page = dictService.queryPage(query);
@@ -49,7 +49,7 @@ public class DictController {
     }
 
     @Operation(summary = "新增字典")
-    @SaCheckPermission("sys:dept:create")
+    @SaCheckPermission("sys:dict:create")
     @PostMapping("/create")
     public RespResult<String> create(@RequestBody @Validated DictDto dto) {
         dictService.saveDict(dto);
@@ -57,7 +57,7 @@ public class DictController {
     }
 
     @Operation(summary = "编辑字典")
-    @SaCheckPermission("sys:dept:modify")
+    @SaCheckPermission("sys:dict:modify")
     @PutMapping("/modify")
     public RespResult<String> modify(@RequestBody @Validated DictDto dto) {
         dictService.updateDict(dto);
@@ -65,7 +65,7 @@ public class DictController {
     }
 
     @Operation(summary = "删除字典")
-    @SaCheckPermission("sys:dept:delete")
+    @SaCheckPermission("sys:dict:delete")
     @DeleteMapping("/delete")
     public RespResult<String> delete(@RequestBody List<Long> ids) {
         if (ObjectUtils.isEmpty(ids)) {
