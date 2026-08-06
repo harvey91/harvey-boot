@@ -2,7 +2,6 @@ package com.harvey.starter.thread.property;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * 多线程参数
@@ -10,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
  * @date 2024-11-25 12:09
  **/
 @Data
-@Configuration
 @ConfigurationProperties(prefix = "executor")
 public class ThreadProperties {
 

@@ -247,7 +247,7 @@ CREATE TABLE `sys_log_op`
     `module`      varchar(32)  DEFAULT '' COMMENT '模块',
     `request_uri` varchar(255) DEFAULT '' COMMENT '请求路径',
     `method`      varchar(128) DEFAULT '' COMMENT '请求方法',
-    `param`       varchar(255) DEFAULT '' COMMENT '请求参数',
+    `params`      varchar(255) DEFAULT '' COMMENT '请求参数',
     `detail`      text COMMENT '详情',
     `duration`    bigint       DEFAULT '0' COMMENT '执行时长(ms)',
     `ip`          varchar(32)  DEFAULT '' COMMENT 'IP',

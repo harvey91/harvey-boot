@@ -5,9 +5,8 @@
 
     <parent>
         <groupId>com.harvey</groupId>
-        <artifactId>harvey-parent</artifactId>
+        <artifactId>harvey-boot</artifactId>
         <version>1.0.0</version>
-        <relativePath/>
     </parent>
 
     <artifactId>harvey-boot-starter</artifactId>

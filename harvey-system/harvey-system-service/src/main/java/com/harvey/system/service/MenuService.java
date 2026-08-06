@@ -118,10 +118,16 @@ public class MenuService extends ServiceImpl<MenuMapper, Menu> {
             menuList = mapper.selectMenuByUserId(userId);
         }
 
+        if (CollectionUtils.isEmpty(menuList)) {
+            return Collections.emptyList();
+        }
         Map<Long, List<Menu>> collect = menuList.stream().collect(Collectors.groupingBy(Menu::getParentId));
         // 获取顶级目录列表
         List<Menu> parentMenuList = collect.get(0L);
         List<RouteVO> routeVOList = new ArrayList<>();
+        if (CollectionUtils.isEmpty(parentMenuList)) {
+            return routeVOList;
+        }
         for (Menu menu : parentMenuList) {
             RouteVO routeVO = new RouteVO();
             routeVO.setName(menu.getRouteName());
