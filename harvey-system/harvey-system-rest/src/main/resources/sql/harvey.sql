@@ -182,13 +182,13 @@ VALUES (15, 10, '操作日志', '', 'MENU', 'LogOp', 'log-op', 'system/log/ex', 
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
 VALUES (16, 10, '登录日志', '', 'MENU', 'LogLogin', 'log-login', 'system/log/login', '', 'document', '', 0, 1, '', 3, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
-VALUES (17, 10, '服务监控', '', 'MENU', 'ServerMonitor', 'server', 'monitor/server', '', 'monitor', '', 0, 1, '', 4, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+VALUES (17, 10, '服务监控', '', 'MENU', 'ServerMonitor', 'server', 'monitor/server/index', '', 'monitor', '', 0, 1, '', 4, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
-VALUES (18, 10, 'Druid 监控', '', 'MENU', 'Druid', 'druid', 'monitor/druid', '', 'code', '', 0, 1, '', 5, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+VALUES (18, 10, 'Druid 监控', '', 'MENU', 'Druid', 'druid', 'monitor/druid/index', '', 'code', '', 0, 1, '', 5, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
 VALUES (19, 0, '工具', '', 'DIRECTORY', '', '/tool', 'Layout', '', 'code', '/tool/file', 0, 1, '', 8, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
-VALUES (20, 19, '文件管理', '', 'MENU', 'File', 'file', 'tool/file', '', 'file', '', 0, 1, '', 1, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
+VALUES (20, 19, '文件管理', '', 'MENU', 'File', 'file', 'tool/file/index', '', 'file', '', 0, 1, '', 1, 1, '2026-08-06 14:30:00', '2026-08-06 14:30:00', 1);
 
 -- ----------------------------
 -- Table structure for sys_user_role
