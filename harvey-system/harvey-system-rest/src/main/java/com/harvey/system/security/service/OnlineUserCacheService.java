@@ -1,22 +1,22 @@
 package com.harvey.system.security.service;
 
-import com.harvey.common.constant.CacheConstant;
+import cn.dev33.satoken.stp.StpUtil;
 import com.harvey.common.constant.Constant;
 import com.harvey.common.utils.ServletUtils;
 import com.harvey.common.utils.ip.AddressUtils;
 import com.harvey.common.utils.ip.IpUtils;
-import com.harvey.starter.redis.service.RedisService;
 import com.harvey.system.model.dto.OnlineUserDto;
+import com.harvey.system.model.entity.OnlineUser;
 import com.harvey.system.security.LoginUserVO;
 import com.harvey.system.service.OnlineUserService;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Harvey
@@ -26,15 +26,11 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class OnlineUserCacheService {
     private final OnlineUserService onlineUserService;
-    private final RedisService redisService;
 
     public void save(LoginUserVO loginUserVO, Integer expireTime, boolean refresh) {
         loginUserVO.setLoginTime(System.currentTimeMillis());
         loginUserVO.setExpireTime(loginUserVO.getLoginTime() + expireTime * Constant.MILLIS_MINUTE);
         setUserAgent(loginUserVO);
-        // 缓存
-        String userKey = getLoginUserKey(loginUserVO.getUuid());
-        redisService.setEx(userKey, loginUserVO, expireTime, TimeUnit.MINUTES);
         OnlineUserDto onlineUserDto = getOnlineUserDto(loginUserVO);
         // 入库
         if (refresh) {
@@ -44,14 +40,26 @@ public class OnlineUserCacheService {
         }
     }
 
-
+    /**
+     * 强制下线指定会话：更新在线用户表状态，并踢出该用户的所有登录
+     *
+     * @param uuid 在线用户会话 uuid
+     */
     public void delete(String uuid) {
-        onlineUserService.offline(uuid);
-        redisService.delete(getLoginUserKey(uuid));
+        OnlineUser onlineUser = onlineUserService.getById(uuid);
+        if (!ObjectUtils.isEmpty(onlineUser)) {
+            onlineUserService.offline(uuid);
+            StpUtil.kickout(onlineUser.getUserId());
+        }
     }
 
-    public LoginUserVO getLoginUser(String uuid) {
-        return redisService.get(getLoginUserKey(uuid));
+    /**
+     * 当前用户主动登出：仅更新在线用户表状态，会话由调用方 StpUtil.logout() 处理
+     *
+     * @param uuid 在线用户会话 uuid
+     */
+    public void logout(String uuid) {
+        onlineUserService.offline(uuid);
     }
 
     /**
@@ -66,10 +74,6 @@ public class OnlineUserCacheService {
         loginUser.setLocation(AddressUtils.getRealAddressByIP(ip));
         loginUser.setBrowser(userAgent.getBrowser().getName());
         loginUser.setOs(userAgent.getOperatingSystem().getName());
-    }
-
-    public String getLoginUserKey(String uuid) {
-        return CacheConstant.LOGIN_TOKEN_KEY + uuid;
     }
 
     public OnlineUserDto getOnlineUserDto(LoginUserVO loginUserVO) {

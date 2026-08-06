@@ -10,7 +10,7 @@ import com.harvey.quartz.service.JobLogService;
 import com.harvey.core.model.PageResult;
 import com.harvey.common.result.RespResult;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +36,7 @@ public class JobLogController {
     }
 
     @Operation(summary = "分页列表")
-    @PreAuthorize("@ex.hasPerm('sys:job:log:list')")
+    @SaCheckPermission("sys:job:log:list")
     @GetMapping("/page")
     public RespResult<PageResult<JobLog>> page(JobLogQuery query) {
         Page<JobLog> page = jobLogService.queryPage(query);
@@ -44,7 +44,7 @@ public class JobLogController {
     }
 
     @Operation(summary = "新增")
-    @PreAuthorize("@ex.hasPerm('sys:job:log:create')")
+    @SaCheckPermission("sys:job:log:create")
     @PostMapping("/create")
         public RespResult<String> create(@RequestBody @Validated JobLogDto dto) {
         jobLogService.saveJobLog(dto);
@@ -52,7 +52,7 @@ public class JobLogController {
     }
 
     @Operation(summary = "修改")
-    @PreAuthorize("@ex.hasPerm('sys:job:log:modify')")
+    @SaCheckPermission("sys:job:log:modify")
     @PutMapping("/modify")
     public RespResult<String> modify(@RequestBody @Validated JobLogDto dto) {
         jobLogService.updateJobLog(dto);
@@ -60,7 +60,7 @@ public class JobLogController {
     }
 
     @Operation(summary = "删除")
-    @PreAuthorize("@ex.hasPerm('sys:job:log:delete')")
+    @SaCheckPermission("sys:job:log:delete")
     @DeleteMapping("/delete")
     public RespResult<String> delete(@RequestBody List<Long> ids) {
         jobLogService.deleteByIds(ids);

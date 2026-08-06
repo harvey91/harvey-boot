@@ -10,7 +10,7 @@ import com.harvey.system.service.ConfigService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,7 +43,7 @@ public class ConfigController {
     }
 
     @Operation(summary = "新增配置")
-    @PreAuthorize("@ex.hasPerm('sys:config:create')")
+    @SaCheckPermission("sys:config:create")
     @PostMapping("/create")
     public RespResult<String> create(@RequestBody @Validated ConfigDto dto) {
         configService.saveConfig(dto);
@@ -51,7 +51,7 @@ public class ConfigController {
     }
 
     @Operation(summary = "修改配置")
-    @PreAuthorize("@ex.hasPerm('sys:config:modify')")
+    @SaCheckPermission("sys:config:modify")
     @PutMapping("/modify")
     public RespResult<String> modify(@RequestBody @Validated ConfigDto dto) {
         configService.updateConfig(dto);
@@ -59,7 +59,7 @@ public class ConfigController {
     }
 
     @Operation(summary = "删除配置")
-    @PreAuthorize("@ex.hasPerm('sys:config:delete')")
+    @SaCheckPermission("sys:config:delete")
     @DeleteMapping("/delete/{id}")
     public RespResult<String> delete(@PathVariable(value = "id") Long id) {
         configService.deleteById(id);
@@ -67,7 +67,7 @@ public class ConfigController {
     }
 
     @Operation(summary = "刷新缓存")
-    @PreAuthorize("@ex.hasPerm('sys:config:refresh')")
+    @SaCheckPermission("sys:config:refresh")
     @PatchMapping("/refresh")
     public RespResult<String> refresh() {
         configService.refresh();

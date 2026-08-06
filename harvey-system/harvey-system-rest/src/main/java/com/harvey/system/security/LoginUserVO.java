@@ -1,14 +1,12 @@
 package com.harvey.system.security;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import lombok.NoArgsConstructor;
 
-import java.util.Collection;
+import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Harvey
@@ -16,13 +14,13 @@ import java.util.Set;
  **/
 @Data
 @Builder
-public class LoginUserVO implements UserDetails {
+@NoArgsConstructor
+@AllArgsConstructor
+public class LoginUserVO implements Serializable {
 
     private Long userId;
 
     private String username;
-
-    private String password;
 
     private String nickname;
 
@@ -59,27 +57,9 @@ public class LoginUserVO implements UserDetails {
     /** 菜单权限列表 */
     private List<String> permissions;
 
+    /** 角色标识列表 */
+    private List<String> roles;
+
     private Boolean enabled;
 
-    private Collection<SimpleGrantedAuthority> authorities;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.authorities;
-    }
-
-    @Override
-    public String getPassword() {
-        return this.password;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.username;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return this.enabled;
-    }
 }

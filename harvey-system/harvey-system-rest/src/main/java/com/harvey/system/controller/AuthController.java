@@ -1,28 +1,31 @@
 package com.harvey.system.controller;
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.IdUtil;
 import com.harvey.common.result.RespResult;
 import com.harvey.common.constant.CacheConstant;
 import com.harvey.common.enums.LoginResultEnum;
 import com.harvey.starter.redis.service.RedisService;
 import com.harvey.system.model.dto.LoginDto;
+import com.harvey.system.model.entity.User;
 import com.harvey.system.model.vo.CaptchaVO;
 import com.harvey.system.security.LoginUserVO;
 import com.harvey.system.security.SecurityUtil;
-import com.harvey.system.security.service.JwtTokenService;
 import com.harvey.system.security.service.OnlineUserCacheService;
 import com.harvey.system.service.LogService;
+import com.harvey.system.service.MenuService;
+import com.harvey.system.service.RoleService;
+import com.harvey.system.service.UserService;
 import com.harvey.common.utils.StringUtils;
 import com.pig4cloud.captcha.ArithmeticCaptcha;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -37,8 +40,10 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/authorize")
 @RequiredArgsConstructor
 public class AuthController {
-    private final AuthenticationManager authenticationManager;
-    private final JwtTokenService jwtTokenService;
+    private final UserService userService;
+    private final RoleService roleService;
+    private final MenuService menuService;
+    private final PasswordEncoder passwordEncoder;
     private final OnlineUserCacheService onlineUserCacheService;
     private final LogService logService;
     private final RedisService redisService;
@@ -58,12 +63,52 @@ public class AuthController {
             return RespResult.fail("验证码不正确");
         }
 
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
-        Authentication authentication = authenticationManager.authenticate(authenticationToken);
-        String token = jwtTokenService.createToken(authentication);
+        User user = userService.findByUsername(loginDto.getUsername());
+        if (user == null) {
+            logService.saveLoginLog(0L, loginDto.getUsername(), LoginResultEnum.LOGIN_FAILED.getValue(), "用户名不存在");
+            return RespResult.fail("用户名或密码错误");
+        }
+        if (user.getEnabled() == 0) {
+            logService.saveLoginLog(0L, loginDto.getUsername(), LoginResultEnum.LOGIN_FAILED.getValue(), "账号被禁用");
+            return RespResult.fail("账号未激活，请联系管理员!");
+        }
+        if (!passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
+            logService.saveLoginLog(0L, loginDto.getUsername(), LoginResultEnum.LOGIN_FAILED.getValue(), "密码错误");
+            return RespResult.fail("用户名或密码错误");
+        }
+
+        // 构建登录用户信息
+        LoginUserVO loginUserVO = LoginUserVO.builder()
+                .userId(user.getId())
+                .username(user.getUsername())
+                .nickname(user.getNickname())
+                .avatar(user.getAvatar())
+                .deptId(user.getDeptId())
+                .isAdmin(user.getId() == 1L)
+                .enabled(user.getEnabled() == 1)
+                .uuid(IdUtil.fastSimpleUUID())
+                .build();
+        // 数据权限 deptId 集合
+        List<Long> deptIds = roleService.getDeptIds(loginUserVO.getUserId(), loginUserVO.getDeptId());
+        // 菜单权限列表
+        List<String> permissions = menuService.getPermissionByUserId(loginUserVO.getUserId());
+        // 角色标识列表
+        List<String> roleCodeList = roleService.getRoleCodeList(loginUserVO.getUserId());
+        loginUserVO.setDataScopes(deptIds);
+        loginUserVO.setPermissions(permissions);
+        loginUserVO.setRoles(roleCodeList);
+
+        // sa-token 登录
+        StpUtil.login(user.getId());
+        // 登录用户信息缓存到会话
+        StpUtil.getSession().set(CacheConstant.LOGIN_USER_KEY, loginUserVO);
+        // 在线用户入库
+        onlineUserCacheService.save(loginUserVO, 60, false);
+        // 保存登陆日志
+        logService.saveLoginLog(loginUserVO.getUserId(), loginUserVO.getUsername(), LoginResultEnum.LOGIN_SUCCESS.getValue(), "");
+
         Map<String, String> data = new HashMap<>();
-        data.put("accessToken", "Bearer " + token);
+        data.put("accessToken", "Bearer " + StpUtil.getTokenValue());
         return RespResult.success(data);
     }
 
@@ -73,8 +118,10 @@ public class AuthController {
         Optional<LoginUserVO> loginUserVO = SecurityUtil.getLoginUserVO();
         Long userId = loginUserVO.map(LoginUserVO::getUserId).orElse(0L);
         String username = loginUserVO.map(LoginUserVO::getUsername).orElse("");
+        String uuid = SecurityUtil.getUuid();
         logService.saveLoginLog(userId, username, LoginResultEnum.LOGOUT_SUCCESS.getValue(), "");
-        onlineUserCacheService.delete(SecurityUtil.getUuid());
+        onlineUserCacheService.logout(uuid);
+        StpUtil.logout();
         return RespResult.success();
     }
 

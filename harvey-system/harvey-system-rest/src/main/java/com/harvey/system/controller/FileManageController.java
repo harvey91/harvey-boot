@@ -12,7 +12,7 @@ import com.harvey.storage.service.FileManageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,7 +39,7 @@ public class FileManageController {
     }
 
     @Operation(summary = "分页列表")
-    @PreAuthorize("@ex.hasPerm('sys:file:manage:list')")
+    @SaCheckPermission("sys:file:manage:list")
     @GetMapping("/page")
     public RespResult<PageResult<FileManage>> page(FileManageQuery query) {
         Page<FileManage> page = fileManageService.queryPage(query);
@@ -47,7 +47,7 @@ public class FileManageController {
     }
 
     @Operation(summary = "新增")
-    @PreAuthorize("@ex.hasPerm('sys:file:manage:create')")
+    @SaCheckPermission("sys:file:manage:create")
     @PostMapping("/create")
     public RespResult<FileManageDto> create(@RequestParam("file") MultipartFile file) throws IOException {
         Long userId = SecurityUtil.getUserId();
@@ -56,7 +56,7 @@ public class FileManageController {
     }
 
     @Operation(summary = "修改")
-    @PreAuthorize("@ex.hasPerm('sys:file:manage:modify')")
+    @SaCheckPermission("sys:file:manage:modify")
     @PutMapping("/modify")
     public RespResult<String> modify(@RequestBody @Validated FileManageDto dto) {
         fileManageService.updateFileManage(dto);
@@ -64,7 +64,7 @@ public class FileManageController {
     }
 
     @Operation(summary = "删除")
-    @PreAuthorize("@ex.hasPerm('sys:file:manage:delete')")
+    @SaCheckPermission("sys:file:manage:delete")
     @DeleteMapping("/delete/{id}")
     public RespResult<String> delete(@PathVariable(value = "id") Long id) {
         fileManageService.deleteById(id);

@@ -10,7 +10,7 @@ import com.harvey.quartz.service.JobService;
 import com.harvey.core.model.PageResult;
 import com.harvey.common.result.RespResult;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +36,7 @@ public class JobController {
     }
 
     @Operation(summary = "分页列表")
-    @PreAuthorize("@ex.hasPerm('sys:job:list')")
+    @SaCheckPermission("sys:job:list")
     @GetMapping("/page")
     public RespResult<PageResult<Job>> page(JobQuery query) {
         Page<Job> page = jobService.queryPage(query);
@@ -44,7 +44,7 @@ public class JobController {
     }
 
     @Operation(summary = "新增")
-    @PreAuthorize("@ex.hasPerm('sys:job:create')")
+    @SaCheckPermission("sys:job:create")
     @PostMapping("/create")
         public RespResult<String> create(@RequestBody @Validated JobDto dto) {
         jobService.saveJob(dto);
@@ -52,7 +52,7 @@ public class JobController {
     }
 
     @Operation(summary = "修改")
-    @PreAuthorize("@ex.hasPerm('sys:job:modify')")
+    @SaCheckPermission("sys:job:modify")
     @PutMapping("/modify")
     public RespResult<String> modify(@RequestBody @Validated JobDto dto) {
         jobService.updateJob(dto);
@@ -60,7 +60,7 @@ public class JobController {
     }
 
     @Operation(summary = "删除")
-    @PreAuthorize("@ex.hasPerm('sys:job:delete')")
+    @SaCheckPermission("sys:job:delete")
     @DeleteMapping("/delete")
     public RespResult<String> delete(@RequestBody List<Long> ids) {
         jobService.deleteByIds(ids);
@@ -68,7 +68,7 @@ public class JobController {
     }
 
     @Operation(summary = "修改状态")
-    @PreAuthorize("@ex.hasPerm('sys:job:modify')")
+    @SaCheckPermission("sys:job:modify")
     @PutMapping("/modify/status")
     public RespResult<String> status(@RequestBody @Validated JobDto dto) {
         jobService.updateJobStatus(dto);
@@ -76,7 +76,7 @@ public class JobController {
     }
 
     @Operation(summary = "立即执行")
-    @PreAuthorize("@ex.hasPerm('sys:job:run')")
+    @SaCheckPermission("sys:job:run")
     @PutMapping("/run")
     public RespResult<String> run(@RequestBody @Validated JobDto dto) {
 

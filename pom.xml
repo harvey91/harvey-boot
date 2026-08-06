@@ -62,8 +62,7 @@
         <druid-spring-boot-3-starter.version>1.2.20</druid-spring-boot-3-starter.version>
         <knife4j-openapi3-jakarta-spring-boot-starter.version>4.4.0</knife4j-openapi3-jakarta-spring-boot-starter.version>
         <hutool-all.version>5.8.25</hutool-all.version>
-        <jjwt-impl.version>0.12.5</jjwt-impl.version>
-        <jjwt-jackson.version>0.12.6</jjwt-jackson.version>
+        <sa-token-spring-boot3-starter.version>1.45.0</sa-token-spring-boot3-starter.version>
         <captcha-spring-boot-starter.version>2.2.4</captcha-spring-boot-starter.version>
         <fastjson2.version>2.0.37</fastjson2.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
@@ -132,16 +131,21 @@
                 <version>${hutool-all.version}</version>
             </dependency>
 
-            <!-- jwt -->
+            <!-- sa-token -->
             <dependency>
-                <groupId>io.jsonwebtoken</groupId>
-                <artifactId>jjwt-impl</artifactId>
-                <version>${jjwt-impl.version}</version>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-spring-boot3-starter</artifactId>
+                <version>${sa-token-spring-boot3-starter.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.jsonwebtoken</groupId>
-                <artifactId>jjwt-jackson</artifactId>
-                <version>${jjwt-jackson.version}</version>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-core</artifactId>
+                <version>${sa-token-spring-boot3-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-redis-template</artifactId>
+                <version>${sa-token-spring-boot3-starter.version}</version>
             </dependency>
 
             <dependency>

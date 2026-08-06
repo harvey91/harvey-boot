@@ -15,7 +15,7 @@ import com.harvey.system.service.NoticeUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,7 +42,7 @@ public class NoticeController {
     }
 
     @Operation(summary = "分页列表")
-    @PreAuthorize("@ex.hasPerm('sys:notice:list')")
+    @SaCheckPermission("sys:notice:list")
     @GetMapping("/page")
     public RespResult<PageResult<Notice>> page(NoticeQuery query) {
         Page<Notice> page = noticeService.queryPage(query);
@@ -50,7 +50,7 @@ public class NoticeController {
     }
 
     @Operation(summary = "新增")
-    @PreAuthorize("@ex.hasPerm('sys:notice:create')")
+    @SaCheckPermission("sys:notice:create")
     @PostMapping("/create")
         public RespResult<String> create(@RequestBody @Validated NoticeDto dto) {
         noticeService.saveNotice(dto);
@@ -58,7 +58,7 @@ public class NoticeController {
     }
 
     @Operation(summary = "修改")
-    @PreAuthorize("@ex.hasPerm('sys:notice:modify')")
+    @SaCheckPermission("sys:notice:modify")
     @PutMapping("/modify")
     public RespResult<String> modify(@RequestBody @Validated NoticeDto dto) {
         noticeService.updateNotice(dto);
@@ -66,7 +66,7 @@ public class NoticeController {
     }
 
     @Operation(summary = "删除")
-    @PreAuthorize("@ex.hasPerm('sys:notice:delete')")
+    @SaCheckPermission("sys:notice:delete")
     @DeleteMapping("/delete")
     public RespResult<String> delete(@RequestBody List<Long> ids) {
         noticeService.deleteByIds(ids);
@@ -74,7 +74,7 @@ public class NoticeController {
     }
 
     @Operation(summary = "发布")
-    @PreAuthorize("@ex.hasPerm('sys:notice:publish')")
+    @SaCheckPermission("sys:notice:publish")
     @PatchMapping("/publish/{id}")
     public RespResult<String> publish(@PathVariable(value = "id") Long id) {
         noticeService.publish(id, SecurityUtil.getUserId());
@@ -82,7 +82,7 @@ public class NoticeController {
     }
 
     @Operation(summary = "撤回")
-    @PreAuthorize("@ex.hasPerm('sys:notice:revoke')")
+    @SaCheckPermission("sys:notice:revoke")
     @PatchMapping("/revoke/{id}")
     public RespResult<String> revoke(@PathVariable(value = "id") Long id) {
         noticeService.revoke(id);

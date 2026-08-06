@@ -10,6 +10,9 @@ public class CacheConstant {
     /** 登录用户token key */
     public static final String LOGIN_TOKEN_KEY = "login_tokens:";
 
+    /** sa-token session 中存储登录用户信息的 key */
+    public static final String LOGIN_USER_KEY = "login_user";
+
     /** 登录验证码 key */
     public static final String LOGIN_CAPTCHA_KEY = "login_captcha:";
 

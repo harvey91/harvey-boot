@@ -11,7 +11,7 @@ import com.harvey.system.service.DictService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +41,7 @@ public class DictController {
     }
 
     @Operation(summary = "字典分页列表")
-    @PreAuthorize("@ex.hasPerm('sys:dept:list')")
+    @SaCheckPermission("sys:dept:list")
     @GetMapping("/page")
     public RespResult<PageResult<Dict>> page(DictQuery query) {
         Page<Dict> page = dictService.queryPage(query);
@@ -49,7 +49,7 @@ public class DictController {
     }
 
     @Operation(summary = "新增字典")
-    @PreAuthorize("@ex.hasPerm('sys:dept:create')")
+    @SaCheckPermission("sys:dept:create")
     @PostMapping("/create")
     public RespResult<String> create(@RequestBody @Validated DictDto dto) {
         dictService.saveDict(dto);
@@ -57,7 +57,7 @@ public class DictController {
     }
 
     @Operation(summary = "编辑字典")
-    @PreAuthorize("@ex.hasPerm('sys:dept:modify')")
+    @SaCheckPermission("sys:dept:modify")
     @PutMapping("/modify")
     public RespResult<String> modify(@RequestBody @Validated DictDto dto) {
         dictService.updateDict(dto);
@@ -65,7 +65,7 @@ public class DictController {
     }
 
     @Operation(summary = "删除字典")
-    @PreAuthorize("@ex.hasPerm('sys:dept:delete')")
+    @SaCheckPermission("sys:dept:delete")
     @DeleteMapping("/delete")
     public RespResult<String> delete(@RequestBody List<Long> ids) {
         if (ObjectUtils.isEmpty(ids)) {

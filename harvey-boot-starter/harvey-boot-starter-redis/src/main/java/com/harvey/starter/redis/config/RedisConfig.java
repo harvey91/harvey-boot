@@ -68,7 +68,9 @@ public class RedisConfig {
         RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig();
         configuration = configuration
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(serializer))
-                .entryTtl(timeToLive == null ? Duration.ofHours(2) : timeToLive);
+                .entryTtl(timeToLive == null ? Duration.ofHours(2) : timeToLive)
+                // 缓存 key 分隔符由默认的 :: 改为 :
+                .computePrefixWith(cacheName -> cacheName + ":");
         return configuration;
     }
 }

@@ -20,13 +20,28 @@ management:
         include: 'health,info'
       base-path: /actuator
 
-# jwt
-jwt:
-  # 令牌前缀
-  token-start-with: Bearer
-  base64-secret: ZWQ0ZGI5NjQ0MGR3NDBjYjgyMzFjZjdmYjcyN2E3ZmYyM2E4Yjk4NWRhNDUwYzBjODQwNzYxMjdjOWMwYWRmZTBlZjlhNGY3ZTg4Y2U3YTE1cjg1ZGQ1OWNmNzhmMGVhNTc1Mzk1ZDZiMWNkNzQ0Y2VlNjJkNzI2NTcyZjUxNDMydw==
-  # token 过期时间，单位：分钟
-  expire-time: 60
+# sa-token
+sa-token:
+  # token 名称（同时也是请求头 key）
+  token-name: Authorization
+  # token 前缀，前端携带的 token 为：Bearer <token>
+  token-prefix: Bearer
+  # token 有效期，单位：秒（默认 30 天）
+  timeout: 3600
+  # token 临时有效期（指定时间内无操作就视为 token 过期），单位：秒，-1 表示不设
+  active-timeout: -1
+  # 是否允许同一账号并发登录（为 true 时允许一起登录，为 false 时新登录挤掉旧登录）
+  is-concurrent: true
+  # 在多人登录同一账号时，是否共用一个 token（为 true 时所有登录共用一个 token，为 false 时每次登录新建一个 token）
+  is-share: false
+  # token 风格
+  token-style: uuid
+  # 是否输出操作日志
+  is-log: false
+  # 是否在初始化配置时打印版本字符画
+  is-print: false
+  # 关闭 cookie 读取，前后端分离
+  is-read-cookie: false
 
 # springdoc-openapi项目配置
 springdoc:

@@ -12,7 +12,7 @@ import com.harvey.system.service.LogOpService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +33,7 @@ public class LogController {
     private final LogLoginService logLoginService;
 
     @Operation(summary = "操作日志分页列表")
-    @PreAuthorize("@ex.hasPerm('sys:log:op:list')")
+    @SaCheckPermission("sys:log:op:list")
     @GetMapping("/opPage")
     public RespResult<PageResult<LogOp>> page(LogOpQuery query) {
         query.setResult(1);
@@ -42,7 +42,7 @@ public class LogController {
     }
 
     @Operation(summary = "异常日志分页列表")
-    @PreAuthorize("@ex.hasPerm('sys:log:ep:list')")
+    @SaCheckPermission("sys:log:ep:list")
     @GetMapping("/exPage")
     public RespResult<PageResult<LogOp>> exPage(LogOpQuery query) {
         query.setResult(2);
@@ -51,7 +51,7 @@ public class LogController {
     }
 
     @Operation(summary = "登陆日志分页列表")
-    @PreAuthorize("@ex.hasPerm('sys:log:login:list')")
+    @SaCheckPermission("sys:log:login:list")
     @GetMapping("/loginPage")
     public RespResult<PageResult<LogLogin>> page(LogLoginQuery query) {
         Page<LogLogin> page = logLoginService.queryPage(query);
@@ -59,7 +59,7 @@ public class LogController {
     }
 
     @Operation(summary = "清空操作日志")
-    @PreAuthorize("@ex.hasPerm('sys:log:op:delete')")
+    @SaCheckPermission("sys:log:op:delete")
     @DeleteMapping("/delete/op")
     public RespResult<String> deleteOp() {
 //        logOpService.deleteByIds(ids);
@@ -67,7 +67,7 @@ public class LogController {
     }
 
     @Operation(summary = "清空异常日志")
-    @PreAuthorize("@ex.hasPerm('sys:log:ex:delete')")
+    @SaCheckPermission("sys:log:ex:delete")
     @DeleteMapping("/delete/ex")
     public RespResult<String> deleteEx() {
 //        logOpService.deleteByIds(ids);
@@ -75,7 +75,7 @@ public class LogController {
     }
 
     @Operation(summary = "清空登陆日志")
-    @PreAuthorize("@ex.hasPerm('sys:log:login:delete')")
+    @SaCheckPermission("sys:log:login:delete")
     @DeleteMapping("/delete/login")
     public RespResult<String> deleteLogin() {
 //        logLoginService.deleteByIds();

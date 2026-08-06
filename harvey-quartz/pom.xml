@@ -18,9 +18,10 @@
             <artifactId>harvey-core</artifactId>
         </dependency>
 
+        <!-- sa-token 注解 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-core</artifactId>
         </dependency>
 
         <dependency>

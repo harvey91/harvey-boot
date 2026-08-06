@@ -10,7 +10,7 @@ import com.harvey.system.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +39,7 @@ public class PostController {
     }
 
     @Operation(summary = "职位分页列表")
-    @PreAuthorize("@ex.hasPerm('sys:post:list')")
+    @SaCheckPermission("sys:post:list")
     @GetMapping("/page")
     public RespResult<PageResult<Post>> page(PostQuery query) {
         Page<Post> dictPage = postService.queryPage(query);
@@ -47,7 +47,7 @@ public class PostController {
     }
 
     @Operation(summary = "新增职位")
-    @PreAuthorize("@ex.hasPerm('sys:post:create')")
+    @SaCheckPermission("sys:post:create")
     @PostMapping("/create")
     public RespResult<String> create(@RequestBody @Validated PostDto dto) {
         postService.savePost(dto);
@@ -55,7 +55,7 @@ public class PostController {
     }
 
     @Operation(summary = "编辑职位")
-    @PreAuthorize("@ex.hasPerm('sys:post:modify')")
+    @SaCheckPermission("sys:post:modify")
     @PutMapping("/modify")
     public RespResult<String> modify(@RequestBody @Validated PostDto dto) {
         postService.updatePost(dto);
@@ -63,7 +63,7 @@ public class PostController {
     }
 
     @Operation(summary = "删除职位")
-    @PreAuthorize("@ex.hasPerm('sys:post:delete')")
+    @SaCheckPermission("sys:post:delete")
     @DeleteMapping("/delete")
     public RespResult<String> delete(@RequestBody List<Long> ids) {
         if (ObjectUtils.isEmpty(ids)) {

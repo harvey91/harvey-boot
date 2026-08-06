@@ -9,7 +9,7 @@ import com.harvey.system.service.NoticeUserService;
 import com.harvey.core.model.PageResult;
 import com.harvey.common.result.RespResult;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +35,7 @@ public class NoticeUserController {
     }
 
     @Operation(summary = "分页列表")
-    @PreAuthorize("@ex.hasPerm('sys:notice:user:list')")
+    @SaCheckPermission("sys:notice:user:list")
     @GetMapping("/page")
     public RespResult<PageResult<NoticeUser>> page(NoticeUserQuery query) {
         Page<NoticeUser> page = noticeUserService.queryPage(query);
@@ -43,7 +43,7 @@ public class NoticeUserController {
     }
 
     @Operation(summary = "新增")
-    @PreAuthorize("@ex.hasPerm('sys:notice:user:create')")
+    @SaCheckPermission("sys:notice:user:create")
     @PostMapping("/create")
         public RespResult<String> create(@RequestBody NoticeUser entity) {
         noticeUserService.save(entity);
@@ -51,7 +51,7 @@ public class NoticeUserController {
     }
 
     @Operation(summary = "修改")
-    @PreAuthorize("@ex.hasPerm('sys:notice:user:modify')")
+    @SaCheckPermission("sys:notice:user:modify")
     @PutMapping("/modify")
     public RespResult<String> modify(@RequestBody NoticeUser entity) {
         noticeUserService.updateById(entity);
@@ -59,7 +59,7 @@ public class NoticeUserController {
     }
 
     @Operation(summary = "删除")
-    @PreAuthorize("@ex.hasPerm('sys:notice:user:delete')")
+    @SaCheckPermission("sys:notice:user:delete")
     @DeleteMapping("/delete")
     public RespResult<String> delete(@RequestBody List<Long> ids) {
         if (ObjectUtils.isEmpty(ids)) {

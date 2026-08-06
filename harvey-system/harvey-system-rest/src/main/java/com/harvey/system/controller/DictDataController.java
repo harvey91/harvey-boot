@@ -10,7 +10,7 @@ import com.harvey.system.service.DictDataService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +40,7 @@ public class DictDataController {
     }
 
     @Operation(summary = "分页查询")
-    @PreAuthorize("@ex.hasPerm('sys:dict:data:list')")
+    @SaCheckPermission("sys:dict:data:list")
     @GetMapping("/page")
     public RespResult<PageResult<DictData>> page(DictDataQuery query) {
         Page<DictData> page = dictDataService.queryPage(query);
@@ -48,7 +48,7 @@ public class DictDataController {
     }
 
     @Operation(summary = "新增字典数据")
-    @PreAuthorize("@ex.hasPerm('sys:dict:data:create')")
+    @SaCheckPermission("sys:dict:data:create")
     @PostMapping("/create")
     public RespResult<String> create(@RequestBody @Validated DictDataDto dto) {
         dictDataService.saveDictData(dto);
@@ -56,7 +56,7 @@ public class DictDataController {
     }
 
     @Operation(summary = "编辑字典数据")
-    @PreAuthorize("@ex.hasPerm('sys:dict:data:modify')")
+    @SaCheckPermission("sys:dict:data:modify")
     @PutMapping("/modify")
     public RespResult<String> modify(@RequestBody @Validated DictDataDto dto) {
         dictDataService.updateDictData(dto);
@@ -64,7 +64,7 @@ public class DictDataController {
     }
 
     @Operation(summary = "删除字典数据")
-    @PreAuthorize("@ex.hasPerm('sys:dict:data:delete')")
+    @SaCheckPermission("sys:dict:data:delete")
     @DeleteMapping("/delete")
     public RespResult<String> delete(@RequestBody List<Long> ids) {
         if (ObjectUtils.isEmpty(ids)) {

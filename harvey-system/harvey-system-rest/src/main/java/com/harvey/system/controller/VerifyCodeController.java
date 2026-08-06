@@ -10,7 +10,7 @@ import com.harvey.system.service.VerifyCodeService;
 import com.harvey.core.model.PageResult;
 import com.harvey.common.result.RespResult;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +36,7 @@ public class VerifyCodeController {
     }
 
     @Operation(summary = "分页列表")
-    @PreAuthorize("@ex.hasPerm('sys:verify:code:list')")
+    @SaCheckPermission("sys:verify:code:list")
     @GetMapping("/page")
     public RespResult<PageResult<VerifyCode>> page(VerifyCodeQuery query) {
         Page<VerifyCode> page = verifyCodeService.queryPage(query);
@@ -44,7 +44,7 @@ public class VerifyCodeController {
     }
 
     @Operation(summary = "新增")
-    @PreAuthorize("@ex.hasPerm('sys:verify:code:create')")
+    @SaCheckPermission("sys:verify:code:create")
     @PostMapping("/create")
         public RespResult<String> create(@RequestBody @Validated VerifyCodeDto dto) {
         verifyCodeService.saveVerifyCode(dto);
@@ -52,7 +52,7 @@ public class VerifyCodeController {
     }
 
     @Operation(summary = "修改")
-    @PreAuthorize("@ex.hasPerm('sys:verify:code:modify')")
+    @SaCheckPermission("sys:verify:code:modify")
     @PutMapping("/modify")
     public RespResult<String> modify(@RequestBody @Validated VerifyCodeDto dto) {
         verifyCodeService.updateVerifyCode(dto);
@@ -60,7 +60,7 @@ public class VerifyCodeController {
     }
 
     @Operation(summary = "删除")
-    @PreAuthorize("@ex.hasPerm('sys:verify:code:delete')")
+    @SaCheckPermission("sys:verify:code:delete")
     @DeleteMapping("/delete")
     public RespResult<String> delete(@RequestBody List<Long> ids) {
         verifyCodeService.deleteByIds(ids);

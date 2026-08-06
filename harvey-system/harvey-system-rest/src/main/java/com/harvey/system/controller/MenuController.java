@@ -12,7 +12,7 @@ import com.harvey.system.service.MenuService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,14 +41,14 @@ public class MenuController {
     }
 
     @Operation(summary = "菜单列表-tree")
-    @PreAuthorize("@ex.hasPerm('sys:menu:list')")
+    @SaCheckPermission("sys:menu:list")
     @GetMapping("/list")
     public RespResult<List<MenuVO>> list(MenuQuery query) {
         return RespResult.success(menuService.queryList(query));
     }
 
     @Operation(summary = "新增菜单")
-    @PreAuthorize("@ex.hasPerm('sys:menu:create')")
+    @SaCheckPermission("sys:menu:create")
     @PostMapping("/create")
     public RespResult<String> create(@RequestBody @Validated MenuDto dto) {
         menuService.saveMenu(dto);
@@ -56,7 +56,7 @@ public class MenuController {
     }
 
     @Operation(summary = "编辑菜单")
-    @PreAuthorize("@ex.hasPerm('sys:menu:modify')")
+    @SaCheckPermission("sys:menu:modify")
     @PutMapping("/modify")
     public RespResult<String> modify(@RequestBody @Validated MenuDto dto) {
         menuService.updateMenu(dto);
@@ -64,7 +64,7 @@ public class MenuController {
     }
 
     @Operation(summary = "删除菜单")
-    @PreAuthorize("@ex.hasPerm('sys:menu:delete')")
+    @SaCheckPermission("sys:menu:delete")
     @DeleteMapping("/delete/{menuId}")
     public RespResult<String> delete(@PathVariable("menuId") Long menuId) {
         menuService.deleteById(menuId);

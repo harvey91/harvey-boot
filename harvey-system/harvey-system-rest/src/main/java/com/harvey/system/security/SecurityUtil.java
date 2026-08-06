@@ -1,8 +1,7 @@
 package com.harvey.system.security;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.util.ObjectUtils;
+import cn.dev33.satoken.stp.StpUtil;
+import com.harvey.common.constant.CacheConstant;
 
 import java.util.Optional;
 
@@ -13,7 +12,11 @@ import java.util.Optional;
 public class SecurityUtil {
 
     public static Long getUserId() {
-        return getLoginUserVO().map(LoginUserVO::getUserId).orElse(0L);
+        try {
+            return StpUtil.getLoginIdAsLong();
+        } catch (Exception e) {
+            return 0L;
+        }
     }
 
     public static String getUuid() {
@@ -21,10 +24,13 @@ public class SecurityUtil {
     }
 
     public static Optional<LoginUserVO> getLoginUserVO() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (ObjectUtils.isEmpty(authentication)) {
+        if (!StpUtil.isLogin()) {
             return Optional.empty();
         }
-        return Optional.of((LoginUserVO) authentication.getPrincipal());
+        Object obj = StpUtil.getSession().get(CacheConstant.LOGIN_USER_KEY);
+        if (obj instanceof LoginUserVO loginUserVO) {
+            return Optional.of(loginUserVO);
+        }
+        return Optional.empty();
     }
 }

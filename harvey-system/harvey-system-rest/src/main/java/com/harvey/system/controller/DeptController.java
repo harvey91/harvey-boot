@@ -13,7 +13,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.security.access.prepost.PreAuthorize;
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
@@ -47,7 +47,7 @@ public class DeptController {
     }
 
     @Operation(summary = "分页查询")
-    @PreAuthorize("@ex.hasPerm('sys:dept:list')")
+    @SaCheckPermission("sys:dept:list")
     @GetMapping("/page")
     public RespResult<PageResult<Dept>> page(DeptQuery query) {
         Page<Dept> page = deptService.queryPage(query);
@@ -55,7 +55,7 @@ public class DeptController {
     }
 
     @Operation(summary = "新增部门")
-    @PreAuthorize("@ex.hasPerm('sys:dept:create')")
+    @SaCheckPermission("sys:dept:create")
     @PostMapping("/create")
     public RespResult<String> create(@RequestBody @Validated DeptDto dto) {
         deptService.saveDept(dto);
@@ -63,7 +63,7 @@ public class DeptController {
     }
 
     @Operation(summary = "编辑部门")
-    @PreAuthorize("@ex.hasPerm('sys:dept:modify')")
+    @SaCheckPermission("sys:dept:modify")
     @PostMapping("/modify")
     public RespResult<String> modify(@RequestBody @Validated DeptDto dto) {
         deptService.updateDept(dto);
@@ -71,7 +71,7 @@ public class DeptController {
     }
 
     @Operation(summary = "删除部门")
-    @PreAuthorize("@ex.hasPerm('sys:dept:delete')")
+    @SaCheckPermission("sys:dept:delete")
     @PostMapping("/delete")
     public RespResult<String> delete(@RequestBody List<Long> ids) {
         if (ObjectUtils.isEmpty(ids)) {

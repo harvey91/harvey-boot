@@ -1,5 +1,8 @@
 package com.harvey.system.handler;
 
+import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.exception.NotPermissionException;
+import cn.dev33.satoken.exception.NotRoleException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.harvey.common.result.RespResult;
 import com.harvey.common.enums.ErrorCodeEnum;
@@ -11,15 +14,16 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.jdbc.BadSqlGrammarException;
-import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -94,12 +98,33 @@ public class GlobalExceptionHandler {
         return RespResult.error(msg);
     }
 
-    @ExceptionHandler(AuthorizationDeniedException.class)
-    public <T> RespResult<T> processException(AuthorizationDeniedException e) {
-        log.error(e.getMessage(), e);
-        return RespResult.error("权限不足！");
+    /**
+     * 未登录
+     */
+    @ExceptionHandler(NotLoginException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public <T> RespResult<T> processException(NotLoginException e) {
+        log.warn(e.getMessage());
+        return RespResult.fail(ErrorCodeEnum.NOT_LOGIN);
     }
 
+    /**
+     * 无权限
+     */
+    @ExceptionHandler(NotPermissionException.class)
+    public <T> RespResult<T> processException(NotPermissionException e) {
+        log.error(e.getMessage(), e);
+        return RespResult.fail("权限不足！");
+    }
+
+    /**
+     * 无角色
+     */
+    @ExceptionHandler(NotRoleException.class)
+    public <T> RespResult<T> processException(NotRoleException e) {
+        log.error(e.getMessage(), e);
+        return RespResult.fail("权限不足！");
+    }
 
     @ExceptionHandler(NoHandlerFoundException.class)
     public <T> RespResult<T> processException(NoHandlerFoundException e) {

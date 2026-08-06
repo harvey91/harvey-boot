@@ -24,11 +24,10 @@ import com.harvey.system.security.service.OnlineUserCacheService;
 import com.harvey.system.service.UserService;
 import com.harvey.system.service.VerifyCodeService;
 import com.harvey.common.utils.AssertUtil;
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
@@ -72,14 +71,14 @@ public class UserController {
         userInfoVO.setUsername(loginUserVO.getUsername());
         userInfoVO.setNickname(loginUserVO.getNickname());
         userInfoVO.setAvatar(loginUserVO.getAvatar());
-        List<String> roleCodeList = loginUserVO.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
+        List<String> roleCodeList = loginUserVO.getRoles();
         userInfoVO.setRoles(roleCodeList);
         userInfoVO.setPerms(loginUserVO.getPermissions());
         return RespResult.success(userInfoVO);
     }
 
     @Operation(summary = "用户分页列表")
-    @PreAuthorize("@ex.hasPerm('sys:user:list')")
+    @SaCheckPermission("sys:user:list")
     @GetMapping("/page")
     public RespResult<PageResult<UserVO>> page(UserQuery query) {
         Page<UserVO> userPage = userService.selectUserPage(query);
@@ -87,7 +86,7 @@ public class UserController {
     }
 
     @Operation(summary = "新增用户")
-    @PreAuthorize("@ex.hasPerm('sys:user:create')")
+    @SaCheckPermission("sys:user:create")
     @PostMapping("/create")
     public RespResult<String> create(@RequestBody @Validated UserDto userDto) {
         if (ObjectUtils.isEmpty(userDto.getId())) {
@@ -104,7 +103,7 @@ public class UserController {
     }
 
     @Operation(summary = "编辑用户")
-    @PreAuthorize("@ex.hasPerm('sys:user:modify')")
+    @SaCheckPermission("sys:user:modify")
     @PutMapping("/modify")
     public RespResult<String> modify(@RequestBody @Validated UserDto userDto) {
         userService.modifyUser(userDto);
@@ -112,7 +111,7 @@ public class UserController {
     }
 
     @Operation(summary = "重置密码")
-    @PreAuthorize("@ex.hasPerm('sys:user:password:rest')")
+    @SaCheckPermission("sys:user:password:rest")
     @PutMapping("/password/reset")
     public RespResult<String> resetPassword(@RequestBody @Validated PasswordDto passwordDto) {
         User user = new User();
@@ -123,7 +122,7 @@ public class UserController {
     }
 
     @Operation(summary = "删除用户")
-    @PreAuthorize("ex.hasPerm('sys:user:delete')")
+    @SaCheckPermission("sys:user:delete")
     @DeleteMapping("/delete")
     public RespResult<String> delete(@RequestBody List<Long> ids) {
         if (ObjectUtils.isEmpty(ids)) {

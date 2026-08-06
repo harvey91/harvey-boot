@@ -9,7 +9,7 @@ import com.harvey.system.service.OnlineUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -29,7 +29,7 @@ public class OnlineUserController {
     private final OnlineUserCacheService onlineUserCacheService;
 
     @Operation(summary = "在线用户列表")
-    @PreAuthorize("@ex.hasPerm('sys:online:user:list')")
+    @SaCheckPermission("sys:online:user:list")
     @GetMapping("/page")
     public RespResult<PageResult<OnlineUser>> page(@RequestParam("pageNum") int pageNum,
                                                       @RequestParam("pageSize") int pageSize) {
@@ -38,7 +38,7 @@ public class OnlineUserController {
     }
 
     @Operation(summary = "强制用户下线")
-    @PreAuthorize("@ex.hasPerm('sys:online:user:offline')")
+    @SaCheckPermission("sys:online:user:offline")
     @DeleteMapping("/offline/{uuid}")
     public RespResult<String> offline(@PathVariable(value = "uuid") String uuid) {
         onlineUserCacheService.delete(uuid);
