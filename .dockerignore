@@ -1,0 +1,9 @@
+.git
+.idea
+*.iml
+**/target
+**/node_modules
+**/.DS_Store
+harvey-system-rest.log
+preview
+G:
