@@ -145,7 +145,7 @@ CREATE TABLE `sys_menu`
     `deleted`      int          DEFAULT '1' COMMENT '逻辑删除',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 21
+  AUTO_INCREMENT = 216
   DEFAULT CHARSET = utf8mb4 COMMENT ='菜单管理';
 
 -- ----------------------------
@@ -321,6 +321,26 @@ INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, 
 VALUES (85, 84, '查询', '', 'BUTTON', '', '', '', 'sys:job:log:list', '', '', 0, 1, '', 1, 1, '2026-08-06 15:30:00', '2026-08-06 15:30:00', 1);
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
 VALUES (86, 84, '删除', '', 'BUTTON', '', '', '', 'sys:job:log:delete', '', '', 0, 1, '', 2, 1, '2026-08-06 15:30:00', '2026-08-06 15:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (200, 0, '开发工具', 'Develop', 'DIRECTORY', '', '/develop', 'Layout', '', 'dev', '/develop/codegen', 0, 1, '', 10, 1, '2026-08-10 10:00:00', '2026-08-10 10:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (201, 200, '代码生成', 'Codegen', 'MENU', 'Codegen', 'codegen', 'codegen/index', '', 'magic-stick', '', 0, 1, '', 1, 1, '2026-08-10 10:00:00', '2026-08-10 10:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (202, 200, '数据库管理', 'Database', 'MENU', 'Database', 'database', 'tool/database/index', '', 'database', '', 0, 1, '', 2, 1, '2026-08-10 10:00:00', '2026-08-10 10:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (203, 200, 'SQL控制台', 'SqlConsole', 'MENU', 'SqlConsole', 'sql-console', 'tool/database/sql', '', 'console', '', 0, 1, '', 3, 1, '2026-08-10 10:00:00', '2026-08-10 10:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (210, 202, '查询结构', '', 'BUTTON', '', '', '', 'tool:db:select', '', '', 0, 1, '', 1, 1, '2026-08-10 10:00:00', '2026-08-10 10:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (211, 202, '数据新增', '', 'BUTTON', '', '', '', 'tool:db:create', '', '', 0, 1, '', 2, 1, '2026-08-10 10:00:00', '2026-08-10 10:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (212, 202, '数据修改', '', 'BUTTON', '', '', '', 'tool:db:modify', '', '', 0, 1, '', 3, 1, '2026-08-10 10:00:00', '2026-08-10 10:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (213, 202, '数据删除', '', 'BUTTON', '', '', '', 'tool:db:delete', '', '', 0, 1, '', 4, 1, '2026-08-10 10:00:00', '2026-08-10 10:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (214, 203, '执行SQL', '', 'BUTTON', '', '', '', 'tool:db:execute', '', '', 0, 1, '', 1, 1, '2026-08-10 10:00:00', '2026-08-10 10:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (215, 203, '执行DDL', '', 'BUTTON', '', '', '', 'tool:db:ddl', '', '', 0, 1, '', 2, 1, '2026-08-10 10:00:00', '2026-08-10 10:00:00', 1);
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -374,7 +394,7 @@ CREATE TABLE `sys_role_menu`
     `create_time` datetime(0) NOT NULL COMMENT '创建时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 33
+  AUTO_INCREMENT = 110
   DEFAULT CHARSET = utf8mb4 COMMENT ='角色菜单关联';
 
 -- ----------------------------
@@ -488,6 +508,16 @@ INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (
 INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (97, 1, 84, '2026-08-06 15:30:00');
 INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (98, 1, 85, '2026-08-06 15:30:00');
 INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (99, 1, 86, '2026-08-06 15:30:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (100, 1, 200, '2026-08-10 10:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (101, 1, 201, '2026-08-10 10:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (102, 1, 202, '2026-08-10 10:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (103, 1, 203, '2026-08-10 10:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (104, 1, 210, '2026-08-10 10:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (105, 1, 211, '2026-08-10 10:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (106, 1, 212, '2026-08-10 10:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (107, 1, 213, '2026-08-10 10:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (108, 1, 214, '2026-08-10 10:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (109, 1, 215, '2026-08-10 10:00:00');
 
 -- ----------------------------
 -- Table structure for sys_dict
@@ -796,6 +826,73 @@ CREATE TABLE `sys_verify_code`
 
 -- ----------------------------
 -- Records of sys_verify_code
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for sys_gen_config
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_gen_config`;
+CREATE TABLE `sys_gen_config`
+(
+    `id`                bigint(20)   NOT NULL AUTO_INCREMENT COMMENT '主键id',
+    `table_name`        varchar(64)  NOT NULL COMMENT '表名',
+    `business_name`     varchar(32)  DEFAULT '' COMMENT '业务名',
+    `module_name`       varchar(32)  DEFAULT '' COMMENT '模块名',
+    `package_name`      varchar(100) DEFAULT '' COMMENT '包名',
+    `entity_name`       varchar(64)  DEFAULT '' COMMENT '实体名',
+    `author`            varchar(32)  DEFAULT '' COMMENT '作者',
+    `parent_menu_id`    bigint(20)   DEFAULT NULL COMMENT '上级菜单id',
+    `backend_app_name`  varchar(64)  DEFAULT '' COMMENT '后端应用名',
+    `frontend_app_name` varchar(64)  DEFAULT '' COMMENT '前端应用名',
+    `remark`            varchar(255) DEFAULT '' COMMENT '描述',
+    `sort`              int          DEFAULT '0' COMMENT '排序',
+    `enabled`           int          DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
+    `create_time`       datetime(0)  NOT NULL COMMENT '创建时间',
+    `update_time`       datetime(0)  NOT NULL COMMENT '修改时间',
+    `deleted`           int          DEFAULT '1' COMMENT '逻辑删除',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_gen_config_table_name` (`table_name`, `deleted`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8mb4 COMMENT ='代码生成配置表';
+
+-- ----------------------------
+-- Records of sys_gen_config
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for sys_gen_field_config
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_gen_field_config`;
+CREATE TABLE `sys_gen_field_config`
+(
+    `id`              bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键id',
+    `config_id`       bigint(20)  NOT NULL COMMENT '生成配置id',
+    `column_name`     varchar(64) NOT NULL COMMENT '列名',
+    `column_type`     varchar(64) DEFAULT '' COMMENT '列类型',
+    `field_name`      varchar(64) DEFAULT '' COMMENT '字段名',
+    `field_type`      varchar(32) DEFAULT '' COMMENT '字段类型',
+    `field_comment`   varchar(255) DEFAULT '' COMMENT '字段注释',
+    `is_show_in_list` int         DEFAULT '1' COMMENT '是否列表显示：0否，1是',
+    `is_show_in_form` int         DEFAULT '1' COMMENT '是否表单显示：0否，1是',
+    `is_show_in_query` int        DEFAULT '0' COMMENT '是否查询条件：0否，1是',
+    `is_required`     int         DEFAULT '0' COMMENT '是否必填：0否，1是',
+    `form_type`       int         DEFAULT '1' COMMENT '表单类型',
+    `query_type`      int         DEFAULT '1' COMMENT '查询类型',
+    `max_length`      int         DEFAULT '0' COMMENT '最大长度',
+    `field_sort`      int         DEFAULT '0' COMMENT '字段排序',
+    `dict_type`       varchar(64) DEFAULT '' COMMENT '字典类型',
+    `create_time`     datetime(0) NOT NULL COMMENT '创建时间',
+    `update_time`     datetime(0) NOT NULL COMMENT '修改时间',
+    `deleted`         int         DEFAULT '1' COMMENT '逻辑删除',
+    PRIMARY KEY (`id`),
+    KEY `idx_gen_field_config_id` (`config_id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8mb4 COMMENT ='代码生成字段配置表';
+
+-- ----------------------------
+-- Records of sys_gen_field_config
 -- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;

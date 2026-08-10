@@ -62,6 +62,12 @@
             <artifactId>UserAgentUtils</artifactId>
         </dependency>
 
+        <!-- 代码生成模板引擎 -->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.github.oshi</groupId>
             <artifactId>oshi-core</artifactId>
