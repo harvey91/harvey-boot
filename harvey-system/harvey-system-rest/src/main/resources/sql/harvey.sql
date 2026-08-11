@@ -322,13 +322,13 @@ VALUES (85, 84, '查询', '', 'BUTTON', '', '', '', 'sys:job:log:list', '', '', 
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
 VALUES (86, 84, '删除', '', 'BUTTON', '', '', '', 'sys:job:log:delete', '', '', 0, 1, '', 2, 1, '2026-08-06 15:30:00', '2026-08-06 15:30:00', 1);
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
-VALUES (200, 0, '开发工具', 'Develop', 'DIRECTORY', '', '/develop', 'Layout', '', 'dev', '/develop/codegen', 0, 1, '', 10, 1, '2026-08-10 10:00:00', '2026-08-10 10:00:00', 1);
+VALUES (200, 0, '开发工具', 'Develop', 'DIRECTORY', '', '/develop', 'Layout', '', 'api', '/develop/codegen', 0, 1, '', 10, 1, '2026-08-10 10:00:00', '2026-08-10 10:00:00', 1);
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
-VALUES (201, 200, '代码生成', 'Codegen', 'MENU', 'Codegen', 'codegen', 'codegen/index', '', 'magic-stick', '', 0, 1, '', 1, 1, '2026-08-10 10:00:00', '2026-08-10 10:00:00', 1);
+VALUES (201, 200, '代码生成', 'Codegen', 'MENU', 'Codegen', 'codegen', 'codegen/index', '', 'java', '', 0, 1, '', 1, 1, '2026-08-10 10:00:00', '2026-08-10 10:00:00', 1);
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
-VALUES (202, 200, '数据库管理', 'Database', 'MENU', 'Database', 'database', 'tool/database/index', '', 'database', '', 0, 1, '', 2, 1, '2026-08-10 10:00:00', '2026-08-10 10:00:00', 1);
+VALUES (202, 200, '数据库管理', 'Database', 'MENU', 'Database', 'database', 'tool/database/index', '', 'table', '', 0, 1, '', 2, 1, '2026-08-10 10:00:00', '2026-08-10 10:00:00', 1);
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
-VALUES (203, 200, 'SQL控制台', 'SqlConsole', 'MENU', 'SqlConsole', 'sql-console', 'tool/database/sql', '', 'console', '', 0, 1, '', 3, 1, '2026-08-10 10:00:00', '2026-08-10 10:00:00', 1);
+VALUES (203, 200, 'SQL控制台', 'SqlConsole', 'MENU', 'SqlConsole', 'sql-console', 'tool/database/sql', '', 'code', '', 0, 1, '', 3, 1, '2026-08-10 10:00:00', '2026-08-10 10:00:00', 1);
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
 VALUES (210, 202, '查询结构', '', 'BUTTON', '', '', '', 'tool:db:select', '', '', 0, 1, '', 1, 1, '2026-08-10 10:00:00', '2026-08-10 10:00:00', 1);
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
