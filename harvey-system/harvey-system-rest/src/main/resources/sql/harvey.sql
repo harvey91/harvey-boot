@@ -341,6 +341,14 @@ INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, 
 VALUES (214, 203, '执行SQL', '', 'BUTTON', '', '', '', 'tool:db:execute', '', '', 0, 1, '', 1, 1, '2026-08-10 10:00:00', '2026-08-10 10:00:00', 1);
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
 VALUES (215, 203, '执行DDL', '', 'BUTTON', '', '', '', 'tool:db:ddl', '', '', 0, 1, '', 2, 1, '2026-08-10 10:00:00', '2026-08-10 10:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (204, 200, '缓存管理', 'Cache', 'MENU', 'Cache', 'cache', 'tool/cache/index', '', 'redis', '', 0, 1, '', 4, 1, '2026-08-12 10:00:00', '2026-08-12 10:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (205, 204, '缓存查询', '', 'BUTTON', '', '', '', 'tool:cache:select', '', '', 0, 1, '', 1, 1, '2026-08-12 10:00:00', '2026-08-12 10:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (206, 204, '缓存修改', '', 'BUTTON', '', '', '', 'tool:cache:modify', '', '', 0, 1, '', 2, 1, '2026-08-12 10:00:00', '2026-08-12 10:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (207, 204, '缓存删除', '', 'BUTTON', '', '', '', 'tool:cache:delete', '', '', 0, 1, '', 3, 1, '2026-08-12 10:00:00', '2026-08-12 10:00:00', 1);
 
 -- ----------------------------
 -- Table structure for sys_user_role
