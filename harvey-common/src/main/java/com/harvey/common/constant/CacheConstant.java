@@ -29,4 +29,15 @@ public class CacheConstant {
 
     /** 字典缓存 */
     public static final String DICT_KEY = "dict";
+
+    /* ------------------------限流与封IP------------------------ */
+
+    /** 限流配置缓存 */
+    public static final String RATE_LIMIT_CONFIG_KEY = "rate_limit:config";
+
+    /** 限流计数器缓存前缀 */
+    public static final String RATE_LIMIT_COUNTER_KEY = "rate_limit:counter:";
+
+    /** 封禁IP缓存前缀 */
+    public static final String RATE_LIMIT_BAN_KEY = "rate_limit:ban:";
 }

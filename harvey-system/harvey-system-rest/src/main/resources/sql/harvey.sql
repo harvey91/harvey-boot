@@ -349,6 +349,16 @@ INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, 
 VALUES (206, 204, '缓存修改', '', 'BUTTON', '', '', '', 'tool:cache:modify', '', '', 0, 1, '', 2, 1, '2026-08-12 10:00:00', '2026-08-12 10:00:00', 1);
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
 VALUES (207, 204, '缓存删除', '', 'BUTTON', '', '', '', 'tool:cache:delete', '', '', 0, 1, '', 3, 1, '2026-08-12 10:00:00', '2026-08-12 10:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (216, 10, '限流与封IP', 'RateLimit', 'MENU', 'RateLimit', 'rate-limit', 'monitor/rateLimit/index', '', 'ip', '', 0, 1, '', 8, 1, '2026-08-12 13:00:00', '2026-08-12 13:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (217, 216, '限流配置', '', 'BUTTON', '', '', '', 'sys:rate:limit:config', '', '', 0, 1, '', 1, 1, '2026-08-12 13:00:00', '2026-08-12 13:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (218, 216, '封禁IP查询', '', 'BUTTON', '', '', '', 'sys:rate:limit:list', '', '', 0, 1, '', 2, 1, '2026-08-12 13:00:00', '2026-08-12 13:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (219, 216, 'IP解封', '', 'BUTTON', '', '', '', 'sys:rate:limit:unban', '', '', 0, 1, '', 3, 1, '2026-08-12 13:00:00', '2026-08-12 13:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (220, 216, 'IP手动封禁', '', 'BUTTON', '', '', '', 'sys:rate:limit:ban', '', '', 0, 1, '', 4, 1, '2026-08-12 13:00:00', '2026-08-12 13:00:00', 1);
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -408,124 +418,110 @@ CREATE TABLE `sys_role_menu`
 -- ----------------------------
 -- Records of sys_role_menu
 -- ----------------------------
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
-VALUES (14, 1, 1, '2024-11-06 20:25:52');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
-VALUES (15, 1, 2, '2024-11-06 20:25:52');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
-VALUES (16, 1, 3, '2024-11-06 20:25:52');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
-VALUES (17, 1, 4, '2024-11-06 20:25:52');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
-VALUES (18, 1, 5, '2024-11-06 20:25:52');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
-VALUES (19, 1, 6, '2024-11-06 20:25:52');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
-VALUES (20, 1, 7, '2024-11-06 20:25:52');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
-VALUES (22, 1, 10, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
-VALUES (23, 1, 11, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
-VALUES (24, 1, 12, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
-VALUES (25, 1, 13, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
-VALUES (26, 1, 14, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
-VALUES (27, 1, 15, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
-VALUES (28, 1, 16, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
-VALUES (29, 1, 17, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
-VALUES (30, 1, 18, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
-VALUES (31, 1, 19, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
-VALUES (32, 1, 20, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
-VALUES (33, 1, 21, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
-VALUES (34, 1, 22, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
-VALUES (35, 1, 23, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
-VALUES (36, 1, 24, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`)
-VALUES (37, 1, 25, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (38, 1, 26, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (39, 1, 27, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (40, 1, 28, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (41, 1, 29, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (42, 1, 30, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (43, 1, 31, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (44, 1, 32, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (45, 1, 33, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (46, 1, 34, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (47, 1, 35, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (48, 1, 36, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (49, 1, 37, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (50, 1, 38, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (51, 1, 39, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (52, 1, 40, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (53, 1, 41, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (54, 1, 42, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (55, 1, 43, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (56, 1, 44, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (57, 1, 45, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (58, 1, 46, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (59, 1, 47, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (60, 1, 48, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (61, 1, 49, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (62, 1, 50, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (63, 1, 51, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (64, 1, 52, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (65, 1, 53, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (66, 1, 54, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (67, 1, 55, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (68, 1, 56, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (69, 1, 57, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (70, 1, 58, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (71, 1, 59, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (72, 1, 60, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (73, 1, 61, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (74, 1, 62, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (75, 1, 63, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (76, 1, 64, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (77, 1, 65, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (78, 1, 66, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (79, 1, 67, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (80, 1, 68, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (81, 1, 69, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (82, 1, 70, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (83, 1, 8, '2024-11-06 20:25:52');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (84, 1, 71, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (85, 1, 72, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (86, 1, 73, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (87, 1, 74, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (88, 1, 75, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (89, 1, 76, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (90, 1, 77, '2026-08-06 14:40:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (91, 1, 78, '2026-08-06 15:30:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (92, 1, 79, '2026-08-06 15:30:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (93, 1, 80, '2026-08-06 15:30:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (94, 1, 81, '2026-08-06 15:30:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (95, 1, 82, '2026-08-06 15:30:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (96, 1, 83, '2026-08-06 15:30:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (97, 1, 84, '2026-08-06 15:30:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (98, 1, 85, '2026-08-06 15:30:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (99, 1, 86, '2026-08-06 15:30:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (100, 1, 200, '2026-08-10 10:00:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (101, 1, 201, '2026-08-10 10:00:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (102, 1, 202, '2026-08-10 10:00:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (103, 1, 203, '2026-08-10 10:00:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (104, 1, 210, '2026-08-10 10:00:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (105, 1, 211, '2026-08-10 10:00:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (106, 1, 212, '2026-08-10 10:00:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (107, 1, 213, '2026-08-10 10:00:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (108, 1, 214, '2026-08-10 10:00:00');
-INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (109, 1, 215, '2026-08-10 10:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (100, 1, 1, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (101, 1, 2, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (102, 1, 26, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (103, 1, 8, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (104, 1, 27, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (105, 1, 28, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (106, 1, 29, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (107, 1, 3, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (108, 1, 30, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (109, 1, 31, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (110, 1, 32, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (111, 1, 33, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (112, 1, 4, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (113, 1, 34, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (114, 1, 35, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (115, 1, 36, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (116, 1, 37, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (117, 1, 38, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (118, 1, 5, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (119, 1, 39, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (120, 1, 40, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (121, 1, 41, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (122, 1, 42, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (123, 1, 6, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (124, 1, 43, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (125, 1, 44, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (126, 1, 45, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (127, 1, 46, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (128, 1, 7, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (129, 1, 47, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (130, 1, 48, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (131, 1, 49, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (132, 1, 50, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (133, 1, 11, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (134, 1, 51, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (135, 1, 52, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (136, 1, 53, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (137, 1, 54, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (138, 1, 12, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (139, 1, 55, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (140, 1, 56, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (141, 1, 57, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (142, 1, 58, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (143, 1, 13, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (144, 1, 59, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (145, 1, 60, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (146, 1, 61, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (147, 1, 62, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (148, 1, 63, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (149, 1, 64, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (150, 1, 19, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (151, 1, 20, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (152, 1, 21, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (153, 1, 22, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (154, 1, 23, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (155, 1, 24, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (156, 1, 25, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (157, 1, 71, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (158, 1, 72, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (159, 1, 73, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (160, 1, 74, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (161, 1, 75, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (162, 1, 10, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (163, 1, 14, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (164, 1, 65, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (165, 1, 66, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (166, 1, 15, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (167, 1, 67, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (168, 1, 68, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (169, 1, 76, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (170, 1, 77, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (171, 1, 16, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (172, 1, 69, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (173, 1, 70, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (174, 1, 17, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (175, 1, 18, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (176, 1, 78, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (177, 1, 79, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (178, 1, 80, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (179, 1, 81, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (180, 1, 82, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (181, 1, 83, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (182, 1, 84, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (183, 1, 85, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (184, 1, 86, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (185, 1, 200, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (186, 1, 201, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (187, 1, 202, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (188, 1, 210, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (189, 1, 211, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (190, 1, 212, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (191, 1, 213, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (192, 1, 203, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (193, 1, 214, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (194, 1, 215, '2026-08-10 17:55:36');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (195, 1, 204, '2026-08-12 06:59:41');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (196, 1, 205, '2026-08-12 06:59:41');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (197, 1, 206, '2026-08-12 06:59:41');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (198, 1, 207, '2026-08-12 06:59:41');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (199, 1, 216, '2026-08-12 13:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (200, 1, 217, '2026-08-12 13:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (201, 1, 218, '2026-08-12 13:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (202, 1, 219, '2026-08-12 13:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (203, 1, 220, '2026-08-12 13:00:00');
 
 -- ----------------------------
 -- Table structure for sys_dict
