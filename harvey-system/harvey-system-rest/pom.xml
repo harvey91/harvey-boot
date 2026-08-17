@@ -28,6 +28,13 @@
             <artifactId>harvey-quartz</artifactId>
         </dependency>
 
+        <!-- AI 模块(模型管理/对话) -->
+        <dependency>
+            <groupId>com.harvey</groupId>
+            <artifactId>harvey-ai</artifactId>
+            <version>${harvey-version}</version>
+        </dependency>
+
         <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-spring-boot3-starter</artifactId>

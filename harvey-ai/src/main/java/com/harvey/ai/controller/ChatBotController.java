@@ -1,47 +1,43 @@
 package com.harvey.ai.controller;
 
 import com.harvey.ai.domain.MessageDto;
+import com.harvey.ai.service.AiChatService;
+import com.harvey.common.result.RespResult;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.openai.OpenAiChatModel;
-import org.springframework.ai.openai.OpenAiImageModel;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
-import java.util.Map;
-
 /**
  * @author Harvey
  * @date 2025-03-03 18:00
  **/
 @Slf4j
+@Tag(name = "AI 对话")
 @RestController
 @RequestMapping("/ai")
-@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class ChatBotController {
-    private final ChatClient chatClient;
-    private final OpenAiChatModel openAiChatModel;
-//    private final OpenAiImageModel imageModel;
 
+    private final AiChatService aiChatService;
 
     /**
-     * 普遍对话
+     * 普遍对话(多轮记忆, 可指定模型与会话, 可选知识库检索)
      * @param dto
      * @return
      */
+    @Operation(summary = "普通对话(支持知识库)")
     @PostMapping(value = "/chat")
-    public Map<String, String> chat(@RequestBody @Validated MessageDto dto) {
-        log.info("普通对话内容：“{}”", dto.getMessage());
-        String content = chatClient.prompt()
-                .user(dto.getMessage())
-                .call().content();
-        log.info("机器人回答：“{}”", content);
-        return Map.of("data", content);
+    public RespResult<AiChatService.ChatResult> chat(@RequestBody @Validated MessageDto dto) {
+        boolean useKb = Boolean.TRUE.equals(dto.getUseKnowledgeBase());
+        log.info("普通对话内容：{}, 模型: {}, 会话: {}, 知识库: {}", dto.getMessage(), dto.getModelId(), dto.getConversationId(), useKb);
+        return RespResult.success(aiChatService.chat(dto.getModelId(), dto.getConversationId(), dto.getMessage(),
+                dto.getKnowledgeBaseIds(), useKb));
     }
 
     /**
@@ -49,33 +45,12 @@ public class ChatBotController {
      * @param dto
      * @return
      */
+    @Operation(summary = "流式对话(支持知识库)")
     @PostMapping(value = "/chat/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<String> streamChat(@RequestBody @Validated MessageDto dto) {
-        log.info("流式对话内容：{}", dto.getMessage());
-        return chatClient.prompt()
-                .user(dto.getMessage())
-                .stream().content();
-                // 添加事件区分正常回答消息(message)和错误消息(error)
-//                .map(content -> ServerSentEvent.builder(content).event("message").build())
-                // 添加问题回答结束标识([DONE])
-//                .concatWithValues(ServerSentEvent.builder("[DONE]").build())
-//                .onErrorResume(e -> Flux.just(ServerSentEvent.builder("Error: " + e.getMessage()).event("error").build()));
+    public Flux<ServerSentEvent<String>> streamChat(@RequestBody @Validated MessageDto dto) {
+        boolean useKb = Boolean.TRUE.equals(dto.getUseKnowledgeBase());
+        log.info("流式对话内容：{}, 模型: {}, 会话: {}, 知识库: {}", dto.getMessage(), dto.getModelId(), dto.getConversationId(), useKb);
+        return aiChatService.streamChat(dto.getModelId(), dto.getConversationId(), dto.getMessage(),
+                dto.getKnowledgeBaseIds(), useKb);
     }
-
-    /**
-     * 文字生成图片
-     * @param message
-     * @return
-     */
-//    @PostMapping(value = "genPic")
-//    public String genPic(@RequestBody String message) {
-//        OpenAiImageOptions options = OpenAiImageOptions.builder()
-//                .withQuality("hd")
-//                .withN(1)
-//                .withHeight(1024)
-//                .withWidth(1024).build();
-//        ImagePrompt imagePrompt = new ImagePrompt(message, options);
-//        ImageResponse response = imageModel.call(imagePrompt);
-//        return response.getResult().getOutput().getUrl();
-//    }
 }

@@ -12,6 +12,14 @@ spring:
     default-property-inclusion: non_null
   profiles:
     active: @activeProfile@, core
+  # spring.ai 兜底配置(数据库未配置默认模型时使用)
+  ai:
+    openai:
+      api-key: sk-11111
+      base-url: https://api.deepseek.com
+      chat:
+        options:
+          model: deepseek-chat
 
 management:
   endpoints:
@@ -54,4 +62,4 @@ springdoc:
   group-configs:
     - group: 'default'
       paths-to-match: '/**'
-      packages-to-scan: com.harvey.system.controller
+      packages-to-scan: com.harvey.system.controller,com.harvey.ai.controller

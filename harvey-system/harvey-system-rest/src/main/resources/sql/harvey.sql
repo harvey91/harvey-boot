@@ -900,3 +900,107 @@ CREATE TABLE `sys_gen_field_config`
 -- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+-- ----------------------------
+-- Records of sys_menu (AI 模块)
+-- ----------------------------
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1000, 0, 'AI 智能', 'AI', 'DIRECTORY', '', '/ai', 'Layout', '', 'api', '/ai/chat', 0, 1, '', 6, 1, '2026-08-17 14:30:00', '2026-08-17 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1001, 1000, '模型管理', 'Model', 'MENU', 'AiModel', 'model', 'ai/model/index', '', 'monitor', '', 0, 1, '', 1, 1, '2026-08-17 14:30:00', '2026-08-17 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1002, 1001, '查询', '', 'BUTTON', '', '', '', 'ai:model:list', '', '', 0, 1, '', 1, 1, '2026-08-17 14:30:00', '2026-08-17 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1003, 1001, '新增', '', 'BUTTON', '', '', '', 'ai:model:create', '', '', 0, 1, '', 2, 1, '2026-08-17 14:30:00', '2026-08-17 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1004, 1001, '修改', '', 'BUTTON', '', '', '', 'ai:model:modify', '', '', 0, 1, '', 3, 1, '2026-08-17 14:30:00', '2026-08-17 14:30:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1005, 1001, '删除', '', 'BUTTON', '', '', '', 'ai:model:delete', '', '', 0, 1, '', 4, 1, '2026-08-17 14:30:00', '2026-08-17 14:30:00', 1);
+
+-- ----------------------------
+-- Records of sys_role_menu (AI 菜单授权给「管理员」角色)
+-- ----------------------------
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (300, 1, 1000, '2026-08-17 15:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (301, 1, 1001, '2026-08-17 15:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (302, 1, 1002, '2026-08-17 15:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (303, 1, 1003, '2026-08-17 15:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (304, 1, 1004, '2026-08-17 15:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (305, 1, 1005, '2026-08-17 15:00:00');
+
+-- ----------------------------
+-- Records of sys_menu (AI 知识库模块)
+-- ----------------------------
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1010, 1000, '知识库', 'Knowledge', 'MENU', 'AiKnowledge', 'knowledge', 'ai/knowledge/index', '', 'collection', '', 0, 1, '', 2, 1, '2026-08-17 16:00:00', '2026-08-17 16:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1011, 1010, '查询', '', 'BUTTON', '', '', '', 'ai:knowledge:list', '', '', 0, 1, '', 1, 1, '2026-08-17 16:00:00', '2026-08-17 16:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1012, 1010, '新增', '', 'BUTTON', '', '', '', 'ai:knowledge:create', '', '', 0, 1, '', 2, 1, '2026-08-17 16:00:00', '2026-08-17 16:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1013, 1010, '修改', '', 'BUTTON', '', '', '', 'ai:knowledge:modify', '', '', 0, 1, '', 3, 1, '2026-08-17 16:00:00', '2026-08-17 16:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1014, 1010, '删除', '', 'BUTTON', '', '', '', 'ai:knowledge:delete', '', '', 0, 1, '', 4, 1, '2026-08-17 16:00:00', '2026-08-17 16:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1015, 1010, '文档查询', '', 'BUTTON', '', '', '', 'ai:doc:list', '', '', 0, 1, '', 5, 1, '2026-08-17 16:00:00', '2026-08-17 16:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1016, 1010, '文档上传', '', 'BUTTON', '', '', '', 'ai:doc:upload', '', '', 0, 1, '', 6, 1, '2026-08-17 16:00:00', '2026-08-17 16:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1017, 1010, '文档删除', '', 'BUTTON', '', '', '', 'ai:doc:delete', '', '', 0, 1, '', 7, 1, '2026-08-17 16:00:00', '2026-08-17 16:00:00', 1);
+
+-- ----------------------------
+-- Records of sys_role_menu (知识库菜单授权给「管理员」角色)
+-- ----------------------------
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (306, 1, 1010, '2026-08-17 16:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (307, 1, 1011, '2026-08-17 16:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (308, 1, 1012, '2026-08-17 16:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (309, 1, 1013, '2026-08-17 16:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (310, 1, 1014, '2026-08-17 16:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (311, 1, 1015, '2026-08-17 16:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (312, 1, 1016, '2026-08-17 16:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (313, 1, 1017, '2026-08-17 16:00:00');
+
+-- ----------------------------
+-- Records of sys_menu (AI 对话助手)
+-- ----------------------------
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1020, 1000, '对话助手', 'Chat', 'MENU', 'AiChat', 'chat', 'ai/chat/index', '', 'chat-dot-round', '', 0, 1, '', 0, 1, '2026-08-17 17:30:00', '2026-08-17 17:30:00', 1);
+
+-- ----------------------------
+-- Records of sys_role_menu (对话助手授权给「管理员」角色)
+-- ----------------------------
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (314, 1, 1020, '2026-08-17 17:30:00');
+
+-- ----------------------------
+-- Records of sys_menu (AI 智能客服模块)
+-- ----------------------------
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1021, 1000, '客服咨询', 'Customer', 'MENU', 'AiCustomer', 'customer', 'ai/customer/index', '', 'service', '', 0, 1, '', 4, 1, '2026-08-17 17:40:00', '2026-08-17 17:40:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1022, 1000, '工单管理', 'Order', 'MENU', 'AiOrder', 'order', 'ai/customer/order', '', 'tickets', '', 0, 1, '', 5, 1, '2026-08-17 17:40:00', '2026-08-17 17:40:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1023, 1021, 'FAQ查询', '', 'BUTTON', '', '', '', 'ai:faq:list', '', '', 0, 1, '', 1, 1, '2026-08-17 17:40:00', '2026-08-17 17:40:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1024, 1021, 'FAQ新增', '', 'BUTTON', '', '', '', 'ai:faq:create', '', '', 0, 1, '', 2, 1, '2026-08-17 17:40:00', '2026-08-17 17:40:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1025, 1021, 'FAQ修改', '', 'BUTTON', '', '', '', 'ai:faq:modify', '', '', 0, 1, '', 3, 1, '2026-08-17 17:40:00', '2026-08-17 17:40:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1026, 1021, 'FAQ删除', '', 'BUTTON', '', '', '', 'ai:faq:delete', '', '', 0, 1, '', 4, 1, '2026-08-17 17:40:00', '2026-08-17 17:40:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1027, 1022, '工单查询', '', 'BUTTON', '', '', '', 'ai:order:list', '', '', 0, 1, '', 1, 1, '2026-08-17 17:40:00', '2026-08-17 17:40:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1028, 1022, '工单回复', '', 'BUTTON', '', '', '', 'ai:order:reply', '', '', 0, 1, '', 2, 1, '2026-08-17 17:40:00', '2026-08-17 17:40:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1029, 1022, '工单删除', '', 'BUTTON', '', '', '', 'ai:order:delete', '', '', 0, 1, '', 3, 1, '2026-08-17 17:40:00', '2026-08-17 17:40:00', 1);
+
+-- ----------------------------
+-- Records of sys_role_menu (智能客服菜单授权给「管理员」角色)
+-- ----------------------------
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (315, 1, 1021, '2026-08-17 17:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (316, 1, 1022, '2026-08-17 17:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (317, 1, 1023, '2026-08-17 17:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (318, 1, 1024, '2026-08-17 17:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (319, 1, 1025, '2026-08-17 17:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (320, 1, 1026, '2026-08-17 17:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (321, 1, 1027, '2026-08-17 17:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (322, 1, 1028, '2026-08-17 17:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (323, 1, 1029, '2026-08-17 17:40:00');
