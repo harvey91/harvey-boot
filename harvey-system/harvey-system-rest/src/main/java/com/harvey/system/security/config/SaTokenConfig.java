@@ -1,5 +1,6 @@
 package com.harvey.system.security.config;
 
+import cn.dev33.satoken.SaManager;
 import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.router.SaHttpMethod;
 import cn.dev33.satoken.router.SaRouter;
@@ -26,6 +27,10 @@ public class SaTokenConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new SaInterceptor(handle -> {
+                    // 异步派发(SSE/流式响应)时, 当前线程无 SA-Token 上下文, 登录校验已在首轮请求完成, 直接放行
+                    if (!SaManager.getSaTokenContext().isValid()) {
+                        return;
+                    }
                     // 放行 OPTIONS 预检请求
                     SaRouter.match(SaHttpMethod.OPTIONS).free(r -> {});
                     // 其余请求都需要登录

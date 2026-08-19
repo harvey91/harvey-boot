@@ -64,6 +64,16 @@ public class AiDocController {
         return RespResult.success();
     }
 
+    @Operation(summary = "重新解析文档")
+    @SaCheckPermission("ai:doc:upload")
+    @PostMapping("/reparse")
+    public RespResult<AiDoc> reparse(@RequestParam("id") Long id) {
+        if (id == null) {
+            return RespResult.fail("id不能为空");
+        }
+        return RespResult.success(docService.reparse(id));
+    }
+
     @Operation(summary = "文档分块列表")
     @SaCheckPermission("ai:doc:list")
     @GetMapping("/chunk/page")

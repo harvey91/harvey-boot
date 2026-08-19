@@ -128,6 +128,56 @@ public class AiDocService extends ServiceImpl<AiDocMapper, AiDoc> {
     }
 
     /**
+     * 重新解析文档: 读取归档文件重新分块, 替换旧分块并更新统计
+     */
+    @Transactional(rollbackFor = Throwable.class)
+    public AiDoc reparse(Long docId) {
+        AiDoc doc = docId == null ? null : this.getById(docId);
+        if (doc == null) {
+            throw new BusinessException("文档不存在");
+        }
+        if (StringUtils.isBlank(doc.getFileUrl())) {
+            throw new BusinessException("文档没有归档文件, 无法重新解析, 请删除后重新上传");
+        }
+        try {
+            byte[] bytes = storageService.loadBytes(doc.getFileUrl());
+            String text = textParser.parse(bytes, doc.getFileName());
+            List<String> chunks = textChunker.chunk(text);
+            if (chunks.isEmpty()) {
+                throw new BusinessException("文档内容为空, 无法建立知识库");
+            }
+
+            int oldChunk = doc.getChunkCount() == null ? 0 : doc.getChunkCount();
+            chunkService.remove(new LambdaQueryWrapper<AiDocChunk>().eq(AiDocChunk::getDocId, docId));
+
+            List<AiDocChunk> chunkEntities = new ArrayList<>(chunks.size());
+            for (int i = 0; i < chunks.size(); i++) {
+                AiDocChunk chunk = new AiDocChunk();
+                chunk.setKbId(doc.getKbId());
+                chunk.setDocId(docId);
+                chunk.setChunkIndex(i);
+                chunk.setContent(chunks.get(i));
+                chunk.setCharCount(chunks.get(i).length());
+                chunkEntities.add(chunk);
+            }
+            chunkService.saveBatch(chunkEntities);
+
+            doc.setStatus(2);
+            doc.setChunkCount(chunkEntities.size());
+            doc.setParseTime(LocalDateTime.now());
+            this.updateById(doc);
+
+            knowledgeBaseService.incrCounts(doc.getKbId(), 0, chunkEntities.size() - oldChunk);
+            return doc;
+        } catch (Exception e) {
+            log.error("文档重新解析失败: {}", doc.getFileName(), e);
+            doc.setStatus(3);
+            this.updateById(doc);
+            throw new BusinessException("文档重新解析失败: " + e.getMessage());
+        }
+    }
+
+    /**
      * 删除文档(连同分块), 并更新知识库统计
      */
     @Transactional(rollbackFor = Throwable.class)

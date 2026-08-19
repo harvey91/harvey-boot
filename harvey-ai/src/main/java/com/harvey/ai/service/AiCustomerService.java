@@ -40,6 +40,7 @@ public class AiCustomerService {
     private final ChatModelFactory chatModelFactory;
     private final RetrievalService retrievalService;
     private final AiFaqService faqService;
+    private final AiChatRecordService chatRecordService;
 
     public CustomerChatResult chat(Long modelId, String conversationId, String message, List<Long> kbIds) {
         String cid = normalizeConversationId(conversationId);
@@ -55,6 +56,7 @@ public class AiCustomerService {
         String content = needHuman ? raw.replace(NEED_HUMAN_MARKER, "").trim() : raw;
         List<CustomerCitation> citations = parseCitations(raw, items);
         incrCitedFaqs(citations);
+        safeRecord(cid, message, content, citations, needHuman);
         return new CustomerChatResult(cid, content, citations, needHuman);
     }
 
@@ -77,6 +79,7 @@ public class AiCustomerService {
                     boolean needHuman = stripNeedHuman(full);
                     List<CustomerCitation> citations = parseCitations(full, items);
                     incrCitedFaqs(citations);
+                    safeRecord(cid, message, full, citations, needHuman);
                     return Flux.concat(
                             Flux.just(ServerSentEvent.<String>builder(JSON.toJSONString(citations)).event("citation").build()),
                             Flux.just(ServerSentEvent.<String>builder(String.valueOf(needHuman)).event("flag").build()),
@@ -86,6 +89,18 @@ public class AiCustomerService {
                     log.error("智能客服流式对话异常", e);
                     return Flux.just(ServerSentEvent.<String>builder("Error: " + e.getMessage()).event("error").build());
                 });
+    }
+
+    /**
+     * 记录会话(失败不影响对话)
+     */
+    private void safeRecord(String conversationId, String userMessage, String botContent,
+                            List<CustomerCitation> citations, boolean needHuman) {
+        try {
+            chatRecordService.record(conversationId, userMessage, userMessage, botContent, citations, needHuman);
+        } catch (Exception e) {
+            log.warn("客服会话落库失败: conversationId={}", conversationId, e);
+        }
     }
 
     /**

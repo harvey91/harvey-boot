@@ -6,13 +6,12 @@ import lombok.EqualsAndHashCode;
 
 /**
  * @author harvey
- * @since 2026-08-17
+ * @since 2026-08-18
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class AiWorkOrderQuery extends Query {
+public class AiConversationQuery extends Query {
 
+    /** 会话状态(0进行中,1已结束) */
     private Integer status;
-
-    private String conversationId;
 }

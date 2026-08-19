@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.stream.Stream;
@@ -19,6 +20,7 @@ import java.util.stream.Stream;
 public class StorageService {
 
     private String active;
+    private String address;
     private IStorage storage;
 
     public String store(MultipartFile file, String md5, String suffix) throws IOException {
@@ -42,6 +44,27 @@ public class StorageService {
 
     public Resource loadAsResource(String keyName) {
         return storage.loadAsResource(keyName);
+    }
+
+    /**
+     * 根据归档 URL 读取文件字节(用于重新解析等场景)
+     *
+     * @param url 存储归档 URL, 形如 /storage/fetch/20260817/md5.txt
+     */
+    public byte[] loadBytes(String url) {
+        if (url == null || url.isBlank()) {
+            throw new IllegalArgumentException("归档文件URL不能为空");
+        }
+        String key = url;
+        if (address != null && url.startsWith(address)) {
+            key = url.substring(address.length());
+        }
+        key = key.replaceFirst("^[/\\\\]+", "");
+        try {
+            return Files.readAllBytes(storage.load(key));
+        } catch (IOException e) {
+            throw new RuntimeException("读取存储文件失败: " + url, e);
+        }
     }
 
     public void delete(String keyName) {

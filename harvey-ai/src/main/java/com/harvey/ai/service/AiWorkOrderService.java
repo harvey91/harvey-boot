@@ -88,6 +88,21 @@ public class AiWorkOrderService extends ServiceImpl<AiWorkOrderMapper, AiWorkOrd
         this.removeByIds(ids);
     }
 
+    /**
+     * 按会话查询最新一条已有人工回复的工单(客户可见)
+     */
+    public AiWorkOrderVO getReplyByConversation(String conversationId) {
+        if (StringUtils.isBlank(conversationId)) {
+            return null;
+        }
+        AiWorkOrder order = this.getOne(new LambdaQueryWrapper<AiWorkOrder>()
+                .eq(AiWorkOrder::getConversationId, conversationId)
+                .isNotNull(AiWorkOrder::getReply)
+                .orderByDesc(AiWorkOrder::getReplyTime)
+                .last("LIMIT 1"));
+        return order == null ? null : converter.toVO(order);
+    }
+
     private AiWorkOrder getOrder(Long id) {
         AiWorkOrder order = id == null ? null : this.getById(id);
         if (order == null) {

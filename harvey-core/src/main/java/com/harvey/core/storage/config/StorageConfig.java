@@ -24,7 +24,10 @@ public class StorageConfig {
         String active = this.properties.getActive();
         storageService.setActive(active);
         switch (active) {
-            case "local" -> storageService.setStorage(localStorage());
+            case "local" -> {
+                storageService.setStorage(localStorage());
+                storageService.setAddress(properties.getLocal().getAddress());
+            }
             case "aliyun" -> storageService.setStorage(aliyunStorage());
             case "tencent" -> storageService.setStorage(tencentStorage());
             case "qiniu" -> storageService.setStorage(qiniuStorage());

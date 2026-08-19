@@ -1,6 +1,8 @@
 package com.harvey.ai.controller;
 
+import com.harvey.ai.model.dto.AiRatingDto;
 import com.harvey.ai.model.dto.AiWorkOrderDto;
+import com.harvey.ai.service.AiChatRecordService;
 import com.harvey.ai.service.AiCustomerService;
 import com.harvey.ai.service.AiWorkOrderService;
 import com.harvey.common.result.RespResult;
@@ -29,6 +31,7 @@ public class AiCustomerController {
 
     private final AiCustomerService customerService;
     private final AiWorkOrderService workOrderService;
+    private final AiChatRecordService chatRecordService;
 
     @Operation(summary = "客服对话(FAQ + 知识库)")
     @PostMapping("/chat")
@@ -43,6 +46,13 @@ public class AiCustomerController {
     public Flux<ServerSentEvent<String>> streamChat(@RequestBody CustomerMessageDto dto) {
         return customerService.streamChat(dto.getModelId(), dto.getConversationId(), dto.getMessage(),
                 dto.getKnowledgeBaseIds());
+    }
+
+    @Operation(summary = "对话评价(1满意, 2不满意)")
+    @PostMapping("/rating")
+    public RespResult<String> rating(@RequestBody @Validated AiRatingDto dto) {
+        chatRecordService.rate(dto.getConversationId(), dto.getRating());
+        return RespResult.success();
     }
 
     @Operation(summary = "转人工/留言, 生成工单")

@@ -41,6 +41,12 @@ public class AiWorkOrderController {
         return RespResult.success(PageResult.of(page));
     }
 
+    @Operation(summary = "按会话查询人工回复")
+    @GetMapping("/reply")
+    public RespResult<AiWorkOrderVO> replyByConversation(@RequestParam("conversationId") String conversationId) {
+        return RespResult.success(workOrderService.getReplyByConversation(conversationId));
+    }
+
     @Operation(summary = "人工回复工单")
     @SaCheckPermission("ai:order:reply")
     @PutMapping("/reply")

@@ -408,6 +408,12 @@ INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, 
 VALUES (1028, 1022, '工单回复', '', 'BUTTON', '', '', '', 'ai:order:reply', '', '', 0, 1, '', 2, 1, '2026-08-17 17:40:00', '2026-08-17 17:40:00', 1);
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
 VALUES (1029, 1022, '工单删除', '', 'BUTTON', '', '', '', 'ai:order:delete', '', '', 0, 1, '', 3, 1, '2026-08-17 17:40:00', '2026-08-17 17:40:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1030, 1000, '会话记录', 'ChatRecord', 'MENU', 'AiChatRecord', 'chatRecord', 'ai/customer/record', '', 'message', '', 0, 1, '', 6, 1, '2026-08-18 10:00:00', '2026-08-18 10:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1031, 1030, '会话查询', '', 'BUTTON', '', '', '', 'ai:chat:list', '', '', 0, 1, '', 1, 1, '2026-08-18 10:00:00', '2026-08-18 10:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1032, 1030, '会话删除', '', 'BUTTON', '', '', '', 'ai:chat:delete', '', '', 0, 1, '', 2, 1, '2026-08-18 10:00:00', '2026-08-18 10:00:00', 1);
 -- ----------------------------
 -- Table structure for sys_user_role
 -- ----------------------------
@@ -595,6 +601,9 @@ INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (
 INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (321, 1, 1027, '2026-08-17 17:40:00');
 INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (322, 1, 1028, '2026-08-17 17:40:00');
 INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (323, 1, 1029, '2026-08-17 17:40:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (324, 1, 1030, '2026-08-18 10:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (325, 1, 1031, '2026-08-18 10:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (326, 1, 1032, '2026-08-18 10:00:00');
 -- ----------------------------
 -- Table structure for sys_dict
 -- ----------------------------

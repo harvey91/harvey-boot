@@ -136,3 +136,47 @@ CREATE TABLE `ai_work_order` (
   PRIMARY KEY (`id`),
   KEY `idx_status` (`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='AI客服工单表';
+
+-- ----------------------------
+-- 客服会话记录表
+-- ----------------------------
+DROP TABLE IF EXISTS `ai_conversation`;
+CREATE TABLE `ai_conversation` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `conversation_id` varchar(64) NOT NULL COMMENT '会话ID',
+  `title` varchar(200) DEFAULT '' COMMENT '会话标题(首问摘要)',
+  `status` tinyint NOT NULL DEFAULT 0 COMMENT '状态(0进行中,1已结束)',
+  `message_count` int NOT NULL DEFAULT 0 COMMENT '消息数',
+  `last_message_time` datetime DEFAULT NULL COMMENT '最后消息时间',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `sort` int NOT NULL DEFAULT 99 COMMENT '排序',
+  `enabled` tinyint NOT NULL DEFAULT 1 COMMENT '是否启用(0禁用,1启用)',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+  `deleted` tinyint NOT NULL DEFAULT 1 COMMENT '逻辑删除(1未删除,0已删除)',
+  PRIMARY KEY (`id`),
+  KEY `idx_conversation_id` (`conversation_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='AI客服会话记录表';
+
+-- ----------------------------
+-- 客服消息记录表
+-- ----------------------------
+DROP TABLE IF EXISTS `ai_chat_message`;
+CREATE TABLE `ai_chat_message` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `conversation_id` varchar(64) NOT NULL COMMENT '会话ID',
+  `role` varchar(16) NOT NULL COMMENT '角色(USER/BOT)',
+  `content` text NOT NULL COMMENT '消息内容',
+  `citations` text DEFAULT NULL COMMENT '引用来源(JSON)',
+  `need_human` tinyint NOT NULL DEFAULT 0 COMMENT '是否需转人工(0否,1是)',
+  `rating` tinyint NOT NULL DEFAULT 0 COMMENT '评价(0未评价,1满意,2不满意)',
+  `rating_time` datetime DEFAULT NULL COMMENT '评价时间',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `sort` int NOT NULL DEFAULT 99 COMMENT '排序',
+  `enabled` tinyint NOT NULL DEFAULT 1 COMMENT '是否启用(0禁用,1启用)',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+  `deleted` tinyint NOT NULL DEFAULT 1 COMMENT '逻辑删除(1未删除,0已删除)',
+  PRIMARY KEY (`id`),
+  KEY `idx_conversation_id` (`conversation_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='AI客服消息记录表';
