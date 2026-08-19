@@ -414,6 +414,39 @@ INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, 
 VALUES (1031, 1030, '会话查询', '', 'BUTTON', '', '', '', 'ai:chat:list', '', '', 0, 1, '', 1, 1, '2026-08-18 10:00:00', '2026-08-18 10:00:00', 1);
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
 VALUES (1032, 1030, '会话删除', '', 'BUTTON', '', '', '', 'ai:chat:delete', '', '', 0, 1, '', 2, 1, '2026-08-18 10:00:00', '2026-08-18 10:00:00', 1);
+-- 以下为 信发模块菜单授权
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1100, 0, '信发管理', 'Screen', 'DIRECTORY', '', '/screen', 'Layout', '', 'Monitor', '/screen/device', 0, 1, '信发模块', 6, 1, '2026-08-19 16:00:00', '2026-08-19 16:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1101, 1100, '设备管理', 'Device', 'MENU', 'ScreenDevice', 'device', 'screen/device/index', 'screen:device:list', 'Connection', '', 0, 1, '信发设备管理', 1, 1, '2026-08-19 16:00:00', '2026-08-19 16:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1102, 1101, '新增设备', '', 'BUTTON', '', '', '', 'screen:device:create', '', '', 0, 1, '', 1, 1, '2026-08-19 16:00:00', '2026-08-19 16:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1103, 1101, '修改设备', '', 'BUTTON', '', '', '', 'screen:device:modify', '', '', 0, 1, '', 2, 1, '2026-08-19 16:00:00', '2026-08-19 16:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1104, 1101, '删除设备', '', 'BUTTON', '', '', '', 'screen:device:delete', '', '', 0, 1, '', 3, 1, '2026-08-19 16:00:00', '2026-08-19 16:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1111, 1100, '指令记录', 'Command', 'MENU', 'ScreenCommand', 'command', 'screen/command/index', 'screen:command:list', 'Document', '', 0, 1, '信发指令记录', 2, 1, '2026-08-19 16:00:00', '2026-08-19 16:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1105, 1101, '下发指令', '', 'BUTTON', '', '', '', 'screen:command:send', '', '', 0, 1, '向设备下发指令', 4, 1, '2026-08-19 16:00:00', '2026-08-19 16:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1121, 1100, '媒体库', 'Media', 'MENU', 'ScreenMedia', 'media', 'screen/media/index', 'screen:media:list', 'Picture', '', 0, 1, '信发媒体库', 3, 1, '2026-08-19 16:00:00', '2026-08-19 16:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1122, 1121, '上传媒体', '', 'BUTTON', '', '', '', 'screen:media:upload', '', '', 0, 1, '', 1, 1, '2026-08-19 16:00:00', '2026-08-19 16:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1123, 1121, '删除媒体', '', 'BUTTON', '', '', '', 'screen:media:delete', '', '', 0, 1, '', 2, 1, '2026-08-19 16:00:00', '2026-08-19 16:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1124, 1121, '推送媒体', '', 'BUTTON', '', '', '', 'screen:media:push', '', '', 0, 1, '', 3, 1, '2026-08-19 16:00:00', '2026-08-19 16:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1131, 1100, '滚动字幕', 'Marquee', 'MENU', 'ScreenMarquee', 'marquee', 'screen/marquee/index', 'screen:marquee:list', 'MessageBox', '', 0, 1, '信发滚动字幕模板', 4, 1, '2026-08-19 16:00:00', '2026-08-19 16:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1132, 1131, '新增模板', '', 'BUTTON', '', '', '', 'screen:marquee:create', '', '', 0, 1, '', 1, 1, '2026-08-19 16:00:00', '2026-08-19 16:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1133, 1131, '修改模板', '', 'BUTTON', '', '', '', 'screen:marquee:modify', '', '', 0, 1, '', 2, 1, '2026-08-19 16:00:00', '2026-08-19 16:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1134, 1131, '删除模板', '', 'BUTTON', '', '', '', 'screen:marquee:delete', '', '', 0, 1, '', 3, 1, '2026-08-19 16:00:00', '2026-08-19 16:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1135, 1131, '下发字幕', '', 'BUTTON', '', '', '', 'screen:marquee:send', '', '', 0, 1, '', 4, 1, '2026-08-19 16:00:00', '2026-08-19 16:00:00', 1);
 -- ----------------------------
 -- Table structure for sys_user_role
 -- ----------------------------
@@ -604,6 +637,23 @@ INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (
 INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (324, 1, 1030, '2026-08-18 10:00:00');
 INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (325, 1, 1031, '2026-08-18 10:00:00');
 INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (326, 1, 1032, '2026-08-18 10:00:00');
+-- 以下为 信发模块菜单授权
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (400, 1, 1100, '2026-08-19 16:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (401, 1, 1101, '2026-08-19 16:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (402, 1, 1102, '2026-08-19 16:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (403, 1, 1103, '2026-08-19 16:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (404, 1, 1104, '2026-08-19 16:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (405, 1, 1111, '2026-08-19 16:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (406, 1, 1105, '2026-08-19 16:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (407, 1, 1121, '2026-08-19 16:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (408, 1, 1122, '2026-08-19 16:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (409, 1, 1123, '2026-08-19 16:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (410, 1, 1124, '2026-08-19 16:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (411, 1, 1131, '2026-08-19 16:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (412, 1, 1132, '2026-08-19 16:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (413, 1, 1133, '2026-08-19 16:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (414, 1, 1134, '2026-08-19 16:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (415, 1, 1135, '2026-08-19 16:00:00');
 -- ----------------------------
 -- Table structure for sys_dict
 -- ----------------------------
@@ -978,6 +1028,129 @@ CREATE TABLE `sys_gen_field_config`
 
 -- ----------------------------
 -- Records of sys_gen_field_config
+-- ----------------------------
+
+
+-- ----------------------------
+-- Table structure for screen_device
+-- ----------------------------
+DROP TABLE IF EXISTS `screen_device`;
+CREATE TABLE `screen_device`
+(
+    `id`               bigint(20)   NOT NULL AUTO_INCREMENT COMMENT '主键id',
+    `device_no`        varchar(64)  NOT NULL COMMENT '设备编号',
+    `device_name`      varchar(64)  NOT NULL COMMENT '设备名称',
+    `model`            varchar(64)  DEFAULT '' COMMENT '设备型号',
+    `secret`           varchar(255) DEFAULT '' COMMENT '登录令牌',
+    `ip`               varchar(64)  DEFAULT '' COMMENT '最后连接IP',
+    `last_online_time` datetime(0)  DEFAULT NULL COMMENT '最后在线时间',
+    `status`           int          DEFAULT '0' COMMENT '状态(0离线 1在线)',
+    `remark`           varchar(255) DEFAULT '' COMMENT '描述',
+    `sort`             int          DEFAULT '99' COMMENT '排序',
+    `enabled`          int          DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
+    `create_time`      datetime(0)  NOT NULL COMMENT '创建时间',
+    `update_time`      datetime(0)  NOT NULL COMMENT '修改时间',
+    `deleted`          int          DEFAULT '1' COMMENT '逻辑删除',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_device_no` (`device_no`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8mb4 COMMENT ='信发设备管理';
+
+-- ----------------------------
+-- Records of screen_device
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for screen_command
+-- ----------------------------
+DROP TABLE IF EXISTS `screen_command`;
+CREATE TABLE `screen_command`
+(
+    `id`          bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '主键id',
+    `device_id`   bigint(20)  NOT NULL COMMENT '设备id',
+    `device_no`   varchar(64) NOT NULL COMMENT '设备编号',
+    `cmd_code`    int         NOT NULL COMMENT '指令编码',
+    `cmd_name`    varchar(32) DEFAULT '' COMMENT '指令名称',
+    `params`      text        DEFAULT NULL COMMENT '指令参数(JSON)',
+    `status`      int         DEFAULT '0' COMMENT '状态(0待发送 1已发送 2已执行 3失败 4超时)',
+    `seq`         bigint(20)  DEFAULT '0' COMMENT '报文序号(应答关联)',
+    `send_time`   datetime(0) DEFAULT NULL COMMENT '发送时间',
+    `ack_time`    datetime(0) DEFAULT NULL COMMENT '应答时间',
+    `ack_message` varchar(255) DEFAULT '' COMMENT '应答说明',
+    `remark`      varchar(255) DEFAULT '' COMMENT '描述',
+    `sort`        int         DEFAULT '99' COMMENT '排序',
+    `enabled`     int         DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
+    `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+    `update_time` datetime(0) NOT NULL COMMENT '修改时间',
+    `deleted`     int         DEFAULT '1' COMMENT '逻辑删除',
+    PRIMARY KEY (`id`),
+    KEY `idx_device_no_seq` (`device_no`, `seq`),
+    KEY `idx_status` (`status`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8mb4 COMMENT ='信发指令记录';
+
+-- ----------------------------
+-- Records of screen_command
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for screen_media
+-- ----------------------------
+DROP TABLE IF EXISTS `screen_media`;
+CREATE TABLE `screen_media`
+(
+    `id`          bigint(20)   NOT NULL AUTO_INCREMENT COMMENT '主键id',
+    `media_name`  varchar(255) NOT NULL COMMENT '媒体名称',
+    `media_type`  int          DEFAULT '1' COMMENT '媒体类型(1图片 2视频)',
+    `url`         varchar(512) DEFAULT '' COMMENT '访问地址',
+    `md5`         varchar(32)  DEFAULT '' COMMENT '文件md5',
+    `size`        bigint(20)   DEFAULT '0' COMMENT '文件大小(字节)',
+    `suffix`      varchar(32)  DEFAULT '' COMMENT '文件后缀',
+    `remark`      varchar(255) DEFAULT '' COMMENT '描述',
+    `sort`        int          DEFAULT '99' COMMENT '排序',
+    `enabled`     int          DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
+    `create_time` datetime(0)  NOT NULL COMMENT '创建时间',
+    `update_time` datetime(0)  NOT NULL COMMENT '修改时间',
+    `deleted`     int          DEFAULT '1' COMMENT '逻辑删除',
+    PRIMARY KEY (`id`),
+    KEY `idx_media_type` (`media_type`),
+    KEY `idx_md5` (`md5`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8mb4 COMMENT ='信发媒体库';
+
+-- ----------------------------
+-- Records of screen_media
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for screen_marquee
+-- ----------------------------
+DROP TABLE IF EXISTS `screen_marquee`;
+CREATE TABLE `screen_marquee`
+(
+    `id`           bigint(20)   NOT NULL AUTO_INCREMENT COMMENT '主键id',
+    `title`        varchar(64)  NOT NULL COMMENT '模板标题',
+    `content`      varchar(255) NOT NULL COMMENT '字幕内容',
+    `speed`        int          DEFAULT '5' COMMENT '滚动速度(1-20)',
+    `color`        varchar(16)  DEFAULT '#ff0000' COMMENT '文字颜色(十六进制)',
+    `font_size`    int          DEFAULT '32' COMMENT '字号',
+    `repeat_count` int          DEFAULT '0' COMMENT '循环次数(0循环)',
+    `remark`       varchar(255) DEFAULT '' COMMENT '描述',
+    `sort`         int          DEFAULT '99' COMMENT '排序',
+    `enabled`      int          DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
+    `create_time`  datetime(0)  NOT NULL COMMENT '创建时间',
+    `update_time`  datetime(0)  NOT NULL COMMENT '修改时间',
+    `deleted`      int          DEFAULT '1' COMMENT '逻辑删除',
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8mb4 COMMENT ='信发滚动字幕模板';
+
+-- ----------------------------
+-- Records of screen_marquee
 -- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;
