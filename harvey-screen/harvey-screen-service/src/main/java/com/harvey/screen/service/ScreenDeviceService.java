@@ -5,10 +5,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.common.exception.BusinessException;
 import com.harvey.common.utils.StringUtils;
+import com.harvey.screen.mapper.ScreenDeviceGroupMapper;
 import com.harvey.screen.mapper.ScreenDeviceMapper;
 import com.harvey.screen.mapstruct.ScreenDeviceConverter;
 import com.harvey.screen.model.dto.ScreenDeviceDto;
 import com.harvey.screen.model.entity.ScreenDevice;
+import com.harvey.screen.model.entity.ScreenDeviceGroup;
 import com.harvey.screen.model.query.ScreenDeviceQuery;
 import com.harvey.screen.model.vo.ScreenDeviceVO;
 import com.harvey.screen.cluster.ScreenClusterSessionRegistry;
@@ -18,6 +20,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 信发设备 服务实现类
@@ -32,11 +38,15 @@ public class ScreenDeviceService extends ServiceImpl<ScreenDeviceMapper, ScreenD
     private final ScreenDeviceMapper mapper;
     private final ScreenDeviceConverter converter;
     private final ScreenClusterSessionRegistry clusterRegistry;
+    private final ScreenDeviceGroupMapper deviceGroupMapper;
 
     /**
      * 分页查询设备(合并 TCP 实时在线状态)
      */
     public Page<ScreenDeviceVO> queryPage(ScreenDeviceQuery query) {
+        if (query.getDeleted() != null && query.getDeleted() == 1) {
+            return queryDeletedPage(query);
+        }
         Page<ScreenDevice> page = new Page<>(query.getPageNum(), query.getPageSize());
         LambdaQueryWrapper<ScreenDevice> queryWrapper = new LambdaQueryWrapper<ScreenDevice>()
                 .and(StringUtils.isNotBlank(query.getKeywords()),
@@ -45,10 +55,45 @@ public class ScreenDeviceService extends ServiceImpl<ScreenDeviceMapper, ScreenD
                                 .like(ScreenDevice::getDeviceName, query.getKeywords()))
                 .eq(query.getStatus() != null, ScreenDevice::getStatus, query.getStatus())
                 .eq(query.getAuditStatus() != null, ScreenDevice::getAuditStatus, query.getAuditStatus())
+                .eq(query.getGroupId() != null, ScreenDevice::getGroupId, query.getGroupId())
                 .orderByDesc(ScreenDevice::getId);
         Page<ScreenDeviceVO> voPage = converter.toPage(this.page(page, queryWrapper));
+        fillGroupName(voPage.getRecords());
         voPage.getRecords().forEach(vo -> vo.setOnline(clusterRegistry.isOnlineGlobal(vo.getDeviceNo())));
         return voPage;
+    }
+
+    /**
+     * 分页查询已删除设备(旁路逻辑删除拦截)
+     */
+    private Page<ScreenDeviceVO> queryDeletedPage(ScreenDeviceQuery query) {
+        Page<ScreenDevice> page = new Page<>(query.getPageNum(), query.getPageSize());
+        mapper.selectDeletedPage(page, query.getKeywords());
+        Page<ScreenDeviceVO> voPage = converter.toPage(page);
+        fillGroupName(voPage.getRecords());
+        voPage.getRecords().forEach(vo -> vo.setOnline(clusterRegistry.isOnlineGlobal(vo.getDeviceNo())));
+        return voPage;
+    }
+
+    /**
+     * 批量填充设备分组名称
+     */
+    private void fillGroupName(List<ScreenDeviceVO> voList) {
+        if (voList == null || voList.isEmpty()) {
+            return;
+        }
+        Set<Long> groupIds = voList.stream()
+                .map(ScreenDeviceVO::getGroupId)
+                .filter(Objects::nonNull)
+                .filter(id -> id > 0)
+                .collect(Collectors.toSet());
+        if (groupIds.isEmpty()) {
+            return;
+        }
+        List<ScreenDeviceGroup> groups = deviceGroupMapper.selectBatchIds(groupIds);
+        Map<Long, String> nameMap = groups.stream()
+                .collect(Collectors.toMap(ScreenDeviceGroup::getId, ScreenDeviceGroup::getGroupName));
+        voList.forEach(vo -> vo.setGroupName(nameMap.get(vo.getGroupId())));
     }
 
     /**
@@ -61,6 +106,7 @@ public class ScreenDeviceService extends ServiceImpl<ScreenDeviceMapper, ScreenD
                 .orderByAsc(ScreenDevice::getSort)
                 .list();
         List<ScreenDeviceVO> voList = list.stream().map(converter::toVO).toList();
+        fillGroupName(voList);
         voList.forEach(vo -> vo.setOnline(clusterRegistry.isOnlineGlobal(vo.getDeviceNo())));
         return voList;
     }
@@ -90,6 +136,7 @@ public class ScreenDeviceService extends ServiceImpl<ScreenDeviceMapper, ScreenD
         entity.setDeviceNo(dto.getDeviceNo());
         entity.setDeviceName(dto.getDeviceName());
         entity.setModel(dto.getModel());
+        entity.setGroupId(dto.getGroupId());
         entity.setSecret(dto.getSecret());
         entity.setRemark(dto.getRemark());
         entity.setEnabled(dto.getEnabled());

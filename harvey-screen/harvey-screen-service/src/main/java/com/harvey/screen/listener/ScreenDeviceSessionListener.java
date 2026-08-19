@@ -1,6 +1,5 @@
 package com.harvey.screen.listener;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.harvey.screen.cluster.ScreenClusterSessionRegistry;
 import com.harvey.screen.mapper.ScreenDeviceMapper;
 import com.harvey.screen.model.entity.ScreenDevice;
@@ -27,7 +26,7 @@ public class ScreenDeviceSessionListener implements ScreenSessionListener {
 
     @Override
     public void onLogin(ScreenSession session) {
-        ScreenDevice device = findByDeviceNo(session.getDeviceNo());
+        ScreenDevice device = deviceMapper.selectByDeviceNoIncludingDeleted(session.getDeviceNo());
         if (device == null) {
             ScreenDevice created = new ScreenDevice();
             created.setDeviceNo(session.getDeviceNo());
@@ -45,6 +44,13 @@ public class ScreenDeviceSessionListener implements ScreenSessionListener {
                     session.getDeviceNo(), session.getModel(), session.getIp());
             return;
         }
+        if (device.getDeleted() != null && device.getDeleted() == 0) {
+            deviceMapper.restoreDeleted(restoreEntity(session));
+            session.setAuditStatus(0);
+            log.info("设备重新连接, 已删除记录复活为待确认: deviceNo={}, model={}, ip={}",
+                    session.getDeviceNo(), session.getModel(), session.getIp());
+            return;
+        }
         session.setAuditStatus(device.getAuditStatus());
         ScreenDevice update = new ScreenDevice();
         update.setId(device.getId());
@@ -55,13 +61,25 @@ public class ScreenDeviceSessionListener implements ScreenSessionListener {
         log.info("设备上线状态已更新: deviceNo={}, ip={}", session.getDeviceNo(), session.getIp());
     }
 
+    private ScreenDevice restoreEntity(ScreenSession session) {
+        ScreenDevice entity = new ScreenDevice();
+        entity.setDeviceNo(session.getDeviceNo());
+        entity.setDeviceName(session.getDeviceNo());
+        entity.setModel(session.getModel());
+        entity.setSecret(session.getToken());
+        entity.setIp(session.getIp());
+        entity.setLastOnlineTime(LocalDateTime.now());
+        entity.setUpdateTime(LocalDateTime.now());
+        return entity;
+    }
+
     @Override
     public void onLogout(ScreenSession session) {
         if (clusterRegistry.isOnlineGlobal(session.getDeviceNo())) {
             log.info("设备在其他节点仍在线, 跳过下线状态更新: deviceNo={}", session.getDeviceNo());
             return;
         }
-        ScreenDevice device = findByDeviceNo(session.getDeviceNo());
+        ScreenDevice device = deviceMapper.selectByDeviceNoIncludingDeleted(session.getDeviceNo());
         if (device == null) {
             return;
         }
@@ -70,11 +88,5 @@ public class ScreenDeviceSessionListener implements ScreenSessionListener {
         update.setStatus(0);
         deviceMapper.updateById(update);
         log.info("设备下线状态已更新: deviceNo={}", session.getDeviceNo());
-    }
-
-    private ScreenDevice findByDeviceNo(String deviceNo) {
-        return deviceMapper.selectOne(new LambdaQueryWrapper<ScreenDevice>()
-                .eq(ScreenDevice::getDeviceNo, deviceNo)
-                .last("limit 1"));
     }
 }

@@ -79,12 +79,12 @@ public class ScreenMarqueeService extends ServiceImpl<ScreenMarqueeMapper, Scree
     }
 
     /**
-     * 下发字幕模板到设备：构建 MARQUEE 指令参数并发送
+     * 构建字幕指令参数(供单发/分组批量复用)
      */
-    public ScreenCommandSendVO send(ScreenMarqueeSendDto dto) {
-        ScreenMarquee marquee = getById(dto.getMarqueeId());
+    public Map<String, Object> buildMarqueeParams(Long marqueeId) {
+        ScreenMarquee marquee = getById(marqueeId);
         if (marquee == null) {
-            throw new BusinessException("字幕模板不存在: " + dto.getMarqueeId());
+            throw new BusinessException("字幕模板不存在: " + marqueeId);
         }
         Map<String, Object> params = new LinkedHashMap<>();
         params.put("marqueeId", marquee.getId());
@@ -94,6 +94,14 @@ public class ScreenMarqueeService extends ServiceImpl<ScreenMarqueeMapper, Scree
         params.put("color", marquee.getColor());
         params.put("fontSize", marquee.getFontSize());
         params.put("repeat", marquee.getRepeatCount());
+        return params;
+    }
+
+    /**
+     * 下发字幕模板到设备：构建 MARQUEE 指令参数并发送
+     */
+    public ScreenCommandSendVO send(ScreenMarqueeSendDto dto) {
+        Map<String, Object> params = buildMarqueeParams(dto.getMarqueeId());
         ScreenCommandDto command = new ScreenCommandDto();
         command.setDeviceNo(dto.getDeviceNo());
         command.setCmdCode(ScreenCommandCode.MARQUEE);

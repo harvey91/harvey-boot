@@ -16,4 +16,10 @@ public class ScreenDeviceQuery extends Query {
 
     /** 审核状态(0待确认 1已通过 2已拒绝)，不传查全部 */
     private Integer auditStatus;
+
+    /** 设备分组id，不传查全部 */
+    private Long groupId;
+
+    /** 是否查询已删除列表(1=是)，走逻辑删除旁路查询 */
+    private Integer deleted;
 }

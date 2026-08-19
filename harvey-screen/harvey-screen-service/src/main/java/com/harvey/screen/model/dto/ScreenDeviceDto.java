@@ -26,6 +26,9 @@ public class ScreenDeviceDto {
     @Schema(title = "设备型号")
     private String model;
 
+    @Schema(title = "设备分组id(0未分组)")
+    private Long groupId;
+
     @Schema(title = "登录令牌")
     private String secret;
 

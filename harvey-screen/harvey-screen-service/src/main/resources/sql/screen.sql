@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS `screen_device`
     `device_no`       varchar(64)  NOT NULL COMMENT '设备编号',
     `device_name`     varchar(64)  NOT NULL COMMENT '设备名称',
     `model`           varchar(64)  DEFAULT '' COMMENT '设备型号',
+    `group_id`        bigint(20)   DEFAULT '0' COMMENT '设备分组id(0未分组)',
     `secret`          varchar(255) DEFAULT '' COMMENT '登录令牌',
     `ip`              varchar(64)  DEFAULT '' COMMENT '最后连接IP',
     `last_online_time` datetime(0) DEFAULT NULL COMMENT '最后在线时间',
@@ -63,10 +64,10 @@ CREATE TABLE IF NOT EXISTS `screen_command`
 -- 说明：id 段 1100-1199 预留给信发模块，避免与既有菜单冲突
 -- ----------------------------
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
-VALUES (1100, 0, '信发管理', 'Screen', 'DIRECTORY', '', '/screen', 'Layout', '', 'Monitor', '/screen/device', 0, 1, '信发模块', 6, 1, NOW(), NOW(), 1);
+VALUES (1100, 0, '信发管理', 'Screen', 'DIRECTORY', '', '/screen', 'Layout', '', 'screen-monitor', '/screen/device', 0, 1, '信发模块', 6, 1, NOW(), NOW(), 1);
 
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
-VALUES (1101, 1100, '设备管理', 'Device', 'MENU', 'ScreenDevice', 'device', 'screen/device/index', 'screen:device:list', 'Connection', '', 0, 1, '信发设备管理', 1, 1, NOW(), NOW(), 1);
+VALUES (1101, 1100, '设备管理', 'Device', 'MENU', 'ScreenDevice', 'device', 'screen/device/index', 'screen:device:list', 'screen-device', '', 0, 1, '信发设备管理', 1, 1, NOW(), NOW(), 1);
 
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
 VALUES (1102, 1101, '新增设备', '', 'BUTTON', '', '', '', 'screen:device:create', '', '', 0, 1, '', 1, 1, NOW(), NOW(), 1);
@@ -78,7 +79,7 @@ INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, 
 VALUES (1104, 1101, '删除设备', '', 'BUTTON', '', '', '', 'screen:device:delete', '', '', 0, 1, '', 3, 1, NOW(), NOW(), 1);
 
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
-VALUES (1111, 1100, '指令记录', 'Command', 'MENU', 'ScreenCommand', 'command', 'screen/command/index', 'screen:command:list', 'Document', '', 0, 1, '信发指令记录', 2, 1, NOW(), NOW(), 1);
+VALUES (1111, 1100, '指令记录', 'Command', 'MENU', 'ScreenCommand', 'command', 'screen/command/index', 'screen:command:list', 'screen-command', '', 0, 1, '信发指令记录', 2, 1, NOW(), NOW(), 1);
 
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
 VALUES (1105, 1101, '下发指令', '', 'BUTTON', '', '', '', 'screen:command:send', '', '', 0, 1, '向设备下发指令', 4, 1, NOW(), NOW(), 1);
@@ -88,6 +89,42 @@ VALUES (1106, 1101, '确认设备', '', 'BUTTON', '', '', '', 'screen:device:app
 
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
 VALUES (1107, 1101, '拒绝设备', '', 'BUTTON', '', '', '', 'screen:device:reject', '', '', 0, 1, '审核拒绝自动注册设备', 6, 1, NOW(), NOW(), 1);
+
+-- ----------------------------
+-- 信发设备分组表
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `screen_device_group`
+(
+    `id`          bigint(20)   NOT NULL AUTO_INCREMENT COMMENT '主键id',
+    `group_name`  varchar(64)  NOT NULL COMMENT '分组名称',
+    `remark`      varchar(255) DEFAULT '' COMMENT '描述',
+    `sort`        int          DEFAULT '99' COMMENT '排序',
+    `enabled`     int          DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
+    `create_time` datetime(0)  NOT NULL COMMENT '创建时间',
+    `update_time` datetime(0)  NOT NULL COMMENT '修改时间',
+    `deleted`     int          DEFAULT '1' COMMENT '逻辑删除',
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8mb4 COMMENT ='信发设备分组';
+
+-- ----------------------------
+-- 信发模块菜单(设备分组)
+-- ----------------------------
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1110, 1100, '设备分组', 'Group', 'MENU', 'ScreenGroup', 'group', 'screen/group/index', 'screen:group:list', 'screen-group', '', 0, 1, '信发设备分组(按区域批量下发)', 0, 1, NOW(), NOW(), 1);
+
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1112, 1110, '新增分组', '', 'BUTTON', '', '', '', 'screen:group:create', '', '', 0, 1, '', 1, 1, NOW(), NOW(), 1);
+
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1113, 1110, '修改分组', '', 'BUTTON', '', '', '', 'screen:group:modify', '', '', 0, 1, '', 2, 1, NOW(), NOW(), 1);
+
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1114, 1110, '删除分组', '', 'BUTTON', '', '', '', 'screen:group:delete', '', '', 0, 1, '', 3, 1, NOW(), NOW(), 1);
+
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1115, 1110, '分组下发', '', 'BUTTON', '', '', '', 'screen:group:send', '', '', 0, 1, '向分组内设备批量下发', 4, 1, NOW(), NOW(), 1);
 
 -- ----------------------------
 -- 信发媒体库表
@@ -141,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `screen_marquee`
 -- 信发模块菜单(补充：媒体库 / 滚动字幕模板)
 -- ----------------------------
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
-VALUES (1121, 1100, '媒体库', 'Media', 'MENU', 'ScreenMedia', 'media', 'screen/media/index', 'screen:media:list', 'Picture', '', 0, 1, '信发媒体库', 3, 1, NOW(), NOW(), 1);
+VALUES (1121, 1100, '媒体库', 'Media', 'MENU', 'ScreenMedia', 'media', 'screen/media/index', 'screen:media:list', 'screen-media', '', 0, 1, '信发媒体库', 3, 1, NOW(), NOW(), 1);
 
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
 VALUES (1122, 1121, '上传媒体', '', 'BUTTON', '', '', '', 'screen:media:upload', '', '', 0, 1, '', 1, 1, NOW(), NOW(), 1);
@@ -153,7 +190,7 @@ INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, 
 VALUES (1124, 1121, '推送媒体', '', 'BUTTON', '', '', '', 'screen:media:push', '', '', 0, 1, '', 3, 1, NOW(), NOW(), 1);
 
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
-VALUES (1131, 1100, '滚动字幕', 'Marquee', 'MENU', 'ScreenMarquee', 'marquee', 'screen/marquee/index', 'screen:marquee:list', 'MessageBox', '', 0, 1, '信发滚动字幕模板', 4, 1, NOW(), NOW(), 1);
+VALUES (1131, 1100, '滚动字幕', 'Marquee', 'MENU', 'ScreenMarquee', 'marquee', 'screen/marquee/index', 'screen:marquee:list', 'screen-marquee', '', 0, 1, '信发滚动字幕模板', 4, 1, NOW(), NOW(), 1);
 
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
 VALUES (1132, 1131, '新增模板', '', 'BUTTON', '', '', '', 'screen:marquee:create', '', '', 0, 1, '', 1, 1, NOW(), NOW(), 1);

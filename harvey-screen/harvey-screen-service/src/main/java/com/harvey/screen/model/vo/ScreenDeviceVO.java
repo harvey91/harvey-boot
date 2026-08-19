@@ -32,6 +32,12 @@ public class ScreenDeviceVO implements Serializable {
     @Schema(title = "设备型号")
     private String model;
 
+    @Schema(title = "设备分组id(0未分组)")
+    private Long groupId;
+
+    @Schema(title = "设备分组名称")
+    private String groupName;
+
     @Schema(title = "最后连接IP")
     private String ip;
 

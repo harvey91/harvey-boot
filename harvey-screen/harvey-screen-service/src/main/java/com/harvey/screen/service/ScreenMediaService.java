@@ -101,12 +101,12 @@ public class ScreenMediaService extends ServiceImpl<ScreenMediaMapper, ScreenMed
     }
 
     /**
-     * 推送媒体到设备：下发 MEDIA_PUSH 指令，设备端按 url 拉取播放
+     * 构建媒体推送指令参数(供单发/分组批量复用)
      */
-    public ScreenCommandSendVO push(ScreenMediaPushDto dto) {
-        ScreenMedia media = getById(dto.getMediaId());
+    public Map<String, Object> buildMediaParams(Long mediaId) {
+        ScreenMedia media = getById(mediaId);
         if (media == null) {
-            throw new BusinessException("媒体不存在: " + dto.getMediaId());
+            throw new BusinessException("媒体不存在: " + mediaId);
         }
         Map<String, Object> params = new LinkedHashMap<>();
         params.put("mediaId", media.getId());
@@ -115,6 +115,14 @@ public class ScreenMediaService extends ServiceImpl<ScreenMediaMapper, ScreenMed
         params.put("url", media.getUrl());
         params.put("md5", media.getMd5());
         params.put("size", media.getSize());
+        return params;
+    }
+
+    /**
+     * 推送媒体到设备：下发 MEDIA_PUSH 指令，设备端按 url 拉取播放
+     */
+    public ScreenCommandSendVO push(ScreenMediaPushDto dto) {
+        Map<String, Object> params = buildMediaParams(dto.getMediaId());
         ScreenCommandDto command = new ScreenCommandDto();
         command.setDeviceNo(dto.getDeviceNo());
         command.setCmdCode(ScreenCommandCode.MEDIA_PUSH);
