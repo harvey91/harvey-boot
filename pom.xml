@@ -34,6 +34,7 @@
         <module>harvey-quartz</module>
         <module>harvey-mq</module>
         <module>harvey-ai</module>
+        <module>harvey-screen</module>
     </modules>
 
     <!-- 版本声明 -->
@@ -320,6 +321,18 @@
                 <groupId>com.harvey</groupId>
                 <artifactId>harvey-storage-service</artifactId>
                 <version>${harvey.storage.service.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.harvey</groupId>
+                <artifactId>harvey-screen-api</artifactId>
+                <version>${harvey-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.harvey</groupId>
+                <artifactId>harvey-screen-service</artifactId>
+                <version>${harvey-version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

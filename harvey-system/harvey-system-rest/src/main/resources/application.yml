@@ -62,4 +62,32 @@ springdoc:
   group-configs:
     - group: 'default'
       paths-to-match: '/**'
-      packages-to-scan: com.harvey.system.controller,com.harvey.ai.controller
+      packages-to-scan: com.harvey.system.controller,com.harvey.ai.controller,com.harvey.screen.controller
+
+# 信发 TCP 服务(设备长连接)
+harvey:
+  screen:
+    netty:
+      enabled: true
+      port: 9110
+      reader-idle-seconds: 90
+      login-timeout-seconds: 30
+      auth:
+        required: true
+        # 骨架阶段：空表示允许任意非空 token；生产接入 Redis/DB 校验后请移除
+        token-whitelist: []
+    # 多节点集群(依赖 Redis)：各节点把本机在线设备登记到独立 Set，节点宕机自动离线；
+    # 跨节点指令经 Redis 频道转发到设备所在节点下发
+    cluster:
+      enabled: true
+      # 节点id，为空时默认 本机IP:TCP端口(端口唯一)
+      node-id: ""
+      # 在线登记 TTL(秒)，心跳续期；节点宕机超过该时长设备自动离线
+      online-ttl-seconds: 120
+      # 跨节点指令转发频道
+      command-channel: "harvey:screen:command"
+    # 指令超时轮询：已发送后超过时限无应答 -> 判定超时(条件UPDATE幂等，多节点安全)
+    command-timeout:
+      enabled: true
+      timeout-seconds: 30
+      scan-interval-seconds: 10

@@ -35,6 +35,12 @@
             <version>${harvey-version}</version>
         </dependency>
 
+        <!-- 信发模块(设备管理/指令下发/TCP长连接) -->
+        <dependency>
+            <groupId>com.harvey</groupId>
+            <artifactId>harvey-screen-service</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-spring-boot3-starter</artifactId>

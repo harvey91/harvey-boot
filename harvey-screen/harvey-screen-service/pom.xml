@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.harvey</groupId>
+        <artifactId>harvey-screen</artifactId>
+        <version>1.0.0</version>
+    </parent>
+    <artifactId>harvey-screen-service</artifactId>
+    <name>${project.artifactId}</name>
+    <packaging>jar</packaging>
+    <description>harvey-screen-service 信发模块业务层(设备管理/指令下发/指令记录)</description>
+
+    <dependencies>
+        <!-- 协议定义 -->
+        <dependency>
+            <groupId>com.harvey</groupId>
+            <artifactId>harvey-screen-api</artifactId>
+        </dependency>
+
+        <!-- Netty 服务端(指令下发/会话管理) -->
+        <dependency>
+            <groupId>com.harvey</groupId>
+            <artifactId>harvey-screen-tcp</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!-- 公共组件(BaseEntity/分页/mybatis-plus/redis) -->
+        <dependency>
+            <groupId>com.harvey</groupId>
+            <artifactId>harvey-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
