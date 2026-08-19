@@ -430,6 +430,10 @@ VALUES (1111, 1100, '指令记录', 'Command', 'MENU', 'ScreenCommand', 'command
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
 VALUES (1105, 1101, '下发指令', '', 'BUTTON', '', '', '', 'screen:command:send', '', '', 0, 1, '向设备下发指令', 4, 1, '2026-08-19 16:00:00', '2026-08-19 16:00:00', 1);
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1106, 1101, '确认设备', '', 'BUTTON', '', '', '', 'screen:device:approve', '', '', 0, 1, '审核通过自动注册设备', 5, 1, '2026-08-19 16:00:00', '2026-08-19 16:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1107, 1101, '拒绝设备', '', 'BUTTON', '', '', '', 'screen:device:reject', '', '', 0, 1, '审核拒绝自动注册设备', 6, 1, '2026-08-19 16:00:00', '2026-08-19 16:00:00', 1);
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
 VALUES (1121, 1100, '媒体库', 'Media', 'MENU', 'ScreenMedia', 'media', 'screen/media/index', 'screen:media:list', 'Picture', '', 0, 1, '信发媒体库', 3, 1, '2026-08-19 16:00:00', '2026-08-19 16:00:00', 1);
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
 VALUES (1122, 1121, '上传媒体', '', 'BUTTON', '', '', '', 'screen:media:upload', '', '', 0, 1, '', 1, 1, '2026-08-19 16:00:00', '2026-08-19 16:00:00', 1);
@@ -654,6 +658,8 @@ INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (
 INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (413, 1, 1133, '2026-08-19 16:00:00');
 INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (414, 1, 1134, '2026-08-19 16:00:00');
 INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (415, 1, 1135, '2026-08-19 16:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (416, 1, 1106, '2026-08-19 16:00:00');
+INSERT INTO `sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`) VALUES (417, 1, 1107, '2026-08-19 16:00:00');
 -- ----------------------------
 -- Table structure for sys_dict
 -- ----------------------------
@@ -1045,6 +1051,7 @@ CREATE TABLE `screen_device`
     `ip`               varchar(64)  DEFAULT '' COMMENT '最后连接IP',
     `last_online_time` datetime(0)  DEFAULT NULL COMMENT '最后在线时间',
     `status`           int          DEFAULT '0' COMMENT '状态(0离线 1在线)',
+    `audit_status`     int          DEFAULT '0' COMMENT '审核状态(0待确认 1已通过 2已拒绝)',
     `remark`           varchar(255) DEFAULT '' COMMENT '描述',
     `sort`             int          DEFAULT '99' COMMENT '排序',
     `enabled`          int          DEFAULT '1' COMMENT '是否启用：0禁用，1启用',

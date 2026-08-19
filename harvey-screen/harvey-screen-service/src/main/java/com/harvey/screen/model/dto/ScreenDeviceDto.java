@@ -34,4 +34,7 @@ public class ScreenDeviceDto {
 
     @Schema(title = "是否启用(0禁用 1启用)")
     private Integer enabled;
+
+    @Schema(title = "审核状态(0待确认 1已通过 2已拒绝)")
+    private Integer auditStatus;
 }

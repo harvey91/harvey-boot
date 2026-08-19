@@ -42,4 +42,7 @@ public class ScreenDevice extends BaseEntity implements Serializable {
 
     @Schema(title = "状态(0离线 1在线)，冗余镜像，实时状态以 TCP 会话为准")
     private Integer status;
+
+    @Schema(title = "审核状态(0待确认 1已通过 2已拒绝)")
+    private Integer auditStatus;
 }

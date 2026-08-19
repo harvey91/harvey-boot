@@ -78,6 +78,9 @@ public class ScreenCommandService extends ServiceImpl<ScreenCommandMapper, Scree
         if (device.getEnabled() == null || device.getEnabled() != 1) {
             throw new BusinessException("设备已禁用: " + dto.getDeviceNo());
         }
+        if (device.getAuditStatus() == null || device.getAuditStatus() != 1) {
+            throw new BusinessException("设备待审核，暂不可下发指令: " + dto.getDeviceNo());
+        }
 
         long seq = seqGenerator.next();
         Map<String, Object> params = dto.getParams();

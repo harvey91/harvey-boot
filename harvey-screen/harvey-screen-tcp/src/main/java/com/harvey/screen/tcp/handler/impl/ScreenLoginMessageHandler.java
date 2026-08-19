@@ -87,7 +87,10 @@ public class ScreenLoginMessageHandler implements ScreenMessageHandler {
                 log.error("设备上线监听器处理失败: deviceNo={}", deviceNo, e);
             }
         }
-        ctx.writeAndFlush(ScreenMessage.ack(seqGenerator.next(), AckMessage.of(message.getSeq(), AckStatus.OK, "登录成功")));
+        String ackMessage = session.getAuditStatus() != null && session.getAuditStatus() == 0
+                ? "登录成功，设备待管理确认"
+                : "登录成功";
+        ctx.writeAndFlush(ScreenMessage.ack(seqGenerator.next(), AckMessage.of(message.getSeq(), AckStatus.OK, ackMessage)));
     }
 
     private String resolveIp(Channel channel) {

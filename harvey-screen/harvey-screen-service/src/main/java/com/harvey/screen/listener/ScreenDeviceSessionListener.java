@@ -29,8 +29,23 @@ public class ScreenDeviceSessionListener implements ScreenSessionListener {
     public void onLogin(ScreenSession session) {
         ScreenDevice device = findByDeviceNo(session.getDeviceNo());
         if (device == null) {
+            ScreenDevice created = new ScreenDevice();
+            created.setDeviceNo(session.getDeviceNo());
+            created.setDeviceName(session.getDeviceNo());
+            created.setModel(session.getModel());
+            created.setSecret(session.getToken());
+            created.setIp(session.getIp());
+            created.setStatus(1);
+            created.setLastOnlineTime(LocalDateTime.now());
+            created.setEnabled(1);
+            created.setAuditStatus(0);
+            deviceMapper.insert(created);
+            session.setAuditStatus(0);
+            log.info("设备首次连接自动注册(待确认): deviceNo={}, model={}, ip={}",
+                    session.getDeviceNo(), session.getModel(), session.getIp());
             return;
         }
+        session.setAuditStatus(device.getAuditStatus());
         ScreenDevice update = new ScreenDevice();
         update.setId(device.getId());
         update.setStatus(1);

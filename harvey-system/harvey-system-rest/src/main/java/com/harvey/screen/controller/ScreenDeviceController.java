@@ -88,4 +88,20 @@ public class ScreenDeviceController {
         screenDeviceService.deleteByIds(List.of(id));
         return RespResult.success();
     }
+
+    @Operation(summary = "审核通过设备")
+    @SaCheckPermission("screen:device:approve")
+    @PutMapping("/approve/{id}")
+    public RespResult<String> approve(@PathVariable(value = "id") Long id) {
+        screenDeviceService.approve(id);
+        return RespResult.success();
+    }
+
+    @Operation(summary = "审核拒绝设备")
+    @SaCheckPermission("screen:device:reject")
+    @PutMapping("/reject/{id}")
+    public RespResult<String> reject(@PathVariable(value = "id") Long id) {
+        screenDeviceService.reject(id);
+        return RespResult.success();
+    }
 }

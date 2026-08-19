@@ -13,6 +13,7 @@ import com.harvey.screen.model.query.ScreenDeviceQuery;
 import com.harvey.screen.model.vo.ScreenDeviceVO;
 import com.harvey.screen.cluster.ScreenClusterSessionRegistry;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,7 @@ import java.util.List;
  *
  * @author Harvey
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ScreenDeviceService extends ServiceImpl<ScreenDeviceMapper, ScreenDevice> {
@@ -42,6 +44,7 @@ public class ScreenDeviceService extends ServiceImpl<ScreenDeviceMapper, ScreenD
                                 .or()
                                 .like(ScreenDevice::getDeviceName, query.getKeywords()))
                 .eq(query.getStatus() != null, ScreenDevice::getStatus, query.getStatus())
+                .eq(query.getAuditStatus() != null, ScreenDevice::getAuditStatus, query.getAuditStatus())
                 .orderByDesc(ScreenDevice::getId);
         Page<ScreenDeviceVO> voPage = converter.toPage(this.page(page, queryWrapper));
         voPage.getRecords().forEach(vo -> vo.setOnline(clusterRegistry.isOnlineGlobal(vo.getDeviceNo())));
@@ -49,11 +52,12 @@ public class ScreenDeviceService extends ServiceImpl<ScreenDeviceMapper, ScreenD
     }
 
     /**
-     * 查询所有已启用设备(供分组下发/下拉选择)
+     * 查询所有已审核且启用的设备(供分组下发/下拉选择)
      */
     public List<ScreenDeviceVO> listEnabled() {
         List<ScreenDevice> list = this.lambdaQuery()
                 .eq(ScreenDevice::getEnabled, 1)
+                .eq(ScreenDevice::getAuditStatus, 1)
                 .orderByAsc(ScreenDevice::getSort)
                 .list();
         List<ScreenDeviceVO> voList = list.stream().map(converter::toVO).toList();
@@ -70,6 +74,9 @@ public class ScreenDeviceService extends ServiceImpl<ScreenDeviceMapper, ScreenD
         ScreenDevice entity = converter.toEntity(dto);
         if (entity.getStatus() == null) {
             entity.setStatus(0);
+        }
+        if (entity.getAuditStatus() == null) {
+            entity.setAuditStatus(1);
         }
         this.save(entity);
     }
@@ -92,6 +99,40 @@ public class ScreenDeviceService extends ServiceImpl<ScreenDeviceMapper, ScreenD
     @Transactional(rollbackFor = Throwable.class)
     public void deleteByIds(List<Long> ids) {
         this.removeByIds(ids);
+    }
+
+    /**
+     * 审核通过设备(待确认 -> 已通过并启用)
+     */
+    @Transactional(rollbackFor = Throwable.class)
+    public void approve(Long id) {
+        ScreenDevice entity = this.getById(id);
+        if (entity == null) {
+            throw new BusinessException("设备不存在");
+        }
+        ScreenDevice update = new ScreenDevice();
+        update.setId(id);
+        update.setAuditStatus(1);
+        update.setEnabled(1);
+        this.updateById(update);
+        log.info("设备审核通过: id={}, deviceNo={}", id, entity.getDeviceNo());
+    }
+
+    /**
+     * 审核拒绝设备(待确认 -> 已拒绝并禁用)
+     */
+    @Transactional(rollbackFor = Throwable.class)
+    public void reject(Long id) {
+        ScreenDevice entity = this.getById(id);
+        if (entity == null) {
+            throw new BusinessException("设备不存在");
+        }
+        ScreenDevice update = new ScreenDevice();
+        update.setId(id);
+        update.setAuditStatus(2);
+        update.setEnabled(0);
+        this.updateById(update);
+        log.info("设备审核拒绝: id={}, deviceNo={}", id, entity.getDeviceNo());
     }
 
     /**

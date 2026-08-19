@@ -13,4 +13,7 @@ public class ScreenDeviceQuery extends Query {
 
     /** 在线状态(0离线 1在线)，不传查全部 */
     private Integer status;
+
+    /** 审核状态(0待确认 1已通过 2已拒绝)，不传查全部 */
+    private Integer auditStatus;
 }

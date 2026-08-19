@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS `screen_device`
     `ip`              varchar(64)  DEFAULT '' COMMENT '最后连接IP',
     `last_online_time` datetime(0) DEFAULT NULL COMMENT '最后在线时间',
     `status`          int          DEFAULT '0' COMMENT '状态(0离线 1在线)',
+    `audit_status`    int          DEFAULT '0' COMMENT '审核状态(0待确认 1已通过 2已拒绝)',
     `remark`          varchar(255) DEFAULT '' COMMENT '描述',
     `sort`            int          DEFAULT '99' COMMENT '排序',
     `enabled`         int          DEFAULT '1' COMMENT '是否启用：0禁用，1启用',
@@ -81,6 +82,12 @@ VALUES (1111, 1100, '指令记录', 'Command', 'MENU', 'ScreenCommand', 'command
 
 INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
 VALUES (1105, 1101, '下发指令', '', 'BUTTON', '', '', '', 'screen:command:send', '', '', 0, 1, '向设备下发指令', 4, 1, NOW(), NOW(), 1);
+
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1106, 1101, '确认设备', '', 'BUTTON', '', '', '', 'screen:device:approve', '', '', 0, 1, '审核通过自动注册设备', 5, 1, NOW(), NOW(), 1);
+
+INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, `route_name`, `route_path`, `component`, `permission`, `icon`, `redirect`, `always_show`, `keep_alive`, `remark`, `sort`, `enabled`, `create_time`, `update_time`, `deleted`)
+VALUES (1107, 1101, '拒绝设备', '', 'BUTTON', '', '', '', 'screen:device:reject', '', '', 0, 1, '审核拒绝自动注册设备', 6, 1, NOW(), NOW(), 1);
 
 -- ----------------------------
 -- 信发媒体库表
@@ -161,4 +168,4 @@ INSERT INTO `sys_menu` (`id`, `parent_id`, `menu_name`, `menu_name_en`, `type`, 
 VALUES (1135, 1131, '下发字幕', '', 'BUTTON', '', '', '', 'screen:marquee:send', '', '', 0, 1, '', 4, 1, NOW(), NOW(), 1);
 
 -- 若需要给非超级管理员角色授权，示例(替换 role_id 为目标角色id)：
--- INSERT INTO `sys_role_menu` (`role_id`, `menu_id`, `create_time`) VALUES (2, 1100, NOW()), (2, 1101, NOW()), (2, 1102, NOW()), (2, 1103, NOW()), (2, 1104, NOW()), (2, 1111, NOW()), (2, 1105, NOW()), (2, 1121, NOW()), (2, 1122, NOW()), (2, 1123, NOW()), (2, 1124, NOW()), (2, 1131, NOW()), (2, 1132, NOW()), (2, 1133, NOW()), (2, 1134, NOW()), (2, 1135, NOW());
+-- INSERT INTO `sys_role_menu` (`role_id`, `menu_id`, `create_time`) VALUES (2, 1100, NOW()), (2, 1101, NOW()), (2, 1102, NOW()), (2, 1103, NOW()), (2, 1104, NOW()), (2, 1111, NOW()), (2, 1105, NOW()), (2, 1106, NOW()), (2, 1107, NOW()), (2, 1121, NOW()), (2, 1122, NOW()), (2, 1123, NOW()), (2, 1124, NOW()), (2, 1131, NOW()), (2, 1132, NOW()), (2, 1133, NOW()), (2, 1134, NOW()), (2, 1135, NOW());

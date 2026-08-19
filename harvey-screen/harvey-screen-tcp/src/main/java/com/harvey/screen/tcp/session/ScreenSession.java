@@ -1,7 +1,6 @@
 package com.harvey.screen.tcp.session;
 
 import io.netty.channel.Channel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -10,8 +9,19 @@ import lombok.Data;
  * @author Harvey
  */
 @Data
-@AllArgsConstructor
 public class ScreenSession {
+
+    public ScreenSession(String deviceNo, Channel channel, String token, long loginTime,
+                         long lastHeartbeatTime, String remoteAddress, String ip, String model) {
+        this.deviceNo = deviceNo;
+        this.channel = channel;
+        this.token = token;
+        this.loginTime = loginTime;
+        this.lastHeartbeatTime = lastHeartbeatTime;
+        this.remoteAddress = remoteAddress;
+        this.ip = ip;
+        this.model = model;
+    }
 
     /** 设备编号 */
     private final String deviceNo;
@@ -36,4 +46,7 @@ public class ScreenSession {
 
     /** 设备型号 */
     private final String model;
+
+    /** 审核状态(0待确认 1已通过 2已拒绝)，由服务端监听器填充，用于登录应答提示 */
+    private volatile Integer auditStatus;
 }
