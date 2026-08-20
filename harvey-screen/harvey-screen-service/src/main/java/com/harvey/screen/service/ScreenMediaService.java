@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.harvey.common.exception.BusinessException;
 import com.harvey.common.utils.StringUtils;
-import com.harvey.core.storage.StorageService;
+import com.harvey.storage.oss.StorageService;
 import com.harvey.screen.api.ScreenCommandCode;
 import com.harvey.screen.mapper.ScreenMediaMapper;
 import com.harvey.screen.mapstruct.ScreenMediaConverter;

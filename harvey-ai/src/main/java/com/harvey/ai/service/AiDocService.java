@@ -14,7 +14,7 @@ import com.harvey.ai.rag.DocTextParser;
 import com.harvey.ai.rag.TextChunker;
 import com.harvey.common.exception.BusinessException;
 import com.harvey.common.utils.StringUtils;
-import com.harvey.core.storage.StorageService;
+import com.harvey.storage.oss.StorageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

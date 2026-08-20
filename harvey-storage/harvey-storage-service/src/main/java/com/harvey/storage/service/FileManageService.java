@@ -12,7 +12,7 @@ import com.harvey.storage.model.dto.FileManageDto;
 import com.harvey.storage.model.entity.FileManage;
 import com.harvey.storage.model.query.FileManageQuery;
 import com.harvey.common.utils.StringUtils;
-import com.harvey.core.storage.StorageService;
+import com.harvey.storage.oss.StorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,4 +1,4 @@
-package com.harvey.core.storage;
+package com.harvey.storage.oss;
 
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.OSSObject;

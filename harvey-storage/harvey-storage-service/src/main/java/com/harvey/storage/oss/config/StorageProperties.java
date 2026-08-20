@@ -1,4 +1,4 @@
-package com.harvey.core.storage.config;
+package com.harvey.storage.oss.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -15,6 +15,7 @@ public class StorageProperties {
     private Aliyun aliyun;
     private Tencent tencent;
     private Qiniu qiniu;
+    private Minio minio;
 
     @Data
     public static class Local {
@@ -44,5 +45,15 @@ public class StorageProperties {
         private String accessKey;
         private String secretKey;
         private String bucketName;
+    }
+
+    @Data
+    public static class Minio {
+        private String endpoint;
+        private String innerEndpoint;
+        private String accessKey;
+        private String secretKey;
+        private String bucketName;
+        private String address;
     }
 }

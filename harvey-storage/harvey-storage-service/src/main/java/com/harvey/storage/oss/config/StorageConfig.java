@@ -1,6 +1,6 @@
-package com.harvey.core.storage.config;
+package com.harvey.storage.oss.config;
 
-import com.harvey.core.storage.*;
+import com.harvey.storage.oss.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -31,6 +31,10 @@ public class StorageConfig {
             case "aliyun" -> storageService.setStorage(aliyunStorage());
             case "tencent" -> storageService.setStorage(tencentStorage());
             case "qiniu" -> storageService.setStorage(qiniuStorage());
+            case "minio" -> {
+                storageService.setStorage(minioStorage());
+                storageService.setAddress(properties.getMinio().getAddress());
+            }
             default -> throw new RuntimeException("当前存储模式 " + active + " 不支持");
         }
         log.info("StorageService bean init. active = {}", active);
@@ -77,5 +81,18 @@ public class StorageConfig {
         qiniuStorage.setBucketName(qiniu.getBucketName());
         qiniuStorage.setEndpoint(qiniu.getEndpoint());
         return qiniuStorage;
+    }
+
+    @Bean
+    public MinioStorage minioStorage() {
+        MinioStorage minioStorage = new MinioStorage();
+        StorageProperties.Minio minio = this.properties.getMinio();
+        minioStorage.setEndpoint(minio.getEndpoint());
+        minioStorage.setInnerEndpoint(minio.getInnerEndpoint());
+        minioStorage.setAccessKey(minio.getAccessKey());
+        minioStorage.setSecretKey(minio.getSecretKey());
+        minioStorage.setBucketName(minio.getBucketName());
+        minioStorage.setAddress(minio.getAddress());
+        return minioStorage;
     }
 }

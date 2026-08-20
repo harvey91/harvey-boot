@@ -11,31 +11,3 @@ mybatis-plus:
       logic-delete-value: 0 # 逻辑已删除值
       logic-not-delete-value: 1 # 逻辑未删除值
 
-# 对象存储配置
-storage:
-  # 当前工作的对象存储模式，分别是local、aliyun、tencent、qiniu
-  active: local
-  # 本地对象存储配置信息
-  local:
-    storagePath: G:/storage
-    # fetch方法对应的地址
-    address: /storage/fetch
-  # 阿里云对象存储配置信息
-  aliyun:
-    endpoint: oss-cn-shenzhen.aliyuncs.com
-    accessKeyId: 111111
-    accessKeySecret: xxxx
-    bucketName: myBucketName
-  # 腾讯对象存储配置信息，请参考 https://cloud.tencent.com/document/product/436/6249
-  tencent:
-    secretId: 111111
-    secretKey: xxxxx
-    region: ap-shanghai
-    bucketName: myBucketName
-  # 七牛云对象存储配置信息
-  qiniu:
-    endpoint: http://pd5cb6ulu.bkt.clouddn.com
-    accessKey: 111111
-    secretKey: xxxxxx
-    bucketName: mall
-

@@ -18,6 +18,12 @@
             <version>${harvey-version}</version>
         </dependency>
 
+        <!-- 对象存储(本地/阿里云/腾讯云/七牛/Minio) -->
+        <dependency>
+            <groupId>com.harvey</groupId>
+            <artifactId>harvey-storage-service</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>

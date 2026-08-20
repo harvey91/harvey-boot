@@ -1,4 +1,4 @@
-package com.harvey.core.storage;
+package com.harvey.storage.oss;
 
 import cn.hutool.core.date.DateUtil;
 import lombok.Data;

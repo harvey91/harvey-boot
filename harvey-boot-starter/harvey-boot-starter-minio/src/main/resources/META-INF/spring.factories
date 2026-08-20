@@ -1,2 +1,0 @@
-# Environment Post Processors
-org.springframework.boot.env.EnvironmentPostProcessor=com.harvey.starter.minio.config.ActiveMinioProfileConfig

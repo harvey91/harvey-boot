@@ -1,4 +1,4 @@
-package com.harvey.core.storage;
+package com.harvey.storage.oss;
 
 import cn.hutool.core.io.IoUtil;
 import com.qcloud.cos.COSClient;
