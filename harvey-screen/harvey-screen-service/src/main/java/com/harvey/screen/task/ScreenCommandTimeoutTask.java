@@ -1,9 +1,11 @@
 package com.harvey.screen.task;
 
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.harvey.screen.cluster.ScreenClusterProperties;
 import com.harvey.screen.mapper.ScreenCommandMapper;
 import com.harvey.screen.model.entity.ScreenCommand;
 import com.harvey.screen.service.ScreenCommandService;
+import com.harvey.starter.redis.service.RedisService;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -20,6 +23,7 @@ import java.util.concurrent.TimeUnit;
  * <p>
  * 周期性扫描长时间处于"已发送"且无设备应答的指令，流转为"超时"。
  * 采用条件 UPDATE(仅命中 status=已发送 且 sendTime 早于截止时间)，多节点并发执行天然幂等。
+ * 多节点集群(harvey.screen.cluster.enabled)下通过 Redis 分布式锁保证每轮仅一个节点执行，避免冗余扫描。
  * 自带调度线程，不依赖全局 @EnableScheduling，避免影响其他模块。
  *
  * @author Harvey
@@ -29,8 +33,13 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class ScreenCommandTimeoutTask {
 
+    /** 分布式锁 key(集群模式下用于保证每轮仅一个节点执行) */
+    private static final String LOCK_KEY = "harvey:screen:command-timeout:lock";
+
     private final ScreenCommandMapper commandMapper;
     private final ScreenCommandTimeoutProperties props;
+    private final RedisService redisService;
+    private final ScreenClusterProperties clusterProps;
 
     private ScheduledExecutorService executor;
     private volatile boolean running;
@@ -67,6 +76,18 @@ public class ScreenCommandTimeoutTask {
         if (!running || !props.isEnabled()) {
             return;
         }
+        String lockValue = null;
+        if (clusterProps.isEnabled()) {
+            lockValue = UUID.randomUUID().toString();
+            try {
+                if (!redisService.setIfAbsent(LOCK_KEY, lockValue, props.getScanIntervalSeconds(), TimeUnit.SECONDS)) {
+                    return;
+                }
+            } catch (Exception e) {
+                log.error("指令超时轮询获取分布式锁失败, 本轮跳过", e);
+                return;
+            }
+        }
         try {
             LocalDateTime cutoff = LocalDateTime.now().minusSeconds(props.getTimeoutSeconds());
             LambdaUpdateWrapper<ScreenCommand> wrapper = new LambdaUpdateWrapper<ScreenCommand>()
@@ -81,6 +102,24 @@ public class ScreenCommandTimeoutTask {
             }
         } catch (Exception e) {
             log.error("指令超时轮询执行异常", e);
+        } finally {
+            releaseLock(lockValue);
+        }
+    }
+
+    /**
+     * 释放分布式锁(仅释放自己的锁, 防止误删他人锁)
+     */
+    private void releaseLock(String lockValue) {
+        if (lockValue == null || !clusterProps.isEnabled()) {
+            return;
+        }
+        try {
+            if (lockValue.equals(redisService.get(LOCK_KEY))) {
+                redisService.delete(LOCK_KEY);
+            }
+        } catch (Exception e) {
+            log.warn("指令超时轮询释放分布式锁失败(由 TTL 兜底)", e);
         }
     }
 }
