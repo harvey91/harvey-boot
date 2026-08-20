@@ -25,7 +25,7 @@
 
         <dependency>
             <groupId>com.harvey</groupId>
-            <artifactId>harvey-quartz</artifactId>
+            <artifactId>harvey-boot-starter-quartz</artifactId>
         </dependency>
 
         <!-- AI 模块(模型管理/对话) -->

@@ -33,18 +33,22 @@ harvey-boot
 │  └── utils
 ├── harvey-core 
 │  ├── config      
-│  ├── mybatis
-│  ├── redis
-│  ├── storage
-│  ├── thread
-│  └── xxl
+│  ├── mapstruct
+│  └── model
+├── harvey-boot-starter
+│  ├── harvey-boot-starter-mysql
+│  ├── harvey-boot-starter-quartz   # 内嵌调度(Quartz) 集成与任务管理
+│  ├── harvey-boot-starter-rabbitmq
+│  ├── harvey-boot-starter-redis
+│  ├── harvey-boot-starter-rocketmq
+│  └── harvey-boot-starter-thread
 ├── harvey-generator
 ├── harvey-mq
 │  ├── harvey-rabbitmq
 │  └── harvey-rocketmq
-├── harvey-quartz
 ├── harvey-storage
 │  └── harvey-storage-service
+│  │  ├── oss          # 对象存储平台(本地/阿里云/腾讯云/七牛/Minio)
 │  │  ├── mapper
 │  │  ├── mapstruct
 │  │  ├── model

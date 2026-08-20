@@ -31,7 +31,6 @@
         <module>harvey-system</module>
         <module>harvey-generator</module>
         <module>harvey-storage</module>
-        <module>harvey-quartz</module>
         <module>harvey-mq</module>
         <module>harvey-ai</module>
         <module>harvey-screen</module>
@@ -41,7 +40,7 @@
     <properties>
         <harvey.common.version>1.0.0</harvey.common.version>
         <harvey.core.version>1.0.0</harvey.core.version>
-        <harvey.quarzt.version>1.0.0</harvey.quarzt.version>
+        <harvey.boot.starter.quartz.version>1.0.0</harvey.boot.starter.quartz.version>
         <harvey.boot.starter.version>1.0.0</harvey.boot.starter.version>
         <harvey.boot.starter.redis.version>1.0.0</harvey.boot.starter.redis.version>
         <harvey.boot.starter.mysql.version>1.0.0</harvey.boot.starter.mysql.version>
@@ -68,7 +67,6 @@
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <commons-lang3.version>3.14.0</commons-lang3.version>
         <UserAgentUtils.version>1.21</UserAgentUtils.version>
-        <xxl-job-core.version>2.4.2</xxl-job-core.version>
         <oshi-core.version>6.1.4</oshi-core.version>
         <jackson-datatype-jsr310-version>2.17.2</jackson-datatype-jsr310-version>
         <aliyun-sdk-oss-version>2.5.0</aliyun-sdk-oss-version>
@@ -198,12 +196,6 @@
                 <version>${captcha-spring-boot-starter.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>com.xuxueli</groupId>
-                <artifactId>xxl-job-core</artifactId>
-                <version>${xxl-job-core.version}</version>
-            </dependency>
-
             <!-- 阿里云OSS 云存储 -->
             <dependency>
                 <groupId>com.aliyun.oss</groupId>
@@ -270,8 +262,8 @@
 
             <dependency>
                 <groupId>com.harvey</groupId>
-                <artifactId>harvey-quartz</artifactId>
-                <version>${harvey.quarzt.version}</version>
+                <artifactId>harvey-boot-starter-quartz</artifactId>
+                <version>${harvey.boot.starter.quartz.version}</version>
             </dependency>
 
             <dependency>

@@ -13,13 +13,24 @@
     <name>${project.artifactId}</name>
     <version>1.0.0</version>
     <packaging>jar</packaging>
-    <description>harvey-boot-starter-quartz 是Harvey平台公共的 Quartz 配置</description>
+    <description>harvey-boot-starter-quartz 是Harvey平台公共的 Quartz 集成(内嵌调度/任务管理)</description>
 
     <dependencies>
-        <!-- Spring Boot -->
+        <!-- 公共组件(BaseEntity/分页/mybatis-plus/redis) -->
+        <dependency>
+            <groupId>com.harvey</groupId>
+            <artifactId>harvey-core</artifactId>
+        </dependency>
+
+        <!-- sa-token 注解 -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-core</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot</artifactId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
         </dependency>
     </dependencies>
 </project>
