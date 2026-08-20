@@ -1,4 +1,5 @@
 server:
+  port: 8080
   servlet:
     context-path: /admin
 spring:
@@ -69,7 +70,7 @@ harvey:
   screen:
     netty:
       enabled: true
-      port: 9110
+      port: 10000
       reader-idle-seconds: 90
       login-timeout-seconds: 30
       auth:

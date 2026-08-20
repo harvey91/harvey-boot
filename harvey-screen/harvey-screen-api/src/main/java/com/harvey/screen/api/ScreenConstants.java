@@ -26,7 +26,7 @@ public final class ScreenConstants {
     public static final int CRC_LENGTH = 4;
 
     /** 默认服务端口 */
-    public static final int DEFAULT_PORT = 9110;
+    public static final int DEFAULT_PORT = 10000;
 
     /** 默认最大报文长度(10MB) */
     public static final int DEFAULT_MAX_FRAME_LENGTH = 10 * 1024 * 1024;

@@ -30,7 +30,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * <p>
  * 启动参数：{@code host port deviceNo token [model]}
  * <pre>
- *   java -jar harvey-screen-demo.jar 127.0.0.1 9110 DEV-001 test123 LED-55X
+ *   java -jar harvey-screen-demo.jar 127.0.0.1 10000 DEV-001 test123 LED-55X
  * </pre>
  *
  * @author Harvey
@@ -75,7 +75,7 @@ public class ScreenDemoDevice {
     public static void main(String[] args) {
         if (args.length < 4) {
             System.out.println("用法: ScreenDemoDevice <host> <port> <deviceNo> <token> [model]");
-            System.out.println("示例: ScreenDemoDevice 127.0.0.1 9110 DEV-001 test123 LED-55X");
+            System.out.println("示例: ScreenDemoDevice 127.0.0.1 10000 DEV-001 test123 LED-55X");
             return;
         }
         String host = args[0];
