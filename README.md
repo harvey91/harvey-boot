@@ -43,9 +43,6 @@ harvey-boot
 │  ├── harvey-boot-starter-rocketmq
 │  └── harvey-boot-starter-thread
 ├── harvey-generator
-├── harvey-mq
-│  ├── harvey-rabbitmq
-│  └── harvey-rocketmq
 ├── harvey-storage
 │  └── harvey-storage-service
 │  │  ├── oss          # 对象存储平台(本地/阿里云/腾讯云/七牛/Minio)
