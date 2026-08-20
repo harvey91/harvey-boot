@@ -1,5 +1,6 @@
 package com.harvey.core.storage;
 
+import cn.hutool.core.io.IoUtil;
 import com.qiniu.common.QiniuException;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
@@ -11,6 +12,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Path;
@@ -93,5 +95,27 @@ public class QiniuStorage implements IStorage {
     @Override
     public String generateUrl(String keyName) {
         return endpoint + "/" + keyName;
+    }
+
+    @Override
+    public byte[] getBytes(String keyName) {
+        try {
+            URL url = new URL(generateUrl(keyName));
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            try {
+                if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                    throw new RuntimeException("下载失败, HTTP状态码: " + connection.getResponseCode());
+                }
+                try (InputStream in = connection.getInputStream()) {
+                    return IoUtil.readBytes(in);
+                }
+            } finally {
+                connection.disconnect();
+            }
+        } catch (Exception ex) {
+            log.error(ex.getMessage(), ex);
+            throw new RuntimeException("读取七牛云文件失败: " + keyName, ex);
+        }
     }
 }

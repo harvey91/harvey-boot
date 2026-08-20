@@ -61,8 +61,8 @@ public class StorageService {
         }
         key = key.replaceFirst("^[/\\\\]+", "");
         try {
-            return Files.readAllBytes(storage.load(key));
-        } catch (IOException e) {
+            return storage.getBytes(key);
+        } catch (Exception e) {
             throw new RuntimeException("读取存储文件失败: " + url, e);
         }
     }

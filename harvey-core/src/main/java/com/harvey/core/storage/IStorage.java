@@ -25,4 +25,9 @@ public interface IStorage {
     void delete(String keyName);
 
     String generateUrl(String keyName);
+
+    /**
+     * 读取对象内容为字节数组, 云存储会走 SDK 下载回源
+     */
+    byte[] getBytes(String keyName);
 }

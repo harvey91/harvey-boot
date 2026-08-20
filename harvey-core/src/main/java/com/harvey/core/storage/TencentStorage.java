@@ -1,9 +1,12 @@
 package com.harvey.core.storage;
 
+import cn.hutool.core.io.IoUtil;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
 import com.qcloud.cos.auth.BasicCOSCredentials;
 import com.qcloud.cos.auth.COSCredentials;
+import com.qcloud.cos.model.COSObject;
+import com.qcloud.cos.model.COSObjectInputStream;
 import com.qcloud.cos.model.ObjectMetadata;
 import com.qcloud.cos.model.PutObjectRequest;
 import com.qcloud.cos.region.Region;
@@ -98,6 +101,19 @@ public class TencentStorage implements IStorage {
             log.error(e.getMessage(), e);
         }
 
+    }
+
+    @Override
+    public byte[] getBytes(String keyName) {
+        try {
+            COSObject cosObject = getCOSClient().getObject(bucketName, keyName);
+            try (COSObjectInputStream in = cosObject.getObjectContent()) {
+                return IoUtil.readBytes(in);
+            }
+        } catch (Exception ex) {
+            log.error(ex.getMessage(), ex);
+            throw new RuntimeException("读取腾讯云COS文件失败: " + keyName, ex);
+        }
     }
 
     @Override

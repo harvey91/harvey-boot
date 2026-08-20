@@ -1,9 +1,11 @@
 package com.harvey.core.storage;
 
 import com.aliyun.oss.OSSClient;
+import com.aliyun.oss.model.OSSObject;
 import com.aliyun.oss.model.ObjectMetadata;
 import com.aliyun.oss.model.PutObjectRequest;
 import com.aliyun.oss.model.PutObjectResult;
+import cn.hutool.core.io.IoUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -28,8 +30,13 @@ public class AliyunStorage implements IStorage {
     private String accessKeySecret;
     private String bucketName;
 
+    private OSSClient ossClient;
+
     private OSSClient getOSSClient() {
-        return new OSSClient(endpoint, accessKeyId, accessKeySecret);
+        if (ossClient == null) {
+            ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
+        }
+        return ossClient;
     }
 
     private String getBaseUrl() {
@@ -89,6 +96,19 @@ public class AliyunStorage implements IStorage {
             log.error(e.getMessage(), e);
         }
 
+    }
+
+    @Override
+    public byte[] getBytes(String keyName) {
+        try {
+            OSSObject ossObject = getOSSClient().getObject(bucketName, keyName);
+            try (InputStream in = ossObject.getObjectContent()) {
+                return IoUtil.readBytes(in);
+            }
+        } catch (Exception ex) {
+            log.error(ex.getMessage(), ex);
+            throw new RuntimeException("读取阿里云OSS文件失败: " + keyName, ex);
+        }
     }
 
     @Override

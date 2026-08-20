@@ -91,6 +91,16 @@ public class LocalStorage implements IStorage {
     }
 
     @Override
+    public byte[] getBytes(String filename) {
+        try {
+            return Files.readAllBytes(load(filename));
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+            throw new RuntimeException("读取文件失败: " + filename, e);
+        }
+    }
+
+    @Override
     public String generateUrl(String keyName) {
 
         return address.endsWith(File.separator) ? address + keyName : address + File.separator + keyName;
