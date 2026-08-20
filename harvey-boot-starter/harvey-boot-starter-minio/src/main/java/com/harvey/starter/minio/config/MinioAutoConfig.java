@@ -14,7 +14,7 @@ import org.springframework.util.StringUtils;
  **/
 @AutoConfiguration
 @EnableConfigurationProperties(MinioProperties.class)
-@ConditionalOnProperty(prefix = "minio", name = {"enable"}, havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "minio", name = {"enable"}, havingValue = "true")
 public class MinioAutoConfig {
 
     @Bean

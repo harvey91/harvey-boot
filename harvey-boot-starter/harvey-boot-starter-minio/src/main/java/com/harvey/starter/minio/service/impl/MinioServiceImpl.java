@@ -6,6 +6,8 @@ import io.minio.*;
 import io.minio.http.Method;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -20,11 +22,14 @@ import java.util.concurrent.TimeUnit;
  **/
 @Slf4j
 @Service
+@ConditionalOnProperty(prefix = "minio", name = "enable", havingValue = "true")
 public class MinioServiceImpl implements MinioService {
 
     @Autowired
+    @Qualifier("minioClient")
     private MinioClient minioClient;
     @Autowired
+    @Qualifier("innerMinioClient")
     private MinioClient innerMinioClient;
 
     @Override
