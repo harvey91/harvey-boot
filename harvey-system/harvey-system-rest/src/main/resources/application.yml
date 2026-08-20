@@ -90,4 +90,4 @@ harvey:
     command-timeout:
       enabled: true
       timeout-seconds: 30
-      scan-interval-seconds: 10
+      scan-interval-seconds: 60
