@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
  **/
 @Slf4j
 @Service
+@ConditionalOnProperty(prefix = "harvey.mq", name = "type", havingValue = "rabbitmq")
 @RequiredArgsConstructor
 public class MessageProducer {
     private final AmqpTemplate amqpTemplate;

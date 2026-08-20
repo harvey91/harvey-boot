@@ -3,6 +3,7 @@ package com.harvey.starter.rocketmq.message;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
  **/
 @Slf4j
 @Service
+@ConditionalOnProperty(prefix = "harvey.mq", name = "type", havingValue = "rocketmq")
 @RequiredArgsConstructor
 public class MessageProducer {
     private final RocketMQTemplate rocketMQTemplate;

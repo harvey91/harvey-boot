@@ -5,6 +5,7 @@ import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
  **/
 @Slf4j
 @Service
+@ConditionalOnProperty(prefix = "harvey.mq", name = "type", havingValue = "rabbitmq")
 public class MessageConsumer {
 
     /**

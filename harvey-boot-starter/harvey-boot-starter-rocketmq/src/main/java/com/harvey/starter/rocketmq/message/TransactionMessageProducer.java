@@ -6,6 +6,7 @@ import org.apache.rocketmq.spring.annotation.RocketMQTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionState;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
  **/
 @Slf4j
 @Service
+@ConditionalOnProperty(prefix = "harvey.mq", name = "type", havingValue = "rocketmq")
 @RequiredArgsConstructor
 public class TransactionMessageProducer {
     private final RocketMQTemplate rocketMQTemplate;

@@ -5,6 +5,7 @@ import org.apache.rocketmq.spring.annotation.ConsumeMode;
 import org.apache.rocketmq.spring.annotation.MessageModel;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
  **/
 @Slf4j
 @Service
+@ConditionalOnProperty(prefix = "harvey.mq", name = "type", havingValue = "rocketmq")
 @RocketMQMessageListener(
         topic = "my-order-topic",
         consumerGroup = "my-order-consumer-group",
